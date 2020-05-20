@@ -18,7 +18,7 @@ public class Armstrong {
 
         System.out.println("type of entered value is "+str.getClass());     //* prints variable type but only works for strings
         
-        int dummy_number= number;
+        double dummy_number= number;
         int mul_len;
         while(number!=0.0)
         {

@@ -10,6 +10,10 @@ public class Print_fun {
     {
         String a = "hello there";
         System.out.println(hello(a));
+
+        int c= 10,b=20;
+        System.out.println(c+b);
+        System.out.println(c+""+b);
     }
 
 }

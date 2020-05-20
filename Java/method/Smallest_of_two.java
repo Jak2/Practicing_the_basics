@@ -22,6 +22,7 @@ public class Smallest_of_two {
         int c;
 
         c= small(a,b);//* static reference so the method should be static
+                    //* this means the method should be written static
         System.out.println(c);
         System.out.println(small(a,b));
         System.out.println(small(50,60));  

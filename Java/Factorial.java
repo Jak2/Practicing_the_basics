@@ -18,6 +18,6 @@ public class Factorial {
 
     
 
-
+        sc.close();
     }
 }

@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class Typecasting {
 
-    public static void main(String []args){
+    public static void main(String []args)
+    {
         Scanner sc = new Scanner(System.in);
         System.out.println("type casting = changing one type of data to another type\n\n you should keep compatibility in mind, java automatically converts one type of data another type, if the data type is not compatible then you have to convert them using explicit cnversion ");
         System.out.println("1. widening casting\n2. narrowing casting ");
@@ -36,9 +37,6 @@ public class Typecasting {
             }
   
         }
-        
-       
-       
        
         System.out.println("would you like to see them in action y or n");
         char implementation = sc.next().charAt(0);
@@ -48,34 +46,67 @@ public class Typecasting {
         String string_value;
         char char_value;
         double double_value;
-        float float_value;        
-        String i,f,d,s;
+        float float_value;
         
         if(implementation==a1)
         {
-            String variable_type;
+            char variable_type = 'x';
             System.out.println("enter the variable type");
             System.out.println("type any one of these proposed names\n"+
             "i for integer\n\t"+
             "f for float\n\t"+ 
             "s for String\n\t"+
-            "d for double");
+            "c for character");
 
-            variable_type = sc.next().charAt();        
-            System.out.println("");
-            System.out.println("widening_typecasting or implicit type casting");
+            //variable_type = sc.next().charAt(0);        
+            
 
-            swtich(variable_type){
+            swtich(variable_type)
+            {
 
-                case i:
+                case 'i':
+                    System.out.println("widening_typecasting or implicit type casting");
+                    System.out.println("enter a value");
+                    int_value = sc.nextInt();
+                    float_value = int_value;
+                    System.out.println("converted integer "+int_value+" to float"+float_value);
+                    break;
+
+                "case 'f'"::
+                System.out.println("narrow typecasting");
                 System.out.println("enter a value");
-                int_value = sc.nextInt()
-                float_value = (int)int_value;
-                System.out.println("converted integer "+int_value+" to float"+float_value);
+                double_value = sc.nextDouble();
+                double_value= (int)float_value;
+                System.out.println("entered float value ="+int_value+" is converted to integer ="+int_value);
                 break;
-        }
+
+                "case 's'"::
+                System.out.println("widening_typecasting or implicit type casting");
+                System.out.println("enter a value");
+                string_value = sc.nextLine();
+                int_value = Integer.parseInt(string_value);
+               //*int_value = Integer.valueOf(string_value); we can also use this to convert 
+                System.out.println("there is no widening_typecasting b/n string and int\n"+
+                "hence we are using parse\n integer value= "+int_value);
+                //string to char
+                char_value = string_value.charAt(0);
+                System.out.println("char value"+char_value);
+                break;
+
+                "case 'c'"::
+                System.out.println("widening typecasting\n enter a number");
+                System.out.println("enter a value");
+                char_value = sc.next().charAt(0);
+                float_value= char_value;
+
+                //default: 
+                //System.out.println("entered value cannot be processed");
+            }
         
-    }
+        } 
     
+    }    
+
 }
+
 

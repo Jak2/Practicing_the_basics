@@ -37,8 +37,10 @@ public class Prime_number{
                 prime++;
             }
             System.out.println("no of prime numbers till "+number+" are "+prime);
+            sc.close();
         }
        
     }
+  //  sc.close();
 }
 }
