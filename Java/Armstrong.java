@@ -7,9 +7,7 @@ public class Armstrong {
         Scanner sc= new Scanner(System.in);
         System.out.println("enter a number");
         String str= sc.nextLine();              //* taking string as input 
-
         double len= str.length();               //* calculating string length
-        
         double number=Double.parseDouble(str);  //* converting string variable to double
         double armstrong=0;                     //* everything is taken as double cause
                                                 //* exponential computation gives floatiing values

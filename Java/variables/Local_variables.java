@@ -3,6 +3,12 @@ package variables;
 public class Local_variables {
     public static void main(String []args)
     {
+
+         //* int size is 4bytes
+        //* float size is 4 bytes
+        //* double size is 8bytes so mostly use double 
+        //*char size is 2bytes
+
         int a = 10;
         float b=a;
         System.out.println(b);
