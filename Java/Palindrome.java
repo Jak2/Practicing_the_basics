@@ -1,31 +1,32 @@
-
 import java.util.Scanner;
 
 public class Palindrome {
-    public static void main(String []args){
-        Scanner sc= new Scanner(System.in);
-        System.out.println("enter any number");
-        String number = sc.nextLine();
-        
-        int palindrome =0, 
-            mod, 
-            num = Integer.parseInt(number),
-            // String num = (int)number
-            x=num;
-
-        while(num>0)
+    public static void main(String[]args)
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter a number");
+        int entered_number= sc.nextInt();
+        int rev=0,count= 0;
+        int a=entered_number;
+        while(a!=0)
         {
-            mod = num%10;
-            palindrome = palindrome*10 + mod;
-            num = num/10;
+            int rem=a%10;
+            if(rem!=0)
+                {count++;}  
+            rev=rev*10+rem;
+            a=a/10;
         }
-        if(palindrome==x){
-            System.out.println("entered number is a palindrome");
+        System.out.println("length of entered number is "+count);
+        if(rev==entered_number)
+        {
+            System.out.println(entered_number+"is an armstrong number");
         }
         else
-            System.out.println("entered number is not a palindrome");
-    
-            sc.close();
+        {
+            System.out.println("entered number is not an armstrong number");
+        }
+        
+        sc.close();
     }
     
 }
