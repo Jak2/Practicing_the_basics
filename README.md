@@ -34,6 +34,7 @@ Large Language Model (LLM): A model that processes and generates text.
 Multimodal: Models that handle multiple data types (text, images, audio, video).
 
 Flow Diagram: AI Categories
+```mermaid
 graph TD
     A[Artificial Intelligence] --> B[Traditional AI]
     A --> C[Generative AI]
@@ -43,7 +44,7 @@ graph TD
     C --> G[Multimodal Models]
     F --> H[GPT, Gemini, Claude]
     G --> I[GPT-4o, Gemini 2.5 Pro]
-
+```
 Note: A real-world example of generative AI is DALL·E, which creates images from text prompts, used by designers to generate concept art.
 
 Prompt Engineering (2:30) ✍️
