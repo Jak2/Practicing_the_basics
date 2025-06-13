@@ -1,2 +1,0 @@
-print("thisis the best")
-
