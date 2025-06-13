@@ -2,6 +2,24 @@
 this is only for practicing th
  htis i is bad
 
+ ```mermaid
+graph LR
+    A[Start Prompting] --> B[Define Task]
+    B --> C[Add Context]
+    C --> D[Provide Resources]
+    D --> E[Generate Output]
+    E --> F{Evaluate}
+    F -->|Satisfied| G[Final Result]
+    F -->|Not Satisfied| H[Iterate]
+    H -->|Revisit| B
+    H -->|Separate Sentences| I[Refine Prompt]
+    H -->|Try New Phrasing| J[Analogous Task]
+    H -->|Add Constraints| K[Specific Limits]
+    I --> E
+    J --> E
+    K --> E
+ ```
+
  AI Learning Report: Crash Course on AI in 2025 🚀
 Introduction (0:00) 🌟
 The video provides a comprehensive overview of AI in 2025, aimed at taking viewers from beginner to advanced levels. It covers key AI topics, offers crash courses on each, and includes resources for deeper exploration. The goal is to equip viewers with knowledge surpassing 99% of the population, with assessments to ensure retention. The video is structured to cover basic AI definitions, prompting, agents, AI-assisted coding (vibe coding), and emerging technologies for the second half of 2025.
