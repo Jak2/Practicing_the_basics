@@ -1,4 +1,5 @@
 # One Weekly Habit to Never Apply for a Job Again! 💼
+> https://www.youtube.com/watch?v=jqjiWlyfuvE
 
 Feeling lost in a tough job market? Emily Durham, your honest internet careers coach, spills the tea on a single weekly habit that could secure your dream job without endless applications. With the job scene looking grim, this iced-coffee-fueled advice (not an espresso martini, she swears!) could change your career game by 2025!
 
