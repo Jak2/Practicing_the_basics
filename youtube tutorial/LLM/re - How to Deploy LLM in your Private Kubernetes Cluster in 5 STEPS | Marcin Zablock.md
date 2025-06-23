@@ -33,11 +33,11 @@
 ```mermaid
 graph TD
     GCS[GCS]
-    InitJob[One-time init job]
-    PVC[PVC (model files)]
-    Deployment1[Deployment (vLLM) 1]
-    Deployment2[Deployment (vLLM) 2]
-    Deployment3[Deployment (vLLM) 3]
+    InitJob["One-time init job"]
+    PVC["PVC (model files)"]
+    Deployment1["Deployment (vLLM)"]
+    Deployment2["Deployment (vLLM)"]
+    Deployment3["Deployment (vLLM)"]
     Service[Service]
 
     GCS --> InitJob
@@ -49,6 +49,7 @@ graph TD
     Deployment2 --> Service
     Deployment3 --> Service
 ```
+
 
 
 
