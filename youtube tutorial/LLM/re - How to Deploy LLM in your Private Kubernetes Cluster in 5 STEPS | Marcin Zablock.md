@@ -44,10 +44,6 @@ graph LR
     Deployment1 --> Service
 ```
 
-
-
-
-
 ### **Step 2: Initialize Persistent Volume (PV) and Persistent Volume Claim (PVC)**  
 **[Context: Setting up scalable storage for model files]**  
 - **Action**:  
@@ -64,7 +60,7 @@ graph LR
 - **Action**:  
   - Create a K8s **Batch Job** manifest with a node selector (e.g., `europe-west4-c`) and a container (e.g., `gcloud-sdk` for GCS).  
   - Command: Copy files from GCS to `/local/pv/model` (mounted PV path).  
-  - Apply with `kubectl create -f job.yaml`.  
+  - Apply with `kubectl create -f init-volume.yaml`.  
   - Monitor with `kubectl get jobs` (e.g., one job completed, one pending).  
 - **[Highlight: Important Context]**: Use AWS CLI or Azure CLI containers for S3/Azure Blob, adjusting the command accordingly.  
 - **[Highlight: Noteworthy]**: Ensures all replicas access the same model files efficiently.
