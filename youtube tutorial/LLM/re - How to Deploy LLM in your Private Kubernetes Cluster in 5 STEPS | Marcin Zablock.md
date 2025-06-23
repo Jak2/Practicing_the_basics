@@ -32,11 +32,16 @@
 
 ```mermaid
 graph TD
-    GCS[GCS] --> InitJob(One-time init job)
-    InitJob --> PVC[PVC (model files)]
-    PVC --> "Read-only mount" --> Deployment[Deployment (vLLM)]
-    Deployment --> " " --> Service[Service]
+    GCS[GCS] --> InitJob[One-time<br>init job]
+    InitJob --> PVC[PVC<br>(model files)]
+    PVC -->|Read-only mount| Deployment1[Deployment<br>(vLLM)]
+    PVC -->|Read-only mount| Deployment2[Deployment<br>(vLLM)]
+    PVC -->|Read-only mount| Deployment3[Deployment<br>(vLLM)]
+    Deployment1 --> Service
+    Deployment2 --> Service
+    Deployment3 --> Service
 ```
+
 
 
 ### **Step 2: Initialize Persistent Volume (PV) and Persistent Volume Claim (PVC)**  
