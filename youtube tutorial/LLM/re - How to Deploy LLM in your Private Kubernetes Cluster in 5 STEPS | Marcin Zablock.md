@@ -34,8 +34,8 @@
 graph LR
     GCS[GCS] --> InitJob(One-time init job)
     InitJob --> PVC[PVC (model files)]
-    PVC -->|Read-only mount| Deployment[Deployment (vLLM)]
-    Deployment --> Service[Service]
+    PVC -- "Read-only mount" --> Deployment[Deployment (vLLM)]
+    Deployment -- " " --> Service[Service]
 ```
 
 
