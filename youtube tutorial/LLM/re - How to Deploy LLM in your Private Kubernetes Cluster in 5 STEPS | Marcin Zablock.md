@@ -36,8 +36,6 @@ graph LR
     InitJob["One-time init job"]
     PVC["PVC (model files)"]
     Deployment1["Deployment (vLLM)"]
-    Deployment2["Deployment (vLLM)"]
-    Deployment3["Deployment (vLLM)"]
     Service[Service]
 
     GCS --> InitJob
