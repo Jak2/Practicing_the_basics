@@ -53,9 +53,9 @@ graph LR
 - **Action**:  
   - Create a **StorageClass** with `reclaimPolicy: Retain` to persist model files post-cluster crash.  
   - Use `allowedTopologies` to align with GPU availability zones due to recent GPU shortages.  
-  - Apply with `kubectl apply -f storageclass.yaml`.  
+  - Apply with `kubectl apply -f storage.yaml`.  
   - Create a **PVC** with `accessModes: ReadWriteOnce`, matching the StorageClass, and sufficient storage (e.g., 50GB for Mistral).  
-  - Apply with `kubectl apply -f pvc.yaml`.  
+  - Apply with `kubectl apply -f volume.yaml`.  
 - **[Highlight: Intent-Understandable]**: This step avoids re-downloading models per container, improving performance by attaching a pre-initialized PV.  
 - **[Highlight: Noteworthy]**: Use regional storage (e.g., EFS) or multiple zone-specific PVCs if scaling across zones.
 
