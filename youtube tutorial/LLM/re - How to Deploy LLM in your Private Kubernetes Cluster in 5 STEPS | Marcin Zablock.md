@@ -30,6 +30,14 @@
 - **[Highlight: Important Context]**: Ensure the storage bucket is in the same region as your K8s cluster for faster transfer speeds.  
 - **Verification**: Confirm files (e.g., Mistral model weights) are in GCS (as shown on-screen).
 
+```mermaid
+graph LR
+    GCS[GCS] --> InitJob(One-time init job)
+    InitJob --> PVC[PVC (model files)]
+    PVC -->|Read-only mount| Deployment[Deployment (vLLM)]
+    Deployment --> Service[Service]
+```
+
 ### **Step 2: Initialize Persistent Volume (PV) and Persistent Volume Claim (PVC)**  
 **[Context: Setting up scalable storage for model files]**  
 - **Action**:  
