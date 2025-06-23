@@ -41,11 +41,7 @@ graph LR
     GCS --> InitJob
     InitJob --> PVC
     PVC -->|Read-only mount| Deployment1
-    PVC -->|Read-only mount| Deployment2
-    PVC -->|Read-only mount| Deployment3
     Deployment1 --> Service
-    Deployment2 --> Service
-    Deployment3 --> Service
 ```
 
 
