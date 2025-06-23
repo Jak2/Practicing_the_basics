@@ -37,6 +37,13 @@ graph LR
     PVC -->|Read-only mount| Deployment[Deployment (vLLM)]
     Deployment --> Service[Service]
 ```
+``` mermaid
+graph TD
+    A[Step 1: Download Model] --> B[Step 2: Initialize PV/PVC]
+    B --> C[Step 3: Copy Files to PV]
+    C --> D[Step 4: Deploy LLM]
+    D --> E[Step 5: Query Model]
+```
 
 ### **Step 2: Initialize Persistent Volume (PV) and Persistent Volume Claim (PVC)**  
 **[Context: Setting up scalable storage for model files]**  
