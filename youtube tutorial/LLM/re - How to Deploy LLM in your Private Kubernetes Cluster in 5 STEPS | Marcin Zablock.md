@@ -31,7 +31,7 @@
 - **Verification**: Confirm files (e.g., Mistral model weights) are in GCS (as shown on-screen).
 
 ```mermaid
-graph LR
+graph TD
     GCS[GCS] --> InitJob(One-time init job)
     InitJob --> PVC[PVC (model files)]
     PVC --> "Read-only mount" --> Deployment[Deployment (vLLM)]
