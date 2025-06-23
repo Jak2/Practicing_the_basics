@@ -32,11 +32,19 @@
 
 ```mermaid
 graph TD
-    GCS[GCS] --> InitJob[One-time<br>init job]
-    InitJob --> PVC[PVC<br>(model files)]
-    PVC -->|Read-only mount| Deployment1[Deployment<br>(vLLM)]
-    PVC -->|Read-only mount| Deployment2[Deployment<br>(vLLM)]
-    PVC -->|Read-only mount| Deployment3[Deployment<br>(vLLM)]
+    GCS[GCS]
+    InitJob[One-time init job]
+    PVC[PVC (model files)]
+    Deployment1[Deployment (vLLM) 1]
+    Deployment2[Deployment (vLLM) 2]
+    Deployment3[Deployment (vLLM) 3]
+    Service[Service]
+
+    GCS --> InitJob
+    InitJob --> PVC
+    PVC -->|Read-only mount| Deployment1
+    PVC -->|Read-only mount| Deployment2
+    PVC -->|Read-only mount| Deployment3
     Deployment1 --> Service
     Deployment2 --> Service
     Deployment3 --> Service
