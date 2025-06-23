@@ -31,7 +31,7 @@
 - **Verification**: Confirm files (e.g., Mistral model weights) are in GCS (as shown on-screen).
 
 ```mermaid
-graph TD
+graph LR
     GCS[GCS]
     InitJob["One-time init job"]
     PVC["PVC (model files)"]
