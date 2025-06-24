@@ -96,6 +96,9 @@ def generate_sliding_windows(tokens: List[str], window_size: int, padding_token:
 ---
 
 Let me know if you want the **unit tests**, **stdin/stdout format**, or a **custom test case runner** for HackerRank integration!
+---
+---
+---
 
 
 # 2nd question
@@ -179,7 +182,8 @@ This object-oriented design **mirrors the modular, plug-and-play architecture** 
 
 ---
 
-Explaning in Theory
+# Explaning in Theory
+---
 Great question! Designing an object-oriented (OO) system for an NLP pipeline in a healthcare domain demands **clean, reusable, and extendable code**, and this is where **OO principles like inheritance and polymorphism shine**.
 
 ---
