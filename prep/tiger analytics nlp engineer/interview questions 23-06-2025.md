@@ -3,8 +3,6 @@ tell me about yourself
 ```
 # 1st question
 
-Sure! Here's the **HackerRank-style format** for both the **question** and its **answer**, structured exactly how you'd see in a coding assessment.
-
 ---
 
 ## 📝 **Question Name: Sliding Window with Padding**
