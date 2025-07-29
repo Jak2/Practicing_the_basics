@@ -1,3 +1,5 @@
+> https://docs.google.com/document/d/1UpEHD3tHdsBdUPkGGv1BjZPm42nvkzRkZ8g3Q3ei2XA/edit?tab=t.9ezl6r4ao1p1
+
 # Enhanced Comprehensive Daily Food Intake Schedule: 5 AM to 11 PM
 *Budget-Friendly, Ayurvedic, Anti-Bloating, Nourishing Protocol for Gut Health & Skin Vitality*
 
