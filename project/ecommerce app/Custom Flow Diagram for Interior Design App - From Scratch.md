@@ -214,7 +214,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    D_START([Delivery Agent Opens App]) --> D_AUTH{Authenticated?}
+    D_START[Delivery Agent Opens App] --> D_AUTH{Authenticated?}
     
     D_AUTH -->|No| D_LOGIN[Delivery Login/Register]
     D_AUTH -->|Yes| D_DASHBOARD[Delivery Dashboard]
@@ -257,7 +257,7 @@ flowchart TD
     PHOTO_PROOF --> COMPLETE_DELIVERY[Mark Delivery Complete]
     CUSTOMER_VERIFICATION --> COMPLETE_DELIVERY
     
-    COMPLETE_DELIVERY --> COLLECT_PAYMENT[Collect Payment (if COD)]
+    COMPLETE_DELIVERY --> COLLECT_PAYMENT[Collect Payment - if COD]
     COLLECT_PAYMENT --> UPDATE_STATUS[Update Order Status]
     UPDATE_STATUS --> EARNINGS_UPDATE[Update Earnings]
     EARNINGS_UPDATE --> NEXT_ORDER[Available for Next Order]
