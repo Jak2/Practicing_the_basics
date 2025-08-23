@@ -8,62 +8,76 @@ Let me provide you with comprehensive architecture diagrams that include detaile
 
 ```mermaid
 graph TB
-    subgraph "Frontend Layer"
-        MA[Mobile Apps<br/>📱 React Native (Free)<br/>📱 Flutter (Free)<br/>📱 Ionic (Paid)]
-        WA[Web Admin Panel<br/>🌐 React.js (Free)<br/>🌐 Vue.js (Free)<br/>🌐 Angular (Free)]
+    subgraph Frontend_Layer
+        MA[Mobile Apps\n📱 React Native (Free)\n📱 Flutter (Free)\n📱 Ionic (Paid)]
+        WA[Web Admin Panel\n🌐 React.js (Free)\n🌐 Vue.js (Free)\n🌐 Angular (Free)]
     end
     
-    subgraph "API Gateway & Security"
-        AG[API Gateway<br/>🔀 Express Gateway (Free)<br/>🔀 Kong (Free/Paid)<br/>🔀 AWS API Gateway (Paid)]
-        AUTH[Authentication<br/>🔐 Firebase Auth (Free/Paid)<br/>🔐 Auth0 (Free/Paid)<br/>🔐 Passport.js (Free)]
-        RATE[Rate Limiting<br/>⚡ Express Rate Limit (Free)<br/>⚡ Redis (Free)<br/>⚡ Cloudflare (Free/Paid)]
+    subgraph API_Gateway_and_Security
+        AG[API Gateway\n🔀 Express Gateway (Free)\n🔀 Kong (Free/Paid)\n🔀 AWS API Gateway (Paid)]
+        AUTH[Authentication\n🔐 Firebase Auth (Free/Paid)\n🔐 Auth0 (Free/Paid)\n🔐 Passport.js (Free)]
+        RATE[Rate Limiting\n⚡ Express Rate Limit (Free)\n⚡ Redis (Free)\n⚡ Cloudflare (Free/Paid)]
     end
     
-    subgraph "Backend Services"
-        US[User Service<br/>👥 Node.js + Express (Free)<br/>👥 Django (Free)<br/>👥 Laravel (Free)]
-        PS[Product Service<br/>📦 Node.js + Express (Free)<br/>📦 FastAPI (Free)<br/>📦 Spring Boot (Free)]
-        OS[Order Service<br/>🛒 Node.js + Express (Free)<br/>🛒 Django REST (Free)<br/>🛒 NestJS (Free)]
-        IS[Inventory Service<br/>📊 Node.js + Express (Free)<br/>📊 Django (Free)<br/>📊 Go + Gin (Free)]
-        NS[Notification Service<br/>🔔 Node.js + FCM (Free)<br/>🔔 Pusher (Free/Paid)<br/>🔔 OneSignal (Free/Paid)]
-        CS[Chat Service<br/>💬 Socket.io (Free)<br/>💬 Firebase (Free/Paid)<br/>💬 Stream Chat (Free/Paid)]
-        GPS[Location Service<br/>📍 Google Maps API (Free/Paid)<br/>📍 Mapbox (Free/Paid)<br/>📍 OpenStreetMap (Free)]
-        DS[Document Service<br/>📄 Multer + AWS S3 (Free/Paid)<br/>📄 Firebase Storage (Free/Paid)<br/>📄 Cloudinary (Free/Paid)]
+    subgraph Backend_Services
+        US[User Service\n👥 Node.js + Express (Free)\n👥 Django (Free)\n👥 Laravel (Free)]
+        PS[Product Service\n📦 Node.js + Express (Free)\n📦 FastAPI (Free)\n📦 Spring Boot (Free)]
+        OS[Order Service\n🛒 Node.js + Express (Free)\n🛒 Django REST (Free)\n🛒 NestJS (Free)]
+        IS[Inventory Service\n📊 Node.js + Express (Free)\n📊 Django (Free)\n📊 Go + Gin (Free)]
+        NS[Notification Service\n🔔 Node.js + FCM (Free)\n🔔 Pusher (Free/Paid)\n🔔 OneSignal (Free/Paid)]
+        CS[Chat Service\n💬 Socket.io (Free)\n💬 Firebase (Free/Paid)\n💬 Stream Chat (Free/Paid)]
+        GPS[Location Service\n📍 Google Maps API (Free/Paid)\n📍 Mapbox (Free/Paid)\n📍 OpenStreetMap (Free)]
+        DS[Document Service\n📄 Multer + AWS S3 (Free/Paid)\n📄 Firebase Storage (Free/Paid)\n📄 Cloudinary (Free/Paid)]
     end
     
-    subgraph "Database Layer"
-        PDB[(Primary Database<br/>🗄️ PostgreSQL (Free)<br/>🗄️ MySQL (Free)<br/>🗄️ MongoDB (Free/Paid))]
-        CACHE[(Cache Layer<br/>⚡ Redis (Free)<br/>⚡ Memcached (Free)<br/>⚡ ElastiCache (Paid))]
-        CHAT_DB[(Chat Database<br/>💬 MongoDB (Free)<br/>💬 Firebase Firestore (Free/Paid)<br/>💬 CouchDB (Free))]
-        FILE_STORAGE[(File Storage<br/>📁 AWS S3 (Free/Paid)<br/>📁 Firebase Storage (Free/Paid)<br/>📁 MinIO (Free))]
+    subgraph Database_Layer
+        PDB[(Primary Database\n🗄️ PostgreSQL (Free)\n🗄️ MySQL (Free)\n🗄️ MongoDB (Free/Paid))]
+        CACHE[(Cache Layer\n⚡ Redis (Free)\n⚡ Memcached (Free)\n⚡ ElastiCache (Paid))]
+        CHAT_DB[(Chat Database\n💬 MongoDB (Free)\n💬 Firebase Firestore (Free/Paid)\n💬 CouchDB (Free))]
+        FILE_STORAGE[(File Storage\n📁 AWS S3 (Free/Paid)\n📁 Firebase Storage (Free/Paid)\n📁 MinIO (Free))]
     end
     
-    subgraph "External Integrations"
-        PAYMENT[Payment Gateway<br/>💳 Stripe (Paid)<br/>💳 Razorpay (Paid)<br/>💳 PayPal (Paid)]
-        EMAIL[Email Service<br/>📧 SendGrid (Free/Paid)<br/>📧 Mailgun (Free/Paid)<br/>📧 AWS SES (Paid)]
-        SMS[SMS Service<br/>📱 Twilio (Paid)<br/>📱 Firebase (Free/Paid)<br/>📱 AWS SNS (Paid)]
+    subgraph External_Integrations
+        PAYMENT[Payment Gateway\n💳 Stripe (Paid)\n💳 Razorpay (Paid)\n💳 PayPal (Paid)]
+        EMAIL[Email Service\n📧 SendGrid (Free/Paid)\n📧 Mailgun (Free/Paid)\n📧 AWS SES (Paid)]
+        SMS[SMS Service\n📱 Twilio (Paid)\n📱 Firebase (Free/Paid)\n📱 AWS SNS (Paid)]
     end
     
-    subgraph "Infrastructure & DevOps"
-        HOST[Hosting<br/>☁️ Vercel (Free/Paid)<br/>☁️ Netlify (Free/Paid)<br/>☁️ AWS/GCP/Azure (Paid)]
-        CI_CD[CI/CD<br/>⚙️ GitHub Actions (Free)<br/>⚙️ GitLab CI (Free)<br/>⚙️ Jenkins (Free)]
-        MONITOR[Monitoring<br/>📊 Sentry (Free/Paid)<br/>📊 New Relic (Paid)<br/>📊 DataDog (Paid)]
+    subgraph Infrastructure_and_DevOps
+        HOST[Hosting\n☁️ Vercel (Free/Paid)\n☁️ Netlify (Free/Paid)\n☁️ AWS/GCP/Azure (Paid)]
+        CI_CD[CI/CD\n⚙️ GitHub Actions (Free)\n⚙️ GitLab CI (Free)\n⚙️ Jenkins (Free)]
+        MONITOR[Monitoring\n📊 Sentry (Free/Paid)\n📊 New Relic (Paid)\n📊 DataDog (Paid)]
     end
     
     MA --> AG
     WA --> AG
-    AG --> AUTH & RATE
-    AG --> US & PS & OS & IS & NS & CS & GPS & DS
+    AG --> AUTH
+    AG --> RATE
+    AG --> US
+    AG --> PS
+    AG --> OS
+    AG --> IS
+    AG --> NS
+    AG --> CS
+    AG --> GPS
+    AG --> DS
     
-    US --> PDB & CACHE
-    PS --> PDB & CACHE
-    OS --> PDB & CACHE
-    IS --> PDB & CACHE
-    NS --> EMAIL & SMS
+    US --> PDB
+    US --> CACHE
+    PS --> PDB
+    PS --> CACHE
+    OS --> PDB
+    OS --> CACHE
+    IS --> PDB
+    IS --> CACHE
+    NS --> EMAIL
+    NS --> SMS
     CS --> CHAT_DB
     DS --> FILE_STORAGE
     
     OS --> PAYMENT
-    NS --> EMAIL & SMS
+    NS --> EMAIL
+    NS --> SMS
     GPS --> PAYMENT
 ```
 
@@ -73,47 +87,57 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph "Mobile Apps (iOS/Android)"
-        subgraph "Customer App"
-            C_UI[UI Layer<br/>📱 React Native (Free)<br/>📱 Flutter (Free)]
-            C_STATE[State Management<br/>🔄 Redux (Free)<br/>🔄 MobX (Free)<br/>🔄 Zustand (Free)]
-            C_NAV[Navigation<br/>🧭 React Navigation (Free)<br/>🧭 Flutter Navigator (Free)]
-            C_API[API Layer<br/>🌐 Axios (Free)<br/>🌐 Fetch (Free)<br/>🌐 Apollo Client (Free)]
+    subgraph Mobile_Apps_iOS_Android
+        subgraph Customer_App
+            C_UI[UI Layer\n📱 React Native (Free)\n📱 Flutter (Free)]
+            C_STATE[State Management\n🔄 Redux (Free)\n🔄 MobX (Free)\n🔄 Zustand (Free)]
+            C_NAV[Navigation\n🧭 React Navigation (Free)\n🧭 Flutter Navigator (Free)]
+            C_API[API Layer\n🌐 Axios (Free)\n🌐 Fetch (Free)\n🌐 Apollo Client (Free)]
         end
         
-        subgraph "Vendor App"
-            V_UI[UI Layer<br/>📱 React Native (Free)<br/>📱 Flutter (Free)]
-            V_STATE[State Management<br/>🔄 Redux (Free)<br/>🔄 MobX (Free)]
-            V_API[API Layer<br/>🌐 Axios (Free)<br/>🌐 Fetch (Free)]
+        subgraph Vendor_App
+            V_UI[UI Layer\n📱 React Native (Free)\n📱 Flutter (Free)]
+            V_STATE[State Management\n🔄 Redux (Free)\n🔄 MobX (Free)]
+            V_API[API Layer\n🌐 Axios (Free)\n🌐 Fetch (Free)]
         end
         
-        subgraph "Delivery App"
-            D_UI[UI Layer<br/>📱 React Native (Free)<br/>📱 Flutter (Free)]
-            D_STATE[State Management<br/>🔄 Redux (Free)<br/>🔄 Provider (Free)]
-            D_GPS[GPS Integration<br/>📍 React Native Maps (Free)<br/>📍 Google Maps (Free/Paid)]
-            D_API[API Layer<br/>🌐 Axios (Free)<br/>🌐 Dio (Free)]
+        subgraph Delivery_App
+            D_UI[UI Layer\n📱 React Native (Free)\n📱 Flutter (Free)]
+            D_STATE[State Management\n🔄 Redux (Free)\n🔄 Provider (Free)]
+            D_GPS[GPS Integration\n📍 React Native Maps (Free)\n📍 Google Maps (Free/Paid)]
+            D_API[API Layer\n🌐 Axios (Free)\n🌐 Dio (Free)]
         end
     end
     
-    subgraph "Web Admin Panel"
-        W_FRAMEWORK[Framework<br/>🌐 React.js (Free)<br/>🌐 Vue.js (Free)<br/>🌐 Angular (Free)]
-        W_UI_LIB[UI Library<br/>🎨 Material-UI (Free)<br/>🎨 Ant Design (Free)<br/>🎨 Chakra UI (Free)]
-        W_STATE[State Management<br/>🔄 Redux (Free)<br/>🔄 Vuex (Free)<br/>🔄 NgRx (Free)]
-        W_CHARTS[Charts & Analytics<br/>📊 Chart.js (Free)<br/>📊 D3.js (Free)<br/>📊 Recharts (Free)]
+    subgraph Web_Admin_Panel
+        W_FRAMEWORK[Framework\n🌐 React.js (Free)\n🌐 Vue.js (Free)\n🌐 Angular (Free)]
+        W_UI_LIB[UI Library\n🎨 Material-UI (Free)\n🎨 Ant Design (Free)\n🎨 Chakra UI (Free)]
+        W_STATE[State Management\n🔄 Redux (Free)\n🔄 Vuex (Free)\n🔄 NgRx (Free)]
+        W_CHARTS[Charts & Analytics\n📊 Chart.js (Free)\n📊 D3.js (Free)\n📊 Recharts (Free)]
     end
     
-    subgraph "Shared Components"
-        DESIGN_SYS[Design System<br/>🎨 Storybook (Free)<br/>🎨 Bit (Free/Paid)]
-        ICONS[Icons<br/>🎯 React Icons (Free)<br/>🎯 Feather Icons (Free)]
-        FORMS[Form Handling<br/>📝 Formik (Free)<br/>📝 React Hook Form (Free)]
+    subgraph Shared_Components
+        DESIGN_SYS[Design System\n🎨 Storybook (Free)\n🎨 Bit (Free/Paid)]
+        ICONS[Icons\n🎯 React Icons (Free)\n🎯 Feather Icons (Free)]
+        FORMS[Form Handling\n📝 Formik (Free)\n📝 React Hook Form (Free)]
     end
     
-    C_UI --> C_STATE --> C_API
-    V_UI --> V_STATE --> V_API
-    D_UI --> D_STATE --> D_GPS --> D_API
-    W_FRAMEWORK --> W_UI_LIB --> W_STATE --> W_CHARTS
+    C_UI --> C_STATE
+    C_STATE --> C_API
+    C_STATE --> C_NAV
+    V_UI --> V_STATE
+    V_STATE --> V_API
+    D_UI --> D_STATE
+    D_STATE --> D_GPS
+    D_GPS --> D_API
+    W_FRAMEWORK --> W_UI_LIB
+    W_UI_LIB --> W_STATE
+    W_STATE --> W_CHARTS
     
-    DESIGN_SYS --> C_UI & V_UI & D_UI & W_FRAMEWORK
+    DESIGN_SYS --> C_UI
+    DESIGN_SYS --> V_UI
+    DESIGN_SYS --> D_UI
+    DESIGN_SYS --> W_FRAMEWORK
 ```
 
 ***
@@ -122,42 +146,52 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph "API Gateway Layer"
-        GATEWAY[API Gateway<br/>🔀 Express Gateway (Free)<br/>🔀 Traefik (Free)<br/>🔀 Kong (Free/Paid)<br/>🔀 AWS API Gateway (Paid)]
-        LB[Load Balancer<br/>⚖️ Nginx (Free)<br/>⚖️ HAProxy (Free)<br/>⚖️ AWS ALB (Paid)]
-        CORS[CORS Handler<br/>🔒 Express CORS (Free)<br/>🔒 Django CORS (Free)]
+    subgraph API_Gateway_Layer
+        GATEWAY[API Gateway\n🔀 Express Gateway (Free)\n🔀 Traefik (Free)\n🔀 Kong (Free/Paid)\n🔀 AWS API Gateway (Paid)]
+        LB[Load Balancer\n⚖️ Nginx (Free)\n⚖️ HAProxy (Free)\n⚖️ AWS ALB (Paid)]
+        CORS[CORS Handler\n🔒 Express CORS (Free)\n🔒 Django CORS (Free)]
     end
     
-    subgraph "Authentication & Authorization"
-        AUTH_SVC[Auth Service<br/>🔐 Node.js + Passport (Free)<br/>🔐 Django + JWT (Free)<br/>🔐 Firebase Auth (Free/Paid)]
-        RBAC[Role-Based Access<br/>👤 Casbin (Free)<br/>👤 CASL (Free)<br/>👤 Auth0 (Free/Paid)]
-        JWT[JWT Management<br/>🎫 jsonwebtoken (Free)<br/>🎫 PyJWT (Free)]
+    subgraph Authentication_and_Authorization
+        AUTH_SVC[Auth Service\n🔐 Node.js + Passport (Free)\n🔐 Django + JWT (Free)\n🔐 Firebase Auth (Free/Paid)]
+        RBAC[Role-Based Access\n👤 Casbin (Free)\n👤 CASL (Free)\n👤 Auth0 (Free/Paid)]
+        JWT[JWT Management\n🎫 jsonwebtoken (Free)\n🎫 PyJWT (Free)]
     end
     
-    subgraph "Core Business Services"
-        USER_SVC[User Management<br/>👥 Node.js + Express (Free)<br/>👥 Django + DRF (Free)<br/>👥 FastAPI (Free)]
-        PROD_SVC[Product Catalog<br/>📦 Node.js + Express (Free)<br/>📦 Django (Free)<br/>📦 Spring Boot (Free)]
-        INV_SVC[Inventory Service<br/>📊 Node.js + Express (Free)<br/>📊 Go + Gin (Free)<br/>📊 Python + Flask (Free)]
-        ORDER_SVC[Order Processing<br/>🛒 Node.js + Express (Free)<br/>🛒 Django + Celery (Free)<br/>🛒 NestJS (Free)]
+    subgraph Core_Business_Services
+        USER_SVC[User Management\n👥 Node.js + Express (Free)\n👥 Django + DRF (Free)\n👥 FastAPI (Free)]
+        PROD_SVC[Product Catalog\n📦 Node.js + Express (Free)\n📦 Django (Free)\n📦 Spring Boot (Free)]
+        INV_SVC[Inventory Service\n📊 Node.js + Express (Free)\n📊 Go + Gin (Free)\n📊 Python + Flask (Free)]
+        ORDER_SVC[Order Processing\n🛒 Node.js + Express (Free)\n🛒 Django + Celery (Free)\n🛒 NestJS (Free)]
     end
     
-    subgraph "Communication Services"
-        NOTIF_SVC[Notification Service<br/>🔔 Node.js + FCM (Free)<br/>🔔 Python + Celery (Free)<br/>🔔 Pusher (Free/Paid)]
-        CHAT_SVC[Chat Service<br/>💬 Socket.io (Free)<br/>💬 WebSocket (Free)<br/>💬 Stream Chat (Free/Paid)]
-        EMAIL_SVC[Email Service<br/>📧 Nodemailer (Free)<br/>📧 SendGrid (Free/Paid)<br/>📧 Mailgun (Free/Paid)]
+    subgraph Communication_Services
+        NOTIF_SVC[Notification Service\n🔔 Node.js + FCM (Free)\n🔔 Python + Celery (Free)\n🔔 Pusher (Free/Paid)]
+        CHAT_SVC[Chat Service\n💬 Socket.io (Free)\n💬 WebSocket (Free)\n💬 Stream Chat (Free/Paid)]
+        EMAIL_SVC[Email Service\n📧 Nodemailer (Free)\n📧 SendGrid (Free/Paid)\n📧 Mailgun (Free/Paid)]
     end
     
-    subgraph "Location & Media Services"
-        LOCATION_SVC[Location Service<br/>📍 Node.js + Google Maps (Free/Paid)<br/>📍 PostGIS (Free)<br/>📍 Mapbox (Free/Paid)]
-        MEDIA_SVC[Media Service<br/>🖼️ Multer + Sharp (Free)<br/>🖼️ Cloudinary (Free/Paid)<br/>🖼️ AWS S3 + Lambda (Paid)]
-        DOC_SVC[Document Verification<br/>📄 Custom OCR (Free)<br/>📄 Google Vision (Free/Paid)<br/>📄 AWS Textract (Paid)]
+    subgraph Location_and_Media_Services
+        LOCATION_SVC[Location Service\n📍 Node.js + Google Maps (Free/Paid)\n📍 PostGIS (Free)\n📍 Mapbox (Free/Paid)]
+        MEDIA_SVC[Media Service\n🖼️ Multer + Sharp (Free)\n🖼️ Cloudinary (Free/Paid)\n🖼️ AWS S3 + Lambda (Paid)]
+        DOC_SVC[Document Verification\n📄 Custom OCR (Free)\n📄 Google Vision (Free/Paid)\n📄 AWS Textract (Paid)]
     end
     
-    GATEWAY --> LB --> CORS
-    GATEWAY --> AUTH_SVC --> RBAC --> JWT
-    GATEWAY --> USER_SVC & PROD_SVC & INV_SVC & ORDER_SVC
-    GATEWAY --> NOTIF_SVC & CHAT_SVC & EMAIL_SVC
-    GATEWAY --> LOCATION_SVC & MEDIA_SVC & DOC_SVC
+    GATEWAY --> LB
+    LB --> CORS
+    GATEWAY --> AUTH_SVC
+    AUTH_SVC --> RBAC
+    RBAC --> JWT
+    GATEWAY --> USER_SVC
+    GATEWAY --> PROD_SVC
+    GATEWAY --> INV_SVC
+    GATEWAY --> ORDER_SVC
+    GATEWAY --> NOTIF_SVC
+    GATEWAY --> CHAT_SVC
+    GATEWAY --> EMAIL_SVC
+    GATEWAY --> LOCATION_SVC
+    GATEWAY --> MEDIA_SVC
+    GATEWAY --> DOC_SVC
 ```
 
 ***
@@ -258,47 +292,63 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph "Development Environment"
-        IDE[Development Tools<br/>💻 VS Code (Free)<br/>💻 WebStorm (Paid)<br/>💻 Android Studio (Free)]
-        GIT[Version Control<br/>📝 Git (Free)<br/>📝 GitHub (Free/Paid)<br/>📝 GitLab (Free/Paid)]
-        DOCKER[Containerization<br/>🐳 Docker (Free)<br/>🐳 Docker Compose (Free)<br/>🐳 Podman (Free)]
+    subgraph Development_Environment
+        IDE[Development Tools\n💻 VS Code (Free)\n💻 WebStorm (Paid)\n💻 Android Studio (Free)]
+        GIT[Version Control\n📝 Git (Free)\n📝 GitHub (Free/Paid)\n📝 GitLab (Free/Paid)]
+        DOCKER[Containerization\n🐳 Docker (Free)\n🐳 Docker Compose (Free)\n🐳 Podman (Free)]
     end
     
-    subgraph "CI/CD Pipeline"
-        GITHUB_ACTIONS[GitHub Actions<br/>⚙️ Free/Paid<br/>2000 mins free<br/>Easy Integration]
-        GITLAB_CI[GitLab CI<br/>⚙️ Free/Paid<br/>400 mins free<br/>Built-in Registry]
-        JENKINS[Jenkins<br/>⚙️ Free<br/>Self-hosted<br/>Highly Customizable]
+    subgraph CI_CD_Pipeline
+        GITHUB_ACTIONS[GitHub Actions\n⚙️ Free/Paid\n2000 mins free\nEasy Integration]
+        GITLAB_CI[GitLab CI\n⚙️ Free/Paid\n400 mins free\nBuilt-in Registry]
+        JENKINS[Jenkins\n⚙️ Free\nSelf-hosted\nHighly Customizable]
     end
     
-    subgraph "Hosting Options"
-        subgraph "Free Tier Hosting"
-            VERCEL[Vercel<br/>🚀 Free/Paid<br/>Serverless<br/>Great for Frontend]
-            NETLIFY[Netlify<br/>🚀 Free/Paid<br/>JAMstack Focus<br/>Easy Deployment]
-            RENDER[Render<br/>🚀 Free/Paid<br/>Full-stack<br/>Auto-deploy]
-            RAILWAY[Railway<br/>🚀 Free/Paid<br/>Simple Setup<br/>Database Included]
+    subgraph Hosting_Options
+        subgraph Free_Tier_Hosting
+            VERCEL[Vercel\n🚀 Free/Paid\nServerless\nGreat for Frontend]
+            NETLIFY[Netlify\n🚀 Free/Paid\nJAMstack Focus\nEasy Deployment]
+            RENDER[Render\n🚀 Free/Paid\nFull-stack\nAuto-deploy]
+            RAILWAY[Railway\n🚀 Free/Paid\nSimple Setup\nDatabase Included]
         end
         
-        subgraph "Cloud Providers"
-            AWS[AWS<br/>☁️ Free Tier/Paid<br/>Comprehensive<br/>Industry Standard]
-            GCP[Google Cloud<br/>☁️ Free Tier/Paid<br/>AI/ML Tools<br/>Firebase Integration]
-            AZURE[Microsoft Azure<br/>☁️ Free Tier/Paid<br/>Enterprise Focus<br/>Windows Integration]
+        subgraph Cloud_Providers
+            AWS[AWS\n☁️ Free Tier/Paid\nComprehensive\nIndustry Standard]
+            GCP[Google Cloud\n☁️ Free Tier/Paid\nAI/ML Tools\nFirebase Integration]
+            AZURE[Microsoft Azure\n☁️ Free Tier/Paid\nEnterprise Focus\nWindows Integration]
         end
     end
     
-    subgraph "Monitoring & Analytics"
-        SENTRY[Sentry<br/>🐛 Free/Paid<br/>Error Tracking<br/>Performance Monitoring]
-        GOOGLE_ANALYTICS[Google Analytics<br/>📊 Free<br/>Web Analytics<br/>User Behavior]
-        MIXPANEL[Mixpanel<br/>📊 Free/Paid<br/>Event Tracking<br/>User Analytics]
+    subgraph Monitoring_and_Analytics
+        SENTRY[Sentry\n🐛 Free/Paid\nError Tracking\nPerformance Monitoring]
+        GOOGLE_ANALYTICS[Google Analytics\n📊 Free\nWeb Analytics\nUser Behavior]
+        MIXPANEL[Mixpanel\n📊 Free/Paid\nEvent Tracking\nUser Analytics]
     end
     
-    IDE --> GIT --> DOCKER
-    GIT --> GITHUB_ACTIONS & GITLAB_CI & JENKINS
-    GITHUB_ACTIONS --> VERCEL & NETLIFY & AWS
-    GITLAB_CI --> RENDER & GCP
-    JENKINS --> RAILWAY & AZURE
-    
-    VERCEL & NETLIFY & RENDER --> SENTRY & GOOGLE_ANALYTICS
-    AWS & GCP & AZURE --> SENTRY & MIXPANEL
+    IDE --> GIT
+    GIT --> DOCKER
+    GIT --> GITHUB_ACTIONS
+    GIT --> GITLAB_CI
+    GIT --> JENKINS
+    GITHUB_ACTIONS --> VERCEL
+    GITHUB_ACTIONS --> NETLIFY
+    GITHUB_ACTIONS --> AWS
+    GITLAB_CI --> RENDER
+    GITLAB_CI --> GCP
+    JENKINS --> RAILWAY
+    JENKINS --> AZURE
+    VERCEL --> SENTRY
+    VERCEL --> GOOGLE_ANALYTICS
+    NETLIFY --> SENTRY
+    NETLIFY --> GOOGLE_ANALYTICS
+    RENDER --> SENTRY
+    RENDER --> GOOGLE_ANALYTICS
+    AWS --> SENTRY
+    AWS --> MIXPANEL
+    GCP --> SENTRY
+    GCP --> MIXPANEL
+    AZURE --> SENTRY
+    AZURE --> MIXPANEL
 ```
 
 ***
