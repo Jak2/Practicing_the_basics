@@ -9,44 +9,44 @@ Let me provide you with comprehensive architecture diagrams that include detaile
 ```mermaid
 graph TB
     subgraph Frontend_Layer
-        MA[Mobile Apps\n📱 React Native (Free)\n📱 Flutter (Free)\n📱 Ionic (Paid)]
-        WA[Web Admin Panel\n🌐 React.js (Free)\n🌐 Vue.js (Free)\n🌐 Angular (Free)]
+        MA[Mobile Apps\n-> React Native (Free)\n-> Flutter (Free)\n-> Ionic (Paid)]
+        WA[Web Admin Panel\n-> React.js (Free)\n-> Vue.js (Free)\n-> Angular (Free)]
     end
     
     subgraph API_Gateway_and_Security
-        AG[API Gateway\n🔀 Express Gateway (Free)\n🔀 Kong (Free/Paid)\n🔀 AWS API Gateway (Paid)]
-        AUTH[Authentication\n🔐 Firebase Auth (Free/Paid)\n🔐 Auth0 (Free/Paid)\n🔐 Passport.js (Free)]
-        RATE[Rate Limiting\n⚡ Express Rate Limit (Free)\n⚡ Redis (Free)\n⚡ Cloudflare (Free/Paid)]
+        AG[API Gateway\n-> Express Gateway (Free)\n-> Kong (Free/Paid)\n-> AWS API Gateway (Paid)]
+        AUTH[Authentication\n-> Firebase Auth (Free/Paid)\n-> Auth0 (Free/Paid)\n-> Passport.js (Free)]
+        RATE[Rate Limiting\n-> Express Rate Limit (Free)\n-> Redis (Free)\n-> Cloudflare (Free/Paid)]
     end
     
     subgraph Backend_Services
-        US[User Service\n👥 Node.js + Express (Free)\n👥 Django (Free)\n👥 Laravel (Free)]
-        PS[Product Service\n📦 Node.js + Express (Free)\n📦 FastAPI (Free)\n📦 Spring Boot (Free)]
-        OS[Order Service\n🛒 Node.js + Express (Free)\n🛒 Django REST (Free)\n🛒 NestJS (Free)]
-        IS[Inventory Service\n📊 Node.js + Express (Free)\n📊 Django (Free)\n📊 Go + Gin (Free)]
-        NS[Notification Service\n🔔 Node.js + FCM (Free)\n🔔 Pusher (Free/Paid)\n🔔 OneSignal (Free/Paid)]
-        CS[Chat Service\n💬 Socket.io (Free)\n💬 Firebase (Free/Paid)\n💬 Stream Chat (Free/Paid)]
-        GPS[Location Service\n📍 Google Maps API (Free/Paid)\n📍 Mapbox (Free/Paid)\n📍 OpenStreetMap (Free)]
-        DS[Document Service\n📄 Multer + AWS S3 (Free/Paid)\n📄 Firebase Storage (Free/Paid)\n📄 Cloudinary (Free/Paid)]
+        US[User Service\n-> Node.js + Express (Free)\n-> Django (Free)\n-> Laravel (Free)]
+        PS[Product Service\n-> Node.js + Express (Free)\n-> FastAPI (Free)\n-> Spring Boot (Free)]
+        OS[Order Service\n-> Node.js + Express (Free)\n-> Django REST (Free)\n-> NestJS (Free)]
+        IS[Inventory Service\n-> Node.js + Express (Free)\n-> Django (Free)\n-> Go + Gin (Free)]
+        NS[Notification Service\n-> Node.js + FCM (Free)\n-> Pusher (Free/Paid)\n-> OneSignal (Free/Paid)]
+        CS[Chat Service\n-> Socket.io (Free)\n-> Firebase (Free/Paid)\n-> Stream Chat (Free/Paid)]
+        GPS[Location Service\n-> Google Maps API (Free/Paid)\n-> Mapbox (Free/Paid)\n-> OpenStreetMap (Free)]
+        DS[Document Service\n-> Multer + AWS S3 (Free/Paid)\n-> Firebase Storage (Free/Paid)\n-> Cloudinary (Free/Paid)]
     end
     
     subgraph Database_Layer
-        PDB[(Primary Database\n🗄️ PostgreSQL (Free)\n🗄️ MySQL (Free)\n🗄️ MongoDB (Free/Paid))]
-        CACHE[(Cache Layer\n⚡ Redis (Free)\n⚡ Memcached (Free)\n⚡ ElastiCache (Paid))]
-        CHAT_DB[(Chat Database\n💬 MongoDB (Free)\n💬 Firebase Firestore (Free/Paid)\n💬 CouchDB (Free))]
-        FILE_STORAGE[(File Storage\n📁 AWS S3 (Free/Paid)\n📁 Firebase Storage (Free/Paid)\n📁 MinIO (Free))]
+        PDB[(Primary Database\n-> PostgreSQL (Free)\n-> MySQL (Free)\n-> MongoDB (Free/Paid))]
+        CACHE[(Cache Layer\n-> Redis (Free)\n-> Memcached (Free)\n-> ElastiCache (Paid))]
+        CHAT_DB[(Chat Database\n-> MongoDB (Free)\n-> Firebase Firestore (Free/Paid)\n-> CouchDB (Free))]
+        FILE_STORAGE[(File Storage\n-> AWS S3 (Free/Paid)\n-> Firebase Storage (Free/Paid)\n-> MinIO (Free))]
     end
     
     subgraph External_Integrations
-        PAYMENT[Payment Gateway\n💳 Stripe (Paid)\n💳 Razorpay (Paid)\n💳 PayPal (Paid)]
-        EMAIL[Email Service\n📧 SendGrid (Free/Paid)\n📧 Mailgun (Free/Paid)\n📧 AWS SES (Paid)]
-        SMS[SMS Service\n📱 Twilio (Paid)\n📱 Firebase (Free/Paid)\n📱 AWS SNS (Paid)]
+        PAYMENT[Payment Gateway\n-> Stripe (Paid)\n-> Razorpay (Paid)\n-> PayPal (Paid)]
+        EMAIL[Email Service\n-> SendGrid (Free/Paid)\n-> Mailgun (Free/Paid)\n-> AWS SES (Paid)]
+        SMS[SMS Service\n-> Twilio (Paid)\n-> Firebase (Free/Paid)\n-> AWS SNS (Paid)]
     end
     
     subgraph Infrastructure_and_DevOps
-        HOST[Hosting\n☁️ Vercel (Free/Paid)\n☁️ Netlify (Free/Paid)\n☁️ AWS/GCP/Azure (Paid)]
-        CI_CD[CI/CD\n⚙️ GitHub Actions (Free)\n⚙️ GitLab CI (Free)\n⚙️ Jenkins (Free)]
-        MONITOR[Monitoring\n📊 Sentry (Free/Paid)\n📊 New Relic (Paid)\n📊 DataDog (Paid)]
+        HOST[Hosting\n-> Vercel (Free/Paid)\n-> Netlify (Free/Paid)\n-> AWS/GCP/Azure (Paid)]
+        CI_CD[CI/CD\n-> GitHub Actions (Free)\n-> GitLab CI (Free)\n-> Jenkins (Free)]
+        MONITOR[Monitoring\n-> Sentry (Free/Paid)\n-> New Relic (Paid)\n-> DataDog (Paid)]
     end
     
     MA --> AG
