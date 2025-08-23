@@ -89,37 +89,37 @@ graph TB
 graph TB
     subgraph Mobile_Apps_iOS_Android
         subgraph Customer_App
-            C_UI{UI Layer 📱 React Native (Free) 📱 Flutter (Free)}
-            C_STATE{State Management 🔄 Redux (Free) 🔄 MobX (Free) 🔄 Zustand (Free)}
-            C_NAV{Navigation 🧭 React Navigation (Free) 🧭 Flutter Navigator (Free)}
-            C_API{API Layer 🌐 Axios (Free) 🌐 Fetch (Free) 🌐 Apollo Client (Free)}
+            C_UI[UI Layer 📱 React Native (Free), 📱 Flutter (Free)]
+            C_STATE[State Management 🔄 Redux (Free), 🔄 MobX (Free), 🔄 Zustand (Free)]
+            C_NAV[Navigation 🧭 React Navigation (Free), 🧭 Flutter Navigator (Free)]
+            C_API[API Layer 🌐 Axios (Free), 🌐 Fetch (Free), 🌐 Apollo Client (Free)]
         end
         
         subgraph Vendor_App
-            V_UI{UI Layer 📱 React Native (Free) 📱 Flutter (Free)}
-            V_STATE{State Management 🔄 Redux (Free) 🔄 MobX (Free)}
-            V_API{API Layer 🌐 Axios (Free) 🌐 Fetch (Free)}
+            V_UI[UI Layer 📱 React Native (Free), 📱 Flutter (Free)]
+            V_STATE[State Management 🔄 Redux (Free), 🔄 MobX (Free)]
+            V_API[API Layer 🌐 Axios (Free), 🌐 Fetch (Free)]
         end
         
         subgraph Delivery_App
-            D_UI{UI Layer 📱 React Native (Free) 📱 Flutter (Free)}
-            D_STATE{State Management 🔄 Redux (Free) 🔄 Provider (Free)}
-            D_GPS{GPS Integration 📍 React Native Maps (Free) 📍 Google Maps (Free/Paid)}
-            D_API{API Layer 🌐 Axios (Free) 🌐 Dio (Free)}
+            D_UI[UI Layer 📱 React Native (Free), 📱 Flutter (Free)]
+            D_STATE[State Management 🔄 Redux (Free), 🔄 Provider (Free)]
+            D_GPS[GPS Integration 📍 React Native Maps (Free), 📍 Google Maps (Free/Paid)]
+            D_API[API Layer 🌐 Axios (Free), 🌐 Dio (Free)]
         end
     end
     
     subgraph Web_Admin_Panel
-        W_FRAMEWORK{Framework 🌐 React.js (Free) 🌐 Vue.js (Free) 🌐 Angular (Free)}
-        W_UI_LIB{UI Library 🎨 Material-UI (Free) 🎨 Ant Design (Free) 🎨 Chakra UI (Free)}
-        W_STATE{State Management 🔄 Redux (Free) 🔄 Vuex (Free) 🔄 NgRx (Free)}
-        W_CHARTS{Charts & Analytics 📊 Chart.js (Free) 📊 D3.js (Free) 📊 Recharts (Free)}
+        W_FRAMEWORK[Framework 🌐 React.js (Free), 🌐 Vue.js (Free), 🌐 Angular (Free)]
+        W_UI_LIB[UI Library 🎨 Material-UI (Free), 🎨 Ant Design (Free), 🎨 Chakra UI (Free)]
+        W_STATE[State Management 🔄 Redux (Free), 🔄 Vuex (Free), 🔄 NgRx (Free)]
+        W_CHARTS[Charts & Analytics 📊 Chart.js (Free), 📊 D3.js (Free), 📊 Recharts (Free)]
     end
     
     subgraph Shared_Components
-        DESIGN_SYS{Design System 🎨 Storybook (Free) 🎨 Bit (Free/Paid)}
-        ICONS{Icons 🎯 React Icons (Free) 🎯 Feather Icons (Free)}
-        FORMS{Form Handling 📝 Formik (Free) 📝 React Hook Form (Free)}
+        DESIGN_SYS[Design System 🎨 Storybook (Free), 🎨 Bit (Free/Paid)]
+        ICONS[Icons 🎯 React Icons (Free), 🎯 Feather Icons (Free)]
+        FORMS[Form Handling 📝 Formik (Free), 📝 React Hook Form (Free)]
     end
     
     C_UI --> C_STATE
