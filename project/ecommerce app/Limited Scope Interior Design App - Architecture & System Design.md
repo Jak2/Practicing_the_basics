@@ -87,7 +87,7 @@ flowchart TD
         C_PRODUCT_LIST --> C_PRODUCT_DETAIL[Product Details]
         C_PRODUCT_DETAIL --> C_ADD_CART[Add to Cart]
         C_ADD_CART --> C_CART[View Cart]
-        C_CART --> C_CHECKOUT[Checkout (No Payment)]
+        C_CART --> C_CHECKOUT["Checkout (No Payment)"]
         C_CHECKOUT --> C_ORDER_PLACED[Order Placed]
         C_ORDER_PLACED --> C_TRACK[Basic Order Status]
     end
@@ -117,7 +117,7 @@ flowchart TD
         A_DASHBOARD --> A_ORDERS[Order Overview]
         A_DASHBOARD --> A_ANALYTICS[Basic Analytics]
         
-        A_VENDORS --> A_APPROVE[Approve/Reject Vendor]
+        A_VENDORS --> A_APPROVE["Approve/Reject Vendor"]
         A_ORDERS --> A_ORDER_DETAILS[View Order Details]
         A_ANALYTICS --> A_REPORTS[Simple Reports]
     end
@@ -130,66 +130,66 @@ flowchart TD
 ```mermaid
 erDiagram
     USERS {
-        id SERIAL PK
-        name VARCHAR
-        email VARCHAR UNIQUE
-        password_hash VARCHAR
-        phone VARCHAR
-        role ENUM
-        status ENUM
-        created_at TIMESTAMP
-        updated_at TIMESTAMP
+        int id PK
+        varchar name
+        varchar email UNIQUE
+        varchar password_hash
+        varchar phone
+        varchar role
+        varchar status
+        timestamp created_at
+        timestamp updated_at
     }
     
     VENDORS {
-        id SERIAL PK
-        user_id INTEGER FK
-        business_name VARCHAR
-        business_address TEXT
-        approval_status ENUM
-        created_at TIMESTAMP
+        int id PK
+        int user_id FK
+        varchar business_name
+        text business_address
+        varchar approval_status
+        timestamp created_at
     }
     
     CATEGORIES {
-        id SERIAL PK
-        name VARCHAR
-        description TEXT
-        image_url VARCHAR
-        is_active BOOLEAN
+        int id PK
+        varchar name
+        text description
+        varchar image_url
+        boolean is_active
     }
     
     PRODUCTS {
-        id SERIAL PK
-        vendor_id INTEGER FK
-        category_id INTEGER FK
-        name VARCHAR
-        description TEXT
-        price DECIMAL
-        image_url VARCHAR
-        stock_quantity INTEGER
-        is_active BOOLEAN
-        created_at TIMESTAMP
+        int id PK
+        int vendor_id FK
+        int category_id FK
+        varchar name
+        text description
+        decimal price
+        varchar image_url
+        int stock_quantity
+        boolean is_active
+        timestamp created_at
     }
     
     ORDERS {
-        id SERIAL PK
-        customer_id INTEGER FK
-        vendor_id INTEGER FK
-        total_amount DECIMAL
-        status ENUM
-        delivery_address TEXT
-        notes TEXT
-        created_at TIMESTAMP
-        updated_at TIMESTAMP
+        int id PK
+        int customer_id FK
+        int vendor_id FK
+        decimal total_amount
+        varchar status
+        text delivery_address
+        text notes
+        timestamp created_at
+        timestamp updated_at
     }
     
     ORDER_ITEMS {
-        id SERIAL PK
-        order_id INTEGER FK
-        product_id INTEGER FK
-        quantity INTEGER
-        price DECIMAL
-        subtotal DECIMAL
+        int id PK
+        int order_id FK
+        int product_id FK
+        int quantity
+        decimal price
+        decimal subtotal
     }
     
     USERS ||--o{ VENDORS : "has"
