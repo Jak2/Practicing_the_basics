@@ -147,34 +147,34 @@ graph TB
 ```mermaid
 graph TB
     subgraph API_Gateway_Layer
-        GATEWAY[API Gateway\n🔀 Express Gateway (Free)\n🔀 Traefik (Free)\n🔀 Kong (Free/Paid)\n🔀 AWS API Gateway (Paid)]
-        LB[Load Balancer\n⚖️ Nginx (Free)\n⚖️ HAProxy (Free)\n⚖️ AWS ALB (Paid)]
-        CORS[CORS Handler\n🔒 Express CORS (Free)\n🔒 Django CORS (Free)]
+        GATEWAY["API Gateway 🔀 Express Gateway (Free) / 🔀 Traefik (Free) / 🔀 Kong (Free/Paid) / 🔀 AWS API Gateway (Paid)"]
+        LB["Load Balancer ⚖️ Nginx (Free) / ⚖️ HAProxy (Free) / ⚖️ AWS ALB (Paid)"]
+        CORS["CORS Handler 🔒 Express CORS (Free) / 🔒 Django CORS (Free)"]
     end
     
     subgraph Authentication_and_Authorization
-        AUTH_SVC[Auth Service\n🔐 Node.js + Passport (Free)\n🔐 Django + JWT (Free)\n🔐 Firebase Auth (Free/Paid)]
-        RBAC[Role-Based Access\n👤 Casbin (Free)\n👤 CASL (Free)\n👤 Auth0 (Free/Paid)]
-        JWT[JWT Management\n🎫 jsonwebtoken (Free)\n🎫 PyJWT (Free)]
+        AUTH_SVC["Auth Service 🔐 Node.js + Passport (Free) / 🔐 Django + JWT (Free) / 🔐 Firebase Auth (Free/Paid)"]
+        RBAC["Role-Based Access 👤 Casbin (Free) / 👤 CASL (Free) / 👤 Auth0 (Free/Paid)"]
+        JWT["JWT Management 🎫 jsonwebtoken (Free) / 🎫 PyJWT (Free)"]
     end
     
     subgraph Core_Business_Services
-        USER_SVC[User Management\n👥 Node.js + Express (Free)\n👥 Django + DRF (Free)\n👥 FastAPI (Free)]
-        PROD_SVC[Product Catalog\n📦 Node.js + Express (Free)\n📦 Django (Free)\n📦 Spring Boot (Free)]
-        INV_SVC[Inventory Service\n📊 Node.js + Express (Free)\n📊 Go + Gin (Free)\n📊 Python + Flask (Free)]
-        ORDER_SVC[Order Processing\n🛒 Node.js + Express (Free)\n🛒 Django + Celery (Free)\n🛒 NestJS (Free)]
+        USER_SVC["User Management 👥 Node.js + Express (Free) / 👥 Django + DRF (Free) / 👥 FastAPI (Free)"]
+        PROD_SVC["Product Catalog 📦 Node.js + Express (Free) / 📦 Django (Free) / 📦 Spring Boot (Free)"]
+        INV_SVC["Inventory Service 📊 Node.js + Express (Free) / 📊 Go + Gin (Free) / 📊 Python + Flask (Free)"]
+        ORDER_SVC["Order Processing 🛒 Node.js + Express (Free) / 🛒 Django + Celery (Free) / 🛒 NestJS (Free)"]
     end
     
     subgraph Communication_Services
-        NOTIF_SVC[Notification Service\n🔔 Node.js + FCM (Free)\n🔔 Python + Celery (Free)\n🔔 Pusher (Free/Paid)]
-        CHAT_SVC[Chat Service\n💬 Socket.io (Free)\n💬 WebSocket (Free)\n💬 Stream Chat (Free/Paid)]
-        EMAIL_SVC[Email Service\n📧 Nodemailer (Free)\n📧 SendGrid (Free/Paid)\n📧 Mailgun (Free/Paid)]
+        NOTIF_SVC["Notification Service 🔔 Node.js + FCM (Free) / 🔔 Python + Celery (Free) / 🔔 Pusher (Free/Paid)"]
+        CHAT_SVC["Chat Service 💬 Socket.io (Free) / 💬 WebSocket (Free) / 💬 Stream Chat (Free/Paid)"]
+        EMAIL_SVC["Email Service 📧 Nodemailer (Free) / 📧 SendGrid (Free/Paid) / 📧 Mailgun (Free/Paid)"]
     end
     
     subgraph Location_and_Media_Services
-        LOCATION_SVC[Location Service\n📍 Node.js + Google Maps (Free/Paid)\n📍 PostGIS (Free)\n📍 Mapbox (Free/Paid)]
-        MEDIA_SVC[Media Service\n🖼️ Multer + Sharp (Free)\n🖼️ Cloudinary (Free/Paid)\n🖼️ AWS S3 + Lambda (Paid)]
-        DOC_SVC[Document Verification\n📄 Custom OCR (Free)\n📄 Google Vision (Free/Paid)\n📄 AWS Textract (Paid)]
+        LOCATION_SVC["Location Service 📍 Node.js + Google Maps (Free/Paid) / 📍 PostGIS (Free) / 📍 Mapbox (Free/Paid)"]
+        MEDIA_SVC["Media Service 🖼️ Multer + Sharp (Free) / 🖼️ Cloudinary (Free/Paid) / 🖼️ AWS S3 + Lambda (Paid)"]
+        DOC_SVC["Document Verification 📄 Custom OCR (Free) / 📄 Google Vision (Free/Paid) / 📄 AWS Textract (Paid)"]
     end
     
     GATEWAY --> LB
