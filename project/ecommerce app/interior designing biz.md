@@ -25,18 +25,18 @@ Your client's vision combines e-commerce, logistics, and real-time experience fo
 
 ## 3. Functional Flow (Schematic Diagram – maria syntax)
 
-```maria
+```mermaid
 graph TD
-    CU(Customer) -->|Place Order| OR(Order)
-    VN(Vendor) -->|Update Inventory| INV(Inventory)
+    CU[Customer] -->|Place Order| OR[Order]
+    VN[Vendor] -->|Update Inventory| INV[Inventory]
     VN -->|Receive Order Notification| OR
-    DL(Delivery) -->|Pickup Item| OR
-    DL -->|GPS Update| ADM(Admin)
+    DL[Delivery] -->|Pickup Item| OR
+    DL -->|GPS Update| ADM[Admin]
     CU -->|Track Order via GPS| DL
     CU -->|Interact via Chat| VN & DL
-    VN & DL & CU -->|Live Chat| SUP(Support Agent)
+    VN & DL & CU -->|Live Chat| SUP[Support Agent]
     ADM -->|Verify Documents| VN & DL
-    ADM -->|Oversee System| ALL
+    ADM -->|Oversee System| CU & VN & DL & OR & INV & SUP
 ```
 
 ***
@@ -45,37 +45,46 @@ graph TD
 
 ### 4.1 High-Level Architecture Diagram
 
-```maria
+```mermaid
 graph LR
     subgraph Frontend
-        A1(Customer App)
-        A2(Vendor App)
-        A3(Delivery App)
-        A4(Admin Panel)
+        A1[Customer App]
+        A2[Vendor App]
+        A3[Delivery App]
+        A4[Admin Panel]
     end
     subgraph Backend
-        B1(API Gateway)
-        B2(Order Service)
-        B3(Inventory Service)
-        B4(Notification Service)
-        B5(Chat Service)
-        B6(GPS Service)
-        B7(Document Verification)
-        B8(Auth Service)
+        B1[API Gateway]
+        B2[Order Service]
+        B3[Inventory Service]
+        B4[Notification Service]
+        B5[Chat Service]
+        B6[GPS Service]
+        B7[Document Verification]
+        B8[Auth Service]
     end
     subgraph Persistence
-        P1(Relational DB)
-        P2(NoSQL DB for Chat)
-        P3(File Storage)
+        P1[Relational DB]
+        P2[NoSQL DB for Chat]
+        P3[File Storage]
     end
-    A1-->|REST/GraphQL|B1
-    A2-->|REST/GraphQL|B1
-    A3-->|REST/GraphQL|B1
-    A4-->|REST/GraphQL|B1
-    B1-->|Internal Calls|B2 & B3 & B4 & B5 & B6 & B7 & B8
-    B2 & B3 & B4 & B6-->|Data|P1
-    B5-->|Chat Data|P2
-    B7-->|Docs|P3
+    A1 -->|REST/GraphQL| B1
+    A2 -->|REST/GraphQL| B1
+    A3 -->|REST/GraphQL| B1
+    A4 -->|REST/GraphQL| B1
+    B1 -->|Internal Calls| B2
+    B1 -->|Internal Calls| B3
+    B1 -->|Internal Calls| B4
+    B1 -->|Internal Calls| B5
+    B1 -->|Internal Calls| B6
+    B1 -->|Internal Calls| B7
+    B1 -->|Internal Calls| B8
+    B2 -->|Data| P1
+    B3 -->|Data| P1
+    B4 -->|Data| P1
+    B6 -->|Data| P1
+    B5 -->|Chat Data| P2
+    B7 -->|Docs| P3
 ```
 
 ***
