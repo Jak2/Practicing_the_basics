@@ -9,7 +9,7 @@ Let me provide you with comprehensive architecture diagrams that include detaile
 ```mermaid
 graph TB
     subgraph Frontend_Layer
-        MA[Mobile Apps\n• React Native - Free\n• Flutter - Free\n• Ionic - Paid]
+        MA[Mobile Apps\n• React Native🧭 - Free\n• Flutter - Free\n• Ionic - Paid]
         WA[Web Admin Panel\n• React.js - Free\n• Vue.js - Free\n• Angular - Free]
     end
     
