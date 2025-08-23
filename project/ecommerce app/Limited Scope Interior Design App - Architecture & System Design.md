@@ -131,60 +131,60 @@ flowchart TD
 erDiagram
     USERS {
         int id PK
-        string name
-        string email UNIQUE
-        string password_hash
-        string phone
-        string role
-        string status
-        date created_at
-        date updated_at
+        varchar name
+        varchar email UNIQUE
+        varchar password_hash
+        varchar phone
+        varchar role
+        varchar status
+        timestamp created_at
+        timestamp updated_at
     }
     VENDORS {
         int id PK
         int user_id FK
-        string business_name
-        string business_address
-        string approval_status
-        date created_at
+        varchar business_name
+        text business_address
+        varchar approval_status
+        timestamp created_at
     }
     CATEGORIES {
         int id PK
-        string name
-        string description
-        string image_url
+        varchar name
+        text description
+        varchar image_url
         boolean is_active
     }
     PRODUCTS {
         int id PK
         int vendor_id FK
         int category_id FK
-        string name
-        string description
-        float price
-        string image_url
+        varchar name
+        text description
+        decimal price
+        varchar image_url
         int stock_quantity
         boolean is_active
-        date created_at
+        timestamp created_at
     }
     ORDERS {
         int id PK
         int customer_id FK
         int vendor_id FK
-        float total_amount
-        string status
-        string delivery_address
-        string notes
-        date created_at
-        date updated_at
+        decimal total_amount
+        varchar status
+        text delivery_address
+        text notes
+        timestamp created_at
+        timestamp updated_at
     }
     ORDER_ITEMS {
         int id PK
         int order_id FK
         int product_id FK
         int quantity
-        float price
-        float subtotal
+        decimal price
+        decimal subtotal
     }
 
     USERS ||--o{ VENDORS : "has"
