@@ -129,6 +129,7 @@ flowchart TD
 
 ```mermaid
 erDiagram
+
     USERS {
         int id PK
         varchar name
@@ -140,7 +141,7 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
-    
+
     VENDORS {
         int id PK
         int user_id FK
@@ -149,7 +150,7 @@ erDiagram
         varchar approval_status
         timestamp created_at
     }
-    
+
     CATEGORIES {
         int id PK
         varchar name
@@ -157,7 +158,7 @@ erDiagram
         varchar image_url
         boolean is_active
     }
-    
+
     PRODUCTS {
         int id PK
         int vendor_id FK
@@ -170,7 +171,7 @@ erDiagram
         boolean is_active
         timestamp created_at
     }
-    
+
     ORDERS {
         int id PK
         int customer_id FK
@@ -182,7 +183,7 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
-    
+
     ORDER_ITEMS {
         int id PK
         int order_id FK
@@ -191,7 +192,7 @@ erDiagram
         decimal price
         decimal subtotal
     }
-    
+
     USERS ||--o{ VENDORS : "has"
     VENDORS ||--o{ PRODUCTS : "sells"
     CATEGORIES ||--o{ PRODUCTS : "contains"
