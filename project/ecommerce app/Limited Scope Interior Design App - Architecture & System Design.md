@@ -131,60 +131,60 @@ flowchart TD
 erDiagram
     USERS {
         int id PK
-        varchar name
-        varchar email UNIQUE
-        varchar password_hash
-        varchar phone
-        varchar role
-        varchar status
-        timestamp created_at
-        timestamp updated_at
+        string name
+        string email UNIQUE
+        string password_hash
+        string phone
+        string role
+        string status
+        date created_at
+        date updated_at
     }
     VENDORS {
         int id PK
         int user_id FK
-        varchar business_name
-        text business_address
-        varchar approval_status
-        timestamp created_at
+        string business_name
+        string business_address
+        string approval_status
+        date created_at
     }
     CATEGORIES {
         int id PK
-        varchar name
-        text description
-        varchar image_url
+        string name
+        string description
+        string image_url
         boolean is_active
     }
     PRODUCTS {
         int id PK
         int vendor_id FK
         int category_id FK
-        varchar name
-        text description
-        decimal price
-        varchar image_url
+        string name
+        string description
+        float price
+        string image_url
         int stock_quantity
         boolean is_active
-        timestamp created_at
+        date created_at
     }
     ORDERS {
         int id PK
         int customer_id FK
         int vendor_id FK
-        decimal total_amount
-        varchar status
-        text delivery_address
-        text notes
-        timestamp created_at
-        timestamp updated_at
+        float total_amount
+        string status
+        string delivery_address
+        string notes
+        date created_at
+        date updated_at
     }
     ORDER_ITEMS {
         int id PK
         int order_id FK
         int product_id FK
         int quantity
-        decimal price
-        decimal subtotal
+        float price
+        float subtotal
     }
 
     USERS ||--o{ VENDORS : "has"
@@ -194,6 +194,7 @@ erDiagram
     VENDORS ||--o{ ORDERS : "receives"
     ORDERS ||--o{ ORDER_ITEMS : "contains"
     PRODUCTS ||--o{ ORDER_ITEMS : "included_in"
+
 ```
 
 ***
