@@ -4,56 +4,55 @@ Now let me create the complete answer with all the detailed information:
 
 ```mermaid
 graph TB
-    AI[AI Generalist] --> ```Digital Marketing Expert]
-    AI --> DA[Data Analyst]```   AI --> DE[Data Engineer]
+    AI[AI Generalist] --> DM[Digital Marketing Expert]
+    AI --> DA[Data Analyst] 
+    AI --> DE[Data Engineer]
     AI --> CC[Content Creator]
-    
     DM --> SMM[Social Media Manager]
     DM --> CC
     DM --> YT[YouTube Channel]
     DM --> IE[Import Export]
-    DM```> CB[Clothing Business]
-    
+    DM --> CB[Clothing Business]
     DA --> DE
-    ```--> LA[Logistics Analyst]
+    DA --> LA[Logistics Analyst]
     DA --> AI
-    ```  DE --> DA
+    DE --> DA
     DE --> AI
-    DE --> LA```  
+    DE --> LA
     VE[Video Editor] --> YT
     VE --> CC
-    VE --> SM```   VE --> DM
-    
-    IE --> CB```  IE --> LA
-    
+    VE --> SMM
+    VE --> DM
+    IE --> CB
+    IE --> LA
     CB --> DM
-    CB -->```M
+    CB --> SMM
     CB --> CC
-    
     LA --> IE
-    ```--> CB
+    LA --> CB
     LA --> DA
-    
-    YT --> CC```  YT --> DM
+    YT --> CC
+    YT --> DM
     YT --> SMM
-    ```--> VE
-    
+    YT --> VE
     SMM --> DM
-    ``` --> CC
+    SMM --> CC
     SMM --> YT
-    SMM -->```
-    
+    SMM --> VE
     CC --> DM
-    CC --> SMM```  CC --> YT
+    CC --> SMM
+    CC --> YT
     CC --> VE
-    CC -->```
-    
+    CC --> AI
+
     %% Styling
-    classDef tech fill```1f5fe,stroke:#01579b,stroke-width```x
-    classDef business fill:#f3e5f```troke:#4a148c,stroke-width:2px```  classDef creative fill:#e8f5e8,stroke:#```d32,stroke-width:2px
-    
-    ```ss AI,DA,DE tech
-    class IE,CB,LA business```  class VE,YT,SMM,CC,DM```eative
+    classDef tech fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef business fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef creative fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+
+    class AI,DA,DE tech
+    class IE,CB,LA business
+    class VE,YT,SMM,CC,DM creative
 ```
 
 ## Detailed Career Analysis### **AI Generalist****Core Skills Required:**[1][2][3]
@@ -460,3 +459,4 @@ This integrated approach leverages the synergies between different domains, allo
 [79](https://creators.instagram.com/earn-money?locale=en_GB)
 
 [80](https://podcastle.ai/blog/how-to-become-a-content-creator/)
+
