@@ -4,7 +4,7 @@ Now let me create the complete answer with all the detailed information:
 
 ```mermaid
 graph TB
-    AI[AI Generalist] --> D```igital Marketing Expert]
+    AI[AI Generalist] --> ```Digital Marketing Expert]
     AI --> DA[Data Analyst]```   AI --> DE[Data Engineer]
     AI --> CC[Content Creator]
     
@@ -458,4 +458,5 @@ This integrated approach leverages the synergies between different domains, allo
 [77](https://www.instagram.com/reel/DC6sURTsHaN/?hl=en)
 [78](https://in.indeed.com/career-advice/career-development/how-to-become-content-creator)
 [79](https://creators.instagram.com/earn-money?locale=en_GB)
+
 [80](https://podcastle.ai/blog/how-to-become-a-content-creator/)
