@@ -231,126 +231,140 @@ graph TB
 - **Startup Investment:** ₹30,000-1,50,000 (equipment, software, marketing)
 - **Revenue Streams:** Sponsored content, affiliate marketing, courses, digital products, consulting
 
-## Individual Learning Roadmaps### **AI Generalist Learning Path**```mermaid
+## Individual Learning Roadmaps### **AI Generalist Learning Path**
+```mermaid
 graph TD
-    A[Start] --> B[Foundation Phase<br/>0-3 months]```  B --> C[Skill Development<br/>3-6 months]
-    C --> D[Practical Experience<br/>6-9 months]
-    D -->```Specialization<br/>9-12 months]
-    ```-> F[Professional Level<br/>12+ months]
-    ```  B --> B1[Learn Python Programming]
+    A[Start] --> B(Foundation Phase: 0-3 months)
+    B --> B1[Learn Python Programming]
     B --> B2[Statistics & Mathematics]
-    B --> B3[Data Structures & Algorithms]```  
+    B --> B3[Data Structures & Algorithms]
+    
+    B --> C(Skill Development: 3-6 months)
     C --> C1[Machine Learning Basics]
-    C --> C2```nsorFlow/PyTorch]```  C --> C3[Data Preprocessing]
+    C --> C2[TensorFlow/PyTorch]
+    C --> C3[Data Preprocessing]
     
-    D```> D1[Build ML Projects]
+    C --> D(Practical Experience: 6-9 months)
+    D --> D1[Build ML Projects]
     D --> D2[Kaggle Competitions]
-    D --> D3```en Source Contributions]
+    D --> D3[Open Source Contributions]
     
-    ```-> E1[Deep Learning]
+    D --> E(Specialization: 9-12 months)
+    E --> E1[Deep Learning]
     E --> E2[NLP/Computer Vision]
     E --> E3[MLOps & Deployment]
     
+    E --> F(Professional Level: 12+ months)
     F --> F1[Lead AI Projects]
     F --> F2[Consulting & Training]
     F --> F3[Research & Innovation]
     
-    %%```yling
-    classDef phase fill:#f9f,stroke:#```,stroke-width:2px
-    classDef skill fill:#```,stroke:#333,stroke-width:1px
-    ```  class B,C,D,E,F```ase
-    class B1,B2,B3,C1,```C3,D1,D2,D3,E1,E2,E3,F1,F2,F3```ill
+    %% Styling
+    classDef phase fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef skill fill:#ccf,stroke:#333,stroke-width:1px;
+    
+    class B,C,D,E,F phase
+    class B1,B2,B3,C1,C2,C3,D1,D2,D3,E1,E2,E3,F1,F2,F3 skill
 ```
 
-### **Digital Marketing Expert Learning Path**```mermaid
+### **Digital Marketing Expert Learning Path**
+```mermaid
 graph TD
-    A[Start] --> B[Foundation Phase<br/>0-3 months]
-    B --> C```ill Development<br/>3-6 months]
-    C```> D[Practical Experience<br/>6-9 months]```  D --> E[Specialization<br/>9-12 months]
-    E --> F[Professional Level<br/>12+ months]```  
-    B --> B1```gital Marketing Fundamentals]
-    B```> B2[Google Analytics Setup]
+    A[Start] --> B(Foundation Phase: 0-3 months)
+    B --> C(Skill Development: 3-6 months)
+    C --> D(Practical Experience: 6-9 months)
+    D --> E(Specialization: 9-12 months)
+    E --> F(Professional Level: 12+ months)
+    
+    B --> B1[Digital Marketing Fundamentals]
+    B --> B2[Google Analytics Setup]
     B --> B3[Basic SEO Techniques]
     
-    C -->```[Advanced SEO/SEM]
-    C --> C```ocial Media Marketing]
+    C --> C1[Advanced SEO/SEM]
+    C --> C2[Social Media Marketing]
     C --> C3[Content Creation & Strategy]
     
-    D --> D```anage Client Campaigns]
+    D --> D1[Manage Client Campaigns]
     D --> D2[A/B Testing & Optimization]
-    D --> D```ortfolio Building]
+    D --> D3[Portfolio Building]
     
-    E --> E```arketing Automation]
-    E --> E```dvanced Analytics & Attribution]
+    E --> E1[Marketing Automation]
+    E --> E2[Advanced Analytics & Attribution]
     E --> E3[Paid Advertising Mastery]
     
-    F -->```[Strategy Consulting]
-    F --> F2```am Leadership & Training]
+    F --> F1[Strategy Consulting]
+    F --> F2[Team Leadership & Training]
     F --> F3[Agency Management]
     
-    %%```yling
-    classDef phase```ll:#f9f,stroke:#```,stroke-width:2px
-    classDef skill fill:#```,stroke:#333,stroke-width:1px
-    ```  class B,C,D,``` phase
-    class B```2,B3,C1,C2,C3,D1,D2,D3,E1,E2,E3,F1,F2``` skill
+    %% Styling
+    classDef phase fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef skill fill:#ccf,stroke:#333,stroke-width:1px;
+    
+    class B,C,D,E,F phase
+    class B1,B2,B3,C1,C2,C3,D1,D2,D3,E1,E2,E3,F1,F2,F3 skill
 ```
 
-### **Complete Skill Mastery Checklist**```mermaid
+### **Complete Skill Mastery Checklist**
+```mermaid
 mindmap
-  root((Multi-Skill Professional))```  Technical Skills
+  root((Multi-Skill Professional))
+    Technical Skills
       Programming
-        Python```stery
+        Python Mastery
         SQL Expertise
-        R/Scala Knowledge```      Version Control (Git)
-      ```& Machine Learning
-        TensorFlow/Py```ch
+        R/Scala Knowledge
+      Version Control (Git)
+      AI & Machine Learning
+        TensorFlow/PyTorch
         Neural Networks
-        N```& Computer Vision
-        MLOps```ployment
+        NLP & Computer Vision
+        MLOps & Deployment
       Data & Analytics
-        Statistical```alysis
+        Statistical Analysis
         Data Visualization
         Business Intelligence
-        ``` Data Tools
+        Big Data Tools
       Cloud & Infrastructure
-        AWS/Azure/```
-        Docker```ntainers
+        AWS/Azure/GCP
+        Docker Containers
         CI/CD Pipelines
-        Database```nagement
-        
+        Database Management
     Creative & Content
-      Video```oduction
+      Video Production
         Adobe Premiere Pro
-        After```fects
+        After Effects
         DaVinci Resolve
-        Audio```iting
+        Audio Editing
       Content Creation
-        ```ywriting
+        Copywriting
         SEO Optimization
-        Social Media Strategy```      Brand Development
-      Design```Visual
+        Social Media Strategy
+      Brand Development
+      Design & Visual
         Graphic Design
-        UI``` Principles
+        UI/UX Principles
         Photography
-        Visual```orytelling
-        
-    Business & Operations```    Digital Marketing
-        SEO/``` Expertise
+        Visual Storytelling
+    Business & Operations
+      Digital Marketing
+        SEO/SEM Expertise
         PPC Management
-        Email```rketing
+        Email Marketing
         Analytics & Reporting
-      ```ommerce & Sales
-        Online Store```tup
+      E-commerce & Sales
+        Online Store Setup
         Supply Chain Management
-        Customer Service```      Sales Fun``` Optimization
-      Financial```nagement
-        Business Planning```      Cost Analysis
+        Customer Service
+        Sales Funnel Optimization
+      Financial Management
+        Business Planning
+        Cost Analysis
         ROI Calculation
-        ```k Assessment
-      ```ject Management
-        Agile/```um
+        Risk Assessment
+      Project Management
+        Agile/Scrum
         Team Leadership
-        Client```mmunication
+        Client Communication
         Quality Assurance
 ```
 
@@ -459,4 +473,5 @@ This integrated approach leverages the synergies between different domains, allo
 [79](https://creators.instagram.com/earn-money?locale=en_GB)
 
 [80](https://podcastle.ai/blog/how-to-become-a-content-creator/)
+
 
