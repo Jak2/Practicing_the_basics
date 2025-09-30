@@ -217,6 +217,105 @@ df = pd.DataFrame(data)
 print(df.head())
 ```
 
+### same code but added feature to export to csv
+```python
+import pandas as pd
+import numpy as np
+import random
+from datetime import datetime, timedelta
+
+# Generate dummy data for 10 booths and 100 sessions
+NUM_BOOTHS = 10
+NUM_SESSIONS = 100
+
+booth_ids = [f'B{str(i).zfill(3)}' for i in range(1, NUM_BOOTHS + 1)]
+booking_sources = ['Calendar', 'Walk-in', 'App']
+departments = ['HR', 'Engineering', 'Marketing', 'Finance', 'Sales']
+roles = ['Manager', 'Staff', 'Executive']
+cleaning_status = ['Pending', 'Completed']
+
+data = []
+
+start_date = datetime(2025, 9, 1, 8, 0)
+
+for i in range(NUM_SESSIONS):
+    booth_id = random.choice(booth_ids)
+    date_offset = timedelta(days=random.randint(0, 28), hours=random.randint(0, 10), minutes=random.randint(0, 50))
+    session_start = start_date + date_offset
+    duration_min = random.randint(15, 120)
+    session_end = session_start + timedelta(minutes=duration_min)
+    status = 'Occupied'
+    user_count = random.randint(1, 6)
+    wait_time_min = random.randint(0, 60)
+    booking_source = random.choice(booking_sources)
+    organizer_dept = random.choice(departments)
+    organizer_role = random.choice(roles)
+    avg_temp = round(np.random.normal(22, 2), 1)
+    avg_humidity = round(np.random.normal(45, 10), 1)
+    avg_co2 = int(np.random.normal(600, 150))
+    peak_noise = int(np.random.normal(60, 10))
+    avg_light = int(np.random.normal(200, 50))
+    comfort_score = round(random.uniform(80, 100), 1)
+    alert_count = np.random.poisson(0.5)
+    maintenance_flag = random.choice([0, 1])
+    cleaning_stat = random.choice(cleaning_status)
+    booth_zone = random.choice(['North', 'South', 'East', 'West'])
+    equipment_fault = random.choice([0, 1])
+    fault_type = random.choice(['None', 'Sensor', 'Door', 'Vent'])
+    fault_resolved = random.choice([0, 1])
+    booking_reschedules = random.randint(0, 3)
+    peak_power_watts = random.randint(50, 200)
+    session_duration_hr = duration_min/60
+    energy_consumption = round(session_duration_hr * peak_power_watts / 1000, 2)
+
+    data.append({
+        'BoothID': booth_id,
+        'BoothZone': booth_zone,
+        'Timestamp': session_start.strftime("%Y-%m-%d %H:%M"),
+        'Status': status,
+        'SessionID': f'S{str(i).zfill(4)}',
+        'UserCount': user_count,
+        'SessionStartTime': session_start.strftime("%Y-%m-%d %H:%M"),
+        'SessionEndTime': session_end.strftime("%Y-%m-%d %H:%M"),
+        'SessionDurationMin': duration_min,
+        'WaitTimeAfterVacancyMin': wait_time_min,
+        'BookingSource': booking_source,
+        'BookingOrganizerDepartment': organizer_dept,
+        'BookingOrganizerRole': organizer_role,
+        'UtilizationRate': round(random.uniform(20, 95), 1),
+        'AvgTemperature°C': avg_temp,
+        'AvgHumidity%': avg_humidity,
+        'AvgCO₂ppm': avg_co2,
+        'PeakNoiseLeveldB': peak_noise,
+        'AvgLightLevelLux': avg_light,
+        'EnvironmentalComfortScore': comfort_score,
+        'AlertCount': alert_count,
+        'MaintenanceFlag': maintenance_flag,
+        'CleaningStatus': cleaning_stat,
+        'EquipmentFaultFlag': equipment_fault,
+        'FaultType': fault_type,
+        'FaultResolvedFlag': fault_resolved,
+        'BookingRescheduleCount': booking_reschedules,
+        'EnergyConsumptionkWh': energy_consumption,
+        'PeakPowerWatts': peak_power_watts,
+    })
+
+df = pd.DataFrame(data)
+
+# --- NEW CODE SECTION ---
+
+# Define the file name for the CSV output
+output_file = 'booth_session_data.csv'
+
+# Save the DataFrame to a CSV file
+# index=False prevents pandas from writing the DataFrame index as a column in the CSV
+df.to_csv(output_file, index=False)
+
+print(f"Successfully generated and saved data to {output_file}")
+print("\nFirst 5 rows of the DataFrame:")
+print(df.head())
+```
+
 - This code will generate a DataFrame with realistic dummy data covering all key columns above.
 - You can export (`df.to_csv('booth_dashboard_dummy_data.csv', index=False)`) and use this data in your dashboard or wireframe.
 
