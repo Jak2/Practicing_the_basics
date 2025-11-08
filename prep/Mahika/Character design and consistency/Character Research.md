@@ -31,21 +31,21 @@ flowchart TD
     
     End -->|Repeat Step 3-5| Step3
     
-    style Start fill:#90EE90
-    style End fill:#FFB6C6
-    style Step1 fill:#87CEEB
-    style Step2 fill:#87CEEB
-    style Step3 fill:#87CEEB
-    style Step4 fill:#87CEEB
-    style Step5 fill:#87CEEB
-    style Tools1 fill:#FFE4B5
-    style Tools2 fill:#FFE4B5
-    style Tools3 fill:#FFE4B5
-    style Tools4 fill:#FFE4B5
-    style Tools5 fill:#FFE4B5
-    style Output1 fill:#DDA0DD
-    style Output2 fill:#DDA0DD
-    style Output3 fill:#DDA0DD
-    style Output4 fill:#DDA0DD
-    style Output5 fill:#DDA0DD
+    style Start fill:#658C58
+    style End fill:#1D546C
+    style Step1 fill:#63A361
+    style Step2 fill:#63A361
+    style Step3 fill:#63A361
+    style Step4 fill:#63A361
+    style Step5 fill:#63A361
+    style Tools1 fill:#450693
+    style Tools2 fill:#450693
+    style Tools3 fill:#450693
+    style Tools4 fill:#450693
+    style Tools5 fill:#450693
+    style Output1 fill:#811844
+    style Output2 fill:#811844
+    style Output3 fill:#811844
+    style Output4 fill:#811844
+    style Output5 fill:#811844
 ```
