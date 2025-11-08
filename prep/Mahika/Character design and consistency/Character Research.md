@@ -33,11 +33,11 @@ flowchart TD
     
     style Start fill:#658C58
     style End fill:#1D546C
-    style Step1 fill:#63A361
-    style Step2 fill:#63A361
-    style Step3 fill:#63A361
-    style Step4 fill:#63A361
-    style Step5 fill:#63A361
+    style Step1 fill:#253900
+    style Step2 fill:#253900
+    style Step3 fill:#253900
+    style Step4 fill:#253900
+    style Step5 fill:#253900
     style Tools1 fill:#450693
     style Tools2 fill:#450693
     style Tools3 fill:#450693
