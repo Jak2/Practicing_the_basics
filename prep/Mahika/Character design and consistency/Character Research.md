@@ -1,6 +1,6 @@
 
 
-
+```mermaid
 flowchart TD
     Start([Start: Create Brand Character]) --> Step1["Step 1: Create Base Character"]
     
@@ -48,3 +48,4 @@ flowchart TD
     style Output3 fill:#DDA0DD
     style Output4 fill:#DDA0DD
     style Output5 fill:#DDA0DD
+```
