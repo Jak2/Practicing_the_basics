@@ -1,4 +1,4 @@
-# Fish Shell & Oh My Posh Setup Guide
+[# Fish Shell & Oh My Posh Setup Guide
 
 This guide details the complete installation and configuration steps to recreate your exact terminal environment (featuring **Fish Shell**, **Oh My Posh** with the custom `jblab` theme, **Fisher plugins**, and **eza** aliases) on any new Linux laptop.
 
@@ -291,3 +291,4 @@ Once configured, reload your shell and check the following:
 3. **Eza Aliases**: Type `ll` or `tree` and verify that the file list includes icons and directory details.
 4. **Fisher Plugins**: Try typing `z` followed by a partial directory name to verify navigation.
 5. **Interactive Check**: Enter a command that fails (e.g. `false`) and press Enter to ensure the exit code / status warning segment appears.
+](https://github.com/Jak2/personal_os_hermes_setup)
