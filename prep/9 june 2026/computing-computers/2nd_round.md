@@ -34,7 +34,7 @@ Designed for a structured codebase but introduces more execution components and 
     Streamlit --> UI[Browser Dashboard: localhost:8501]
 ```
 
-
+```
 graph TD
     Task[Task Input] --> Main[main.py]
     Main --> f1[agent_1: Plain Function]
@@ -48,7 +48,7 @@ graph TD
     DB --> DashScript[build_dashboard.py]
     DashScript --> HTML[dashboard.html]
     HTML --> FileProto[Browser: file:///...]
-
+```
 original_agent_project/
 ├── schema.sql           # Database schema definition
 ├── database.py          # SQLite connection and raw query execution helpers
