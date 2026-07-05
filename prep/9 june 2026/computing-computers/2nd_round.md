@@ -67,15 +67,20 @@ graph TD
     HTML --> FileProto[Browser: file:///...]
 ```
 Code/Component Interface
-Agent Definition: Single file main.py containing plain functions:
-python
+
+* **Agent Definition**: Single file `main.py` containing plain functions:
+```python
 def call_llm(system, prompt): ...
 def log_run(agent, inp, outp): ... # Contains inline CREATE TABLE IF NOT EXISTS
 def agent_1(inp): ...
 def agent_2(inp): ...
-Orchestration: Direct procedural execution within main.py.
-Schema Initialization: Handled automatically and inline within Python using sqlite3 fallback checks.
-Dashboard: Python script reads database, generates a HTML string, dumps it to dashboard.html, and runs webbrowser.open('dashboard.html') (using local browser file:// protocol).
+
+```
+
+
+* **Orchestration**: Direct procedural execution within `main.py`.
+* **Schema Initialization**: Handled automatically and inline within Python using `sqlite3` fallback checks.
+* **Dashboard**: Python script reads database, generates a HTML string, dumps it to `dashboard.html`, and runs `webbrowser.open('dashboard.html')` (using local browser `file://` protocol).
 
 ```text
 lean_agent_project/
