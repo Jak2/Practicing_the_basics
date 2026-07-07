@@ -1,0 +1,46 @@
+# Personal library — large binaries, not project content
+/books/
+
+# Nested git repos — each is independently managed with its own remote,
+# excluded here so this parent repo doesn't try to track them as embedded repos
+interview_prep/resume_prep/
+interview_prep/job_description/right_job.in/
+my_learning_projects/Bias_Fairness_Auditor_Report/
+my_learning_projects/Blog/
+my_learning_projects/contentpilot/
+my_learning_projects/contentPilot2.0/
+my_learning_projects/ems_2.0/
+my_learning_projects/expense_tracker/
+my_learning_projects/llm-eval-framework/
+my_learning_projects/outflo/
+my_learning_projects/portfolio/
+my_learning_projects/Prompt_Regression_Suite_Report/
+my_learning_projects/trend_engine/
+my_learning_projects/tools/career-ops/
+my_learning_projects/tools/markitdown/
+
+# Secrets — never commit real credentials
+**/.env
+!**/.env.example
+**/*.envrc
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/.venv/
+**/venv/
+**/comp_venv/
+**/*.egg-info/
+
+# Node
+**/node_modules/
+
+# Runtime artifacts / generated files
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+
+# OS/editor junk
+**/.DS_Store
+**/Thumbs.db

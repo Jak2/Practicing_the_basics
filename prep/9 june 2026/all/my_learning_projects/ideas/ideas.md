@@ -1,0 +1,2 @@
+we already have excalidraw an opensource project and they also have a pricing model, what can i do diferently in terms of feature, tech stack or anything else to make this project innovative and usefull, and also give some other examples of opensource project that i can refer to, so that i can pick features from them and implement in my own version of excalidraw, like having excalidraw work with pen tablets like huion H1060P etc. also give me a breif details about the pricing model of excalidraw.
+

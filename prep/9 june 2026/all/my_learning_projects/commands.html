@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Commands Reference — my_learning_projects</title>
+<style>
+  :root {
+    --bg: #0e1116; --panel: #161b22; --border: #30363d;
+    --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff; --code-bg: #1e242c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text); font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    margin: 0; padding: 2rem; line-height: 1.55;
+  }
+  h1 { color: #fff; font-size: 1.8rem; margin-bottom: .25rem; }
+  .sub { color: var(--muted); margin-bottom: 2rem; }
+  nav {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1rem 1.5rem; margin-bottom: 2rem;
+  }
+  nav b { color: #fff; }
+  nav ul { columns: 3; -webkit-columns: 3; margin: .5rem 0 0; padding-left: 1.2rem; }
+  nav a { color: var(--accent); text-decoration: none; }
+  nav a:hover { text-decoration: underline; }
+  section {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.25rem 1.75rem; margin-bottom: 1.5rem;
+  }
+  h2 { color: #fff; border-bottom: 1px solid var(--border); padding-bottom: .4rem; margin-top: 0; }
+  h3 { color: #e6edf3; margin-bottom: .3rem; }
+  p.note { color: var(--muted); font-size: .92rem; margin-top: -.2rem; }
+  table { width: 100%; border-collapse: collapse; margin: .5rem 0 1.25rem; }
+  th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: .85rem; text-transform: uppercase; }
+  code {
+    background: var(--code-bg); color: #ffa657; padding: .1rem .4rem; border-radius: 4px;
+    font-family: "SF Mono", Consolas, monospace; font-size: .88rem; white-space: nowrap;
+  }
+  td:last-child { color: var(--muted); font-size: .9rem; white-space: normal; }
+  .tag { display: inline-block; font-size: .72rem; background: #1f6feb33; color: #79c0ff;
+    border: 1px solid #1f6feb66; border-radius: 4px; padding: 0 .4rem; margin-left: .4rem; }
+</style>
+</head>
+<body>
+
+<h1>Commands Reference</h1>
+<p class="sub">Every command used across projects in <code>my_learning_projects/</code> — daily-driver shortlist plus the full tool reference for each CLI. Last updated 2026-07-02.</p>
+
+<nav>
+  <b>Jump to:</b>
+  <ul>
+    <li><a href="#daily">Daily Shortlist</a></li>
+    <li><a href="#ollama">Ollama (LLM)</a></li>
+    <li><a href="#git">Git</a></li>
+    <li><a href="#contentpilot">ContentPilot</a></li>
+    <li><a href="#outflo">Outflo (Next.js)</a></li>
+    <li><a href="#blog">Blog (Astro)</a></li>
+    <li><a href="#expense">Expense Tracker (Vite)</a></li>
+    <li><a href="#ems">EMS 2.0 (FastAPI + Vite)</a></li>
+    <li><a href="#llmeval">LLM Eval Framework (Docker/Alembic)</a></li>
+    <li><a href="#portfolio">Portfolio (Vercel)</a></li>
+    <li><a href="#python">Python / venv</a></li>
+    <li><a href="#node">Node / npm</a></li>
+  </ul>
+</nav>
+
+<section id="daily">
+<h2>Daily Shortlist <span class="tag">most used</span></h2>
+<p class="note">The handful of commands you'll actually type most days, pulled from every section below.</p>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>ollama list</code></td><td>See which local models are installed</td></tr>
+<tr><td><code>ollama run phi3:mini</code></td><td>Chat with the local model ContentPilot uses</td></tr>
+<tr><td><code>python main.py</code></td><td>Run ContentPilot (from its folder, venv active)</td></tr>
+<tr><td><code>python -m uvicorn dashboard.server:app --port 8000</code></td><td>Start ContentPilot's dashboard</td></tr>
+<tr><td><code>npm run dev</code></td><td>Start dev server (Outflo, Blog, Expense Tracker, EMS frontend)</td></tr>
+<tr><td><code>uvicorn app.main:app --reload --port 8000</code></td><td>Start EMS 2.0 backend</td></tr>
+<tr><td><code>docker-compose up -d</code></td><td>Start LLM Eval Framework's 5-service stack</td></tr>
+<tr><td><code>git status</code></td><td>Check before any commit/push, especially before ContentPilot runs</td></tr>
+<tr><td><code>git add -p</code></td><td>Stage changes selectively instead of <code>git add .</code></td></tr>
+<tr><td><code>PYTHONPATH=. .venv/bin/python3 -m pytest -v</code></td><td>Run tests (ContentPilot pattern; adjust venv path per project)</td></tr>
+</table>
+</section>
+
+<section id="ollama">
+<h2>Ollama (Local LLM runtime)</h2>
+<p class="note">Used by ContentPilot in local mode (<code>llm.provider: ollama</code>, model <code>phi3:mini</code>).</p>
+
+<h3>Core Commands</h3>
+<table>
+<tr><td><code>ollama run &lt;model&gt;</code></td><td>Start and chat with a model.</td></tr>
+<tr><td><code>ollama pull &lt;model&gt;</code></td><td>Download a model from the registry.</td></tr>
+<tr><td><code>ollama rm &lt;model&gt;</code></td><td>Remove a downloaded model.</td></tr>
+<tr><td><code>ollama list</code></td><td>List all models installed on your computer.</td></tr>
+<tr><td><code>ollama show &lt;model&gt;</code></td><td>Display information and architecture for a model.</td></tr>
+<tr><td><code>ollama cp &lt;source&gt; &lt;target&gt;</code></td><td>Copy a model to create a new one.</td></tr>
+</table>
+
+<h3>Advanced Commands</h3>
+<table>
+<tr><td><code>ollama serve</code></td><td>Start the background server manually.</td></tr>
+<tr><td><code>ollama create &lt;name&gt; -f &lt;path&gt;</code></td><td>Create a custom model from a Modelfile.</td></tr>
+<tr><td><code>ollama push &lt;model&gt;</code></td><td>Upload a model to the Ollama registry.</td></tr>
+<tr><td><code>ollama ps</code></td><td>List the models currently loaded into memory.</td></tr>
+</table>
+
+<h3>In-Chat Slash Commands</h3>
+<p class="note">Available inside an active <code>ollama run</code> session.</p>
+<table>
+<tr><td><code>/bye</code></td><td>Exit the chat session.</td></tr>
+<tr><td><code>/set &lt;setting&gt; &lt;value&gt;</code></td><td>Change variables like temperature or system.</td></tr>
+<tr><td><code>/show &lt;info&gt;</code></td><td>View the modelfile, license, or system prompt.</td></tr>
+<tr><td><code>/load &lt;model&gt;</code></td><td>Swap out the current model for another one.</td></tr>
+<tr><td><code>/save &lt;name&gt;</code></td><td>Save the current chat configuration as a new model.</td></tr>
+<tr><td><code>/clear</code></td><td>Clear the conversation history.</td></tr>
+</table>
+
+<h3>General Help</h3>
+<table>
+<tr><td><code>ollama --help</code></td><td>View the global help menu.</td></tr>
+<tr><td><code>ollama &lt;command&gt; --help</code></td><td>View specific help instructions for any individual command.</td></tr>
+</table>
+
+<h3>Project-specific models used here</h3>
+<table>
+<tr><th>Model</th><th>Used by</th></tr>
+<tr><td><code>phi3:mini</code></td><td>ContentPilot (default local model, config.yaml)</td></tr>
+<tr><td><code>llama3.2:3b</code></td><td>ContentPilot (alternative — see docs/LOCAL_LLM_SETUP.md)</td></tr>
+<tr><td><code>gemma2:2b</code></td><td>ContentPilot (alternative)</td></tr>
+</table>
+</section>
+
+<section id="git">
+<h2>Git</h2>
+<table>
+<tr><td><code>git status</code></td><td>Show staged/unstaged/untracked changes. Run before any tool that auto-commits (e.g. ContentPilot).</td></tr>
+<tr><td><code>git status -sb</code></td><td>Short form with branch tracking info.</td></tr>
+<tr><td><code>git diff</code></td><td>Show unstaged changes.</td></tr>
+<tr><td><code>git diff --staged</code></td><td>Show staged changes.</td></tr>
+<tr><td><code>git log --oneline -n</code></td><td>Compact commit history, last n commits.</td></tr>
+<tr><td><code>git add &lt;file&gt;</code></td><td>Stage a specific file (prefer over <code>git add -A</code>).</td></tr>
+<tr><td><code>git commit -m "msg"</code></td><td>Create a commit.</td></tr>
+<tr><td><code>git push</code></td><td>Push commits to the tracked remote branch.</td></tr>
+<tr><td><code>git remote -v</code></td><td>List configured remotes and their URLs.</td></tr>
+<tr><td><code>git clone &lt;repo&gt; &lt;dest&gt;</code></td><td>Clone a repo — used to make disposable test copies (e.g. before running ContentPilot against a real target).</td></tr>
+<tr><td><code>git init</code></td><td>Initialize a new repo — used for scratch/throwaway test repos.</td></tr>
+<tr><td><code>git commit --allow-empty -m "init"</code></td><td>Create an initial empty commit in a fresh throwaway repo.</td></tr>
+<tr><td><code>git stash</code></td><td>Shelve uncommitted changes temporarily.</td></tr>
+</table>
+</section>
+
+<section id="contentpilot">
+<h2>ContentPilot <span class="tag">my_learning_projects/tools/contentpilot</span></h2>
+<table>
+<tr><td><code>python main.py</code></td><td>Run the interactive CLI pipeline (asks topics/prompts/workflows/categories).</td></tr>
+<tr><td><code>python -m uvicorn dashboard.server:app --port 8000</code></td><td>Start the dashboard at localhost:8000.</td></tr>
+<tr><td><code>PYTHONPATH=. .venv/bin/python3 -m pytest -v</code></td><td>Run the full test suite (38 tests).</td></tr>
+<tr><td><code>PYTHONPATH=. .venv/bin/python3 -m pytest tests/agents/test_trend_discovery.py -v</code></td><td>Run one test file.</td></tr>
+<tr><td><code>PYTHONPATH=. .venv/bin/python3 -m pytest -v -k "test_append_post"</code></td><td>Run tests matching a keyword.</td></tr>
+<tr><td><code>rm -f manifest.json run_log.json manifest.json.lock run_log.json.lock</code></td><td>Reset post history and run logs (keeps code + config).</td></tr>
+</table>
+</section>
+
+<section id="outflo">
+<h2>Outflo <span class="tag">Next.js — my_learning_projects/outflo</span></h2>
+<table>
+<tr><td><code>npm run dev</code></td><td>Start dev server (<code>next dev</code>).</td></tr>
+<tr><td><code>npm run build</code></td><td>Production build (<code>next build</code>).</td></tr>
+<tr><td><code>npm run start</code></td><td>Serve the production build (<code>next start</code>).</td></tr>
+<tr><td><code>npm run lint</code></td><td>Run Next.js's linter.</td></tr>
+</table>
+</section>
+
+<section id="blog">
+<h2>Blog <span class="tag">Astro — my_learning_projects/Blog</span></h2>
+<table>
+<tr><td><code>npm run dev</code></td><td>Start dev server (<code>astro dev</code>).</td></tr>
+<tr><td><code>npm run build</code></td><td>Static build (<code>astro build</code>).</td></tr>
+<tr><td><code>npm run preview</code></td><td>Preview the production build locally.</td></tr>
+</table>
+</section>
+
+<section id="expense">
+<h2>Expense Tracker <span class="tag">Vite — my_learning_projects/expense_tracker</span></h2>
+<table>
+<tr><td><code>npm run dev</code></td><td>Start dev server (<code>vite</code>).</td></tr>
+<tr><td><code>npm run build</code></td><td>Production build (<code>vite build</code>).</td></tr>
+<tr><td><code>npm run preview</code></td><td>Preview the production build locally.</td></tr>
+</table>
+</section>
+
+<section id="ems">
+<h2>EMS 2.0 <span class="tag">FastAPI backend + Vite frontend — my_learning_projects/ems_2.0</span></h2>
+<h3>Backend</h3>
+<table>
+<tr><td><code>.\start.bat</code></td><td>Windows convenience script to start the backend.</td></tr>
+<tr><td><code>uvicorn app.main:app --reload --host 0.0.0.0 --port 8000</code></td><td>Start the FastAPI backend manually with hot reload.</td></tr>
+<tr><td><code>pip install -r requirements.txt</code></td><td>Install backend dependencies.</td></tr>
+</table>
+<h3>Frontend</h3>
+<table>
+<tr><td><code>npm run dev</code></td><td>Start dev server (<code>vite</code>).</td></tr>
+<tr><td><code>npm run build</code></td><td>Production build.</td></tr>
+<tr><td><code>npm run preview</code></td><td>Preview the production build.</td></tr>
+</table>
+</section>
+
+<section id="llmeval">
+<h2>LLM Eval Framework <span class="tag">Docker/Alembic — my_learning_projects/llm-eval-framework</span></h2>
+<table>
+<tr><td><code>docker-compose up -d</code></td><td>Start the full 5-service stack in the background.</td></tr>
+<tr><td><code>docker-compose down</code></td><td>Stop and remove the stack's containers.</td></tr>
+<tr><td><code>docker-compose logs -f &lt;service&gt;</code></td><td>Tail logs for one service.</td></tr>
+<tr><td><code>docker-compose ps</code></td><td>List running services and their status.</td></tr>
+<tr><td><code>alembic upgrade head</code></td><td>Apply all pending DB migrations.</td></tr>
+<tr><td><code>alembic revision --autogenerate -m "msg"</code></td><td>Generate a new migration from model changes.</td></tr>
+<tr><td><code>alembic downgrade -1</code></td><td>Roll back the last migration.</td></tr>
+<tr><td><code>pytest</code></td><td>Run the test suite.</td></tr>
+</table>
+</section>
+
+<section id="portfolio">
+<h2>Portfolio <span class="tag">Vercel static site — my_learning_projects/portfolio</span></h2>
+<table>
+<tr><td><code>npm run dev</code></td><td>Serve locally on port 3000 (<code>npx serve . -p 3000</code>).</td></tr>
+<tr><td><code>npm run build</code></td><td>Copy static files into <code>dist/</code>.</td></tr>
+<tr><td><code>vercel</code></td><td>Deploy a preview build to Vercel.</td></tr>
+<tr><td><code>vercel --prod</code></td><td>Deploy to production on Vercel.</td></tr>
+</table>
+</section>
+
+<section id="python">
+<h2>Python / venv <span class="tag">used by ContentPilot, EMS backend, LLM Eval Framework</span></h2>
+<table>
+<tr><td><code>python -m venv .venv</code></td><td>Create a virtual environment.</td></tr>
+<tr><td><code>source .venv/bin/activate</code></td><td>Activate the venv (Linux/Mac).</td></tr>
+<tr><td><code>deactivate</code></td><td>Exit the active venv.</td></tr>
+<tr><td><code>pip install -r requirements.txt</code></td><td>Install a project's dependencies.</td></tr>
+<tr><td><code>pip install pymupdf</code></td><td>Dependency for the workspace's <code>pdf_to_md.py</code> tool.</td></tr>
+<tr><td><code>pip list</code></td><td>List installed packages in the active environment.</td></tr>
+<tr><td><code>pip freeze &gt; requirements.txt</code></td><td>Snapshot current dependencies to a requirements file.</td></tr>
+</table>
+</section>
+
+<section id="node">
+<h2>Node / npm <span class="tag">used by Outflo, Blog, Expense Tracker, EMS frontend, Portfolio</span></h2>
+<table>
+<tr><td><code>npm install</code></td><td>Install dependencies from package.json.</td></tr>
+<tr><td><code>npm run &lt;script&gt;</code></td><td>Run any script defined in <code>package.json</code>'s <code>scripts</code> block.</td></tr>
+<tr><td><code>npm outdated</code></td><td>Check for outdated dependencies.</td></tr>
+<tr><td><code>npm update</code></td><td>Update dependencies within semver range.</td></tr>
+<tr><td><code>npx &lt;tool&gt;</code></td><td>Run a package binary without installing it globally.</td></tr>
+</table>
+</section>
+
+</body>
+</html>

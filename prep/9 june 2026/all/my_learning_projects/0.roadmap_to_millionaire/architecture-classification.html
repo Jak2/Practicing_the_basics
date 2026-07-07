@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is Our Trend Engine? — RAG vs Multi-Agent vs LLM-Augmented Pipeline</title>
+<style>
+  body{font-family:system-ui,-apple-system,sans-serif;max-width:1000px;margin:0 auto;padding:2rem;background:#0f1117;color:#e6e6e6;line-height:1.65}
+  h1{color:#7dd3fc;border-bottom:2px solid #7dd3fc;padding-bottom:.5rem}
+  h2{color:#fbbf24;margin-top:2.6rem}
+  h3{color:#a78bfa;margin-top:1.6rem}
+  .badge{display:inline-block;background:#34d399;color:#06281c;font-weight:700;padding:.25rem .7rem;border-radius:99px;font-size:.85rem;margin:.2rem .3rem .2rem 0}
+  .badge.no{background:#ff6b6b;color:#2a0a0a}
+  .card{background:#1a1d27;border:1px solid #2a2e3d;border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0}
+  .card b{color:#7dd3fc}
+  table{border-collapse:collapse;width:100%;margin:1rem 0}
+  th,td{border:1px solid #2a2e3d;padding:.6rem;text-align:left;vertical-align:top}
+  th{background:#1a1d27;color:#7dd3fc}
+  .tip{background:#132a20;border-left:3px solid #34d399;padding:.7rem 1rem;margin:1rem 0;border-radius:4px}
+  .tip b{color:#34d399}
+  .warn{background:#2a1a1a;border-left:3px solid #ff6b6b;padding:.7rem 1rem;margin:1rem 0;border-radius:4px}
+  .warn b{color:#ff9b9b}
+
+  /* Pipeline diagram */
+  .pipeline{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:2rem 0;justify-content:center}
+  .stage{background:#1a1d27;border:2px solid #334155;border-radius:10px;padding:1rem;width:150px;text-align:center;position:relative}
+  .stage .icon{font-size:1.8rem}
+  .stage .name{font-weight:700;color:#fff;margin-top:.3rem}
+  .stage .desc{font-size:.78rem;color:#9ca3af;margin-top:.4rem}
+  .stage.code{border-color:#34d399}
+  .stage.llm{border-color:#f472b6}
+  .arrow{display:flex;align-items:center;justify-content:center;width:40px;color:#7dd3fc;font-size:1.6rem}
+  .legend{display:flex;gap:1.5rem;justify-content:center;margin-top:1rem;font-size:.85rem}
+  .legend span{display:flex;align-items:center;gap:.4rem}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .dot.code{background:#34d399}
+  .dot.llm{background:#f472b6}
+
+  /* z-score bar chart */
+  .chart{background:#1a1d27;border-radius:10px;padding:1.5rem;margin:1.5rem 0}
+  .bars{display:flex;align-items:flex-end;gap:12px;height:180px;border-bottom:2px solid #334155;padding-top:1rem}
+  .bar-group{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;flex:1}
+  .bar{width:70%;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#38bdf8,#0ea5e9)}
+  .bar.spike{background:linear-gradient(180deg,#fb923c,#ea580c)}
+  .bar-label{margin-top:.5rem;font-size:.8rem;color:#9ca3af;text-align:center}
+  .bar-val{font-size:.75rem;color:#e6e6e6;margin-bottom:.2rem}
+
+  /* funnel */
+  .funnel{display:flex;flex-direction:column;align-items:center;gap:.4rem;margin:1.5rem 0}
+  .funnel-row{background:#1a1d27;border:1px solid #334155;border-radius:8px;padding:.6rem 1rem;text-align:center;color:#e6e6e6}
+  .funnel-row .n{color:#7dd3fc;font-weight:700}
+
+  code{background:#1a1d27;padding:.1rem .4rem;border-radius:4px;color:#fbbf24}
+  .toc{background:#1a1d27;border-radius:10px;padding:1rem 1.5rem}
+  .toc a{color:#7dd3fc;text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<h1>🧭 What Is Our Trend Engine? — Architecture Classification</h1>
+<p>Part of <strong>Roadmap to Millionaire</strong> · 2026-07-02 · companion to <code>trend-engine-design.md</code></p>
+
+<div class="toc">
+<strong>Contents:</strong>
+<a href="#verdict">Verdict</a> ·
+<a href="#pipeline">Pipeline Diagram</a> ·
+<a href="#notrag">Why Not RAG</a> ·
+<a href="#notagent">Why Not Multi-Agent</a> ·
+<a href="#whatitis">Why LLM-Augmented Pipeline</a> ·
+<a href="#zscore">How Scoring Works (Chart)</a> ·
+<a href="#funnel">Dedup Funnel</a> ·
+<a href="#future">Where It Could Become Agentic</a>
+</div>
+
+<h2 id="verdict">Verdict</h2>
+<div class="card">
+<span class="badge no">✗ Not RAG</span>
+<span class="badge no">✗ Not Multi-Agent</span>
+<span class="badge">✓ LLM-Augmented Data Pipeline (agentic ETL)</span>
+<p style="margin-top:.8rem">Deterministic collection and scoring, with one narrow, single-shot LLM call for the
+one task code can't do well: clustering duplicate stories and writing natural-language
+explanations. No retrieval-then-generate loop, no autonomous multi-step agents.</p>
+</div>
+
+<h2 id="pipeline">Pipeline Diagram — How It Actually Flows</h2>
+<div class="pipeline">
+  <div class="stage code"><div class="icon">📡</div><div class="name">Collectors</div><div class="desc">Reddit, YouTube, HN, Wikipedia APIs — plain code, no LLM</div></div>
+  <div class="arrow">→</div>
+  <div class="stage code"><div class="icon">🗄️</div><div class="name">SQLite Store</div><div class="desc">Raw items + 7‑day rolling history</div></div>
+  <div class="arrow">→</div>
+  <div class="stage code"><div class="icon">📐</div><div class="name">Scorer</div><div class="desc">z-score × decay × corroboration — pure math</div></div>
+  <div class="arrow">→</div>
+  <div class="stage llm"><div class="icon">🧠</div><div class="name">Enricher</div><div class="desc">ONE Haiku batch call: dedup + explain + tag</div></div>
+  <div class="arrow">→</div>
+  <div class="stage code"><div class="icon">📄</div><div class="name">Publisher</div><div class="desc">top100.html / .json + platform briefs</div></div>
+</div>
+<div class="legend">
+  <span><i class="dot code"></i> Deterministic code (4 of 5 stages)</span>
+  <span><i class="dot llm"></i> LLM touchpoint (1 of 5 stages)</span>
+</div>
+<p style="text-align:center;color:#9ca3af;font-size:.9rem">Only <strong>one stage</strong> touches an LLM, and it's a single structured call — not a loop, not a conversation, not a decision-making agent.</p>
+
+<h2 id="notrag">Why This Is <em>Not</em> RAG</h2>
+<div class="card">
+<p><b>RAG (Retrieval-Augmented Generation)</b> = retrieve relevant documents from a corpus →
+feed them as context → LLM generates an answer grounded in that retrieved context.
+Classic shape: <em>user asks a question → search a knowledge base → LLM answers using
+what was found.</em></p>
+<table>
+<tr><th>RAG requires…</th><th>Our engine has…</th></tr>
+<tr><td>A query to answer</td><td>No question being asked — we're producing a fresh ranked list, not answering</td></tr>
+<tr><td>A retrieval step (vector/keyword search over stored docs)</td><td>No retrieval — the enricher sees only *today's* scored candidates, nothing pulled from storage by similarity</td></tr>
+<tr><td>Generation grounded in retrieved context</td><td>Generation (the "why it's viral" line) is grounded in the collected item's own text, not a retrieved corpus</td></tr>
+</table>
+<div class="tip"><b>Where RAG really enters our product:</b> in phase 2–3, mem0 will let the persona
+ask "have we covered something like this before?" by vector-searching past memories and
+feeding that into the write-up — <em>that</em> piece is RAG-shaped. But it lives in the
+persona/content layer, not the trend-engine core described here.</div>
+</div>
+
+<h2 id="notagent">Why This Is <em>Not</em> a Multi-Agent Setup</h2>
+<div class="card">
+<p><b>Multi-agent</b> = multiple autonomous LLM agents, each with their own reasoning loop,
+that plan, use tools across multiple turns, and coordinate or hand off work to each other
+(e.g., a planner agent dispatching researcher/writer/critic agents).</p>
+<table>
+<tr><th>Multi-agent requires…</th><th>Our engine has…</th></tr>
+<tr><td>Multiple LLM-driven actors</td><td>Exactly one LLM call, in one stage (the enricher)</td></tr>
+<tr><td>Autonomous multi-step reasoning / tool use per agent</td><td>Collectors/scorer/publisher are fixed code — zero reasoning, zero autonomy</td></tr>
+<tr><td>Coordination or negotiation between agents</td><td>Nothing to coordinate — strictly linear, one-directional pipeline</td></tr>
+</table>
+<div class="warn"><b>Common mix-up:</b> "uses an LLM" ≠ "is agentic." An LLM call that takes
+fixed input and returns structured output in one shot is a <em>function call</em>, not an
+agent — no different in kind from calling a sentiment-analysis API.</div>
+</div>
+
+<h2 id="whatitis">Why It <em>Is</em> an LLM-Augmented Data Pipeline</h2>
+<div class="card">
+<p>This is standard ETL (Extract → Transform → Load) shape, with one Transform sub-step
+outsourced to an LLM because it needs language understanding that rules/regex can't do
+well:</p>
+<ul>
+<li><b>Extract:</b> collectors pull raw data from 4+ APIs</li>
+<li><b>Transform (math):</b> scorer computes z-score, decay, corroboration — 100% deterministic, reproducible, testable</li>
+<li><b>Transform (language):</b> enricher dedups near-duplicate stories and writes explanations — the one part needing semantic judgment</li>
+<li><b>Load:</b> publisher writes the final Top-100 to HTML/JSON and to the historical archive</li>
+</ul>
+<p>Some call this pattern <b>"agentic ETL"</b> loosely because an LLM participates — but by
+the stricter definition above (autonomy, multi-step reasoning, tool use), it's more
+accurately an <b>LLM-augmented pipeline</b>: deterministic where determinism is better
+(reproducible rankings, cheap, testable), LLM-powered only where language understanding
+is genuinely required.</p>
+</div>
+
+<h2 id="zscore">How the Scorer Actually Works</h2>
+<p>Example: 7 days of engagement counts for one topic, showing why day 7's spike gets flagged (z-score math, not opinion):</p>
+<div class="chart">
+<div class="bars">
+  <div class="bar-group"><div class="bar-val">210</div><div class="bar" style="height:22%"></div><div class="bar-label">Day 1</div></div>
+  <div class="bar-group"><div class="bar-val">180</div><div class="bar" style="height:19%"></div><div class="bar-label">Day 2</div></div>
+  <div class="bar-group"><div class="bar-val">240</div><div class="bar" style="height:25%"></div><div class="bar-label">Day 3</div></div>
+  <div class="bar-group"><div class="bar-val">195</div><div class="bar" style="height:20%"></div><div class="bar-label">Day 4</div></div>
+  <div class="bar-group"><div class="bar-val">220</div><div class="bar" style="height:23%"></div><div class="bar-label">Day 5</div></div>
+  <div class="bar-group"><div class="bar-val">205</div><div class="bar" style="height:21%"></div><div class="bar-label">Day 6</div></div>
+  <div class="bar-group"><div class="bar-val">8,400</div><div class="bar spike" style="height:100%"></div><div class="bar-label"><b>Day 7 (today)</b></div></div>
+</div>
+</div>
+<p><b>mean</b> (days 1–6) ≈ 208 · <b>stddev</b> ≈ 20 → <code>z = (8400 − 208) / 20 ≈ 410</code> —
+an extreme spike, immediately surfaces to the top of the Top-100 candidate list regardless
+of the raw view count size. This is why a topic jumping from a small base can outrank a
+topic that's simply large-but-flat.</p>
+
+<h2 id="funnel">Dedup Funnel — From Raw Signals to Final 100</h2>
+<div class="funnel">
+  <div class="funnel-row">Raw items collected daily (Reddit + YouTube + HN + Wikipedia): <span class="n">~800–1,500</span></div>
+  <div class="funnel-row">After z-score + decay + corroboration scoring, top candidates kept: <span class="n">~150</span></div>
+  <div class="funnel-row">Enricher merges same-story duplicates ("GPT-6 leak" ≈ "OpenAI's new model"): <span class="n">~150 → ~100–120 clusters</span></div>
+  <div class="funnel-row" style="border-color:#34d399;color:#34d399"><b>Final published Top 100</b>, tagged by category/platform-fit/stage</div>
+</div>
+
+<h2 id="future">Where It Could Become Genuinely Agentic Later</h2>
+<div class="tip">
+<b>A real agentic step (phase 3 candidate):</b> "decide which of today's Top 100 topics we
+actually script videos for" — considering what we've already covered (needs memory
+retrieval), how similar past explanations performed (needs feedback data), our upload
+cadence, and current niche gaps. That requires multi-step reasoning, tool use (query
+mem0, check the calendar, maybe re-rank), and judgment calls with no single deterministic
+formula — the textbook definition of a task worth an autonomous agent.
+</div>
+<table>
+<tr><th>Trigger</th><th>Why it would need an agent</th></tr>
+<tr><td>Memory-aware topic selection</td><td>Must retrieve past coverage (RAG via mem0) and weigh it against new candidates</td></tr>
+<tr><td>Adaptive persona voice</td><td>Needs to reason about what tone worked before, not just apply a fixed template</td></tr>
+<tr><td>Multi-platform format planning</td><td>Deciding Shorts vs thread vs long-form per topic requires weighing several soft constraints at once</td></tr>
+</table>
+<p>Until then, the trend-engine core stays a clean, cheap, testable pipeline — and that's
+the right call: agents cost more, run slower, and are harder to debug than deterministic
+code. Reach for autonomy only once a step genuinely needs it.</p>
+
+<p style="margin-top:3rem;color:#888;font-size:.9rem">Roadmap to Millionaire · architecture note · 2026-07-02</p>
+</body>
+</html>
