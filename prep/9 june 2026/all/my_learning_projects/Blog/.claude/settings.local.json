@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:unsloth.ai)",
+      "Bash(dir:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(npx astro build:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(xxd:*)"
+    ]
+  }
+}

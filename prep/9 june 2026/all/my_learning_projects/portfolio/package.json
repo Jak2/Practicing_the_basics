@@ -1,0 +1,11 @@
+{
+  "name": "portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000",
+    "build": "mkdir -p dist && cp index.html MyCurrentActivities.md dist/ || true"
+  },
+  "dependencies": {}
+}

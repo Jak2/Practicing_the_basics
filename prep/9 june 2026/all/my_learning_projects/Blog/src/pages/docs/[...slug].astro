@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface PageModule {
+  default: any;
+  frontmatter?: {
+    title?: string;
+    description?: string;
+  };
+  getHeadings?: () => Heading[];
+}
+
+const mods = import.meta.glob('/src/content/docs/**/*.md', { eager: true }) as Record<string, PageModule>;
+
+function fileToRoute(filePath: string): string {
+  const rel = filePath.replace(/^\/src\/content\/docs/, '');
+  let route = '/docs' + rel.replace(/\.md$/, '');
+  route = route.replace(/\/index$/, '') || '/docs';
+  return route.replace(/\/+/g, '/');
+}
+
+const pageList = Object.entries(mods).map(([path, mod]) => ({
+  file: path,
+  route: fileToRoute(path),
+  module: mod,
+}));
+
+// Generate static paths for all markdown files
+export function getStaticPaths() {
+  const modules = import.meta.glob('/src/content/docs/**/*.md', { eager: true }) as Record<string, PageModule>;
+
+  const paths = Object.keys(modules).map((filePath) => {
+    const rel = filePath.replace(/^\/src\/content\/docs/, '');
+    let route = '/docs' + rel.replace(/\.md$/, '');
+    route = route.replace(/\/index$/, '') || '/docs';
+    route = route.replace(/\/+/g, '/');
+
+    // For rest params [...slug], the slug should be a string path or undefined
+    const slugPath = route.replace(/^\/docs\/?/, '');
+
+    return {
+      params: { slug: slugPath || undefined },
+    };
+  });
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+const route = '/docs' + (slug ? '/' + slug : '');
+const page = pageList.find((p) => p.route === route) || pageList.find((p) => p.route === '/docs');
+
+const title = page?.module.frontmatter?.title || 'Documentation';
+const description = page?.module.frontmatter?.description || 'Markdown-driven documentation';
+
+// Create slug from title for the main heading
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
+
+// Get headings for table of contents, including the page title
+const contentHeadings: Heading[] = page?.module.getHeadings?.() || [];
+const titleHeading: Heading = {
+  depth: 1,
+  slug: slugify(title),
+  text: title,
+};
+// Prepend title to headings array
+const headings: Heading[] = [titleHeading, ...contentHeadings];
+
+// Find prev/next pages for navigation
+const currentIndex = pageList.findIndex((p) => p.route === route);
+const prevPage = currentIndex > 0 ? pageList[currentIndex - 1] : null;
+const nextPage = currentIndex < pageList.length - 1 ? pageList[currentIndex + 1] : null;
+
+function getTitleFromPath(filePath: string): string {
+  const name = filePath.split('/').pop()?.replace('.md', '') || '';
+  if (name.toLowerCase() === 'index') {
+    const parts = filePath.split('/');
+    return parts[parts.length - 2] || 'Home';
+  }
+  return name.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+---
+
+<BaseLayout title={title} description={description}>
+  {page ? (
+    <article class="prose max-w-none">
+      <!-- Page Header -->
+      <header class="mb-8 pb-8 border-b border-docs-border dark:border-docs-border-dark">
+        <h1 id={slugify(title)} class="!mt-0 !mb-3">{title}</h1>
+        {page.module.frontmatter?.description && (
+          <p class="text-lg text-docs-text-muted dark:text-docs-text-muted-dark !mt-0">
+            {page.module.frontmatter.description}
+          </p>
+        )}
+      </header>
+
+      <!-- Main Content -->
+      <div class="docs-content">
+        <page.module.default />
+      </div>
+
+      <!-- Page Navigation -->
+      <nav class="mt-16 pt-8 border-t border-docs-border dark:border-docs-border-dark">
+        <div class="flex flex-col sm:flex-row justify-between gap-4">
+          {prevPage ? (
+            <a
+              href={prevPage.route}
+              class="group flex flex-col p-4 rounded-lg border border-docs-border dark:border-docs-border-dark hover:border-docs-accent dark:hover:border-indigo-400 transition-colors no-underline"
+            >
+              <span class="text-sm text-docs-text-muted dark:text-docs-text-muted-dark mb-1">Previous</span>
+              <span class="font-medium text-docs-text dark:text-docs-text-dark group-hover:text-docs-accent dark:group-hover:text-indigo-400 transition-colors">
+                {prevPage.module.frontmatter?.title || getTitleFromPath(prevPage.file)}
+              </span>
+            </a>
+          ) : <div />}
+
+          {nextPage ? (
+            <a
+              href={nextPage.route}
+              class="group flex flex-col p-4 rounded-lg border border-docs-border dark:border-docs-border-dark hover:border-docs-accent dark:hover:border-indigo-400 transition-colors no-underline text-right sm:ml-auto"
+            >
+              <span class="text-sm text-docs-text-muted dark:text-docs-text-muted-dark mb-1">Next</span>
+              <span class="font-medium text-docs-text dark:text-docs-text-dark group-hover:text-docs-accent dark:group-hover:text-indigo-400 transition-colors">
+                {nextPage.module.frontmatter?.title || getTitleFromPath(nextPage.file)}
+              </span>
+            </a>
+          ) : null}
+        </div>
+      </nav>
+    </article>
+  ) : (
+    <div class="text-center py-16">
+      <h1 class="text-4xl font-bold text-docs-text dark:text-docs-text-dark mb-4">404</h1>
+      <p class="text-docs-text-muted dark:text-docs-text-muted-dark mb-8">Page not found: {route}</p>
+      <a
+        href="/docs"
+        class="inline-flex items-center px-4 py-2 rounded-lg bg-docs-accent text-white hover:bg-docs-accent-hover transition-colors"
+      >
+        Back to Documentation
+      </a>
+    </div>
+  )}
+
+  <!-- Table of Contents for right sidebar -->
+  <TableOfContents slot="toc" headings={headings} />
+</BaseLayout>

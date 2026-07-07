@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Variables */
+:root {
+  --navbar-height: 4rem; /* 64px - matches h-16 */
+}
+
+/* Base layer customizations */
+@layer base {
+  html {
+    font-size: 102%;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--navbar-height);
+  }
+
+  body {
+    @apply leading-relaxed;
+  }
+
+  /* Scroll margin for all elements with IDs (anchor targets) */
+  [id] {
+    scroll-margin-top: calc(var(--navbar-height) + 1rem);
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-docs-accent ring-offset-2 ring-offset-white dark:ring-offset-docs-bg-dark;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-slate-700 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400 dark:bg-slate-600;
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-indigo-200 dark:bg-indigo-800 text-docs-text dark:text-docs-text-dark;
+  }
+}
+
+/* Components layer */
+@layer components {
+  /* Prose customizations for markdown content */
+  .prose {
+    @apply text-docs-text dark:text-docs-text-dark;
+  }
+
+  .prose h1 {
+    @apply text-3xl sm:text-4xl font-bold tracking-tight mt-0 mb-6 text-docs-text dark:text-docs-text-dark;
+  }
+
+  .prose h2 {
+    @apply text-2xl font-semibold tracking-tight mt-12 mb-4 pt-6 border-t border-docs-border dark:border-docs-border-dark text-docs-text dark:text-docs-text-dark;
+  }
+
+  .prose h2:first-child {
+    @apply mt-0 pt-0 border-t-0;
+  }
+
+  .prose h3 {
+    @apply text-xl font-semibold mt-8 mb-3 text-docs-text dark:text-docs-text-dark;
+  }
+
+  .prose h4 {
+    @apply text-lg font-medium mt-6 mb-2 text-docs-text dark:text-docs-text-dark;
+  }
+
+  .prose p {
+    @apply my-4 leading-7;
+  }
+
+  .prose a {
+    @apply text-docs-accent dark:text-indigo-400 font-medium underline underline-offset-2 decoration-docs-accent/30 hover:decoration-docs-accent transition-colors;
+  }
+
+  .prose strong {
+    @apply font-semibold text-docs-text dark:text-docs-text-dark;
+  }
+
+  .prose ul {
+    @apply my-4 pl-6 list-disc marker:text-docs-text-muted dark:marker:text-docs-text-muted-dark;
+  }
+
+  .prose ol {
+    @apply my-4 pl-6 list-decimal marker:text-docs-text-muted dark:marker:text-docs-text-muted-dark;
+  }
+
+  .prose li {
+    @apply my-2;
+  }
+
+  .prose li > ul,
+  .prose li > ol {
+    @apply my-2;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-docs-accent dark:border-indigo-400 pl-4 my-6 italic text-docs-text-muted dark:text-docs-text-muted-dark;
+  }
+
+  .prose hr {
+    @apply my-8 border-docs-border dark:border-docs-border-dark;
+  }
+
+  .prose table {
+    @apply w-full my-6 text-sm;
+  }
+
+  .prose thead {
+    @apply border-b border-docs-border dark:border-docs-border-dark;
+  }
+
+  .prose th {
+    @apply py-3 px-4 text-left font-semibold text-docs-text dark:text-docs-text-dark;
+  }
+
+  .prose td {
+    @apply py-3 px-4 border-b border-docs-border dark:border-docs-border-dark;
+  }
+
+  .prose img {
+    @apply rounded-lg my-6;
+  }
+
+  /* Code blocks */
+  .prose code {
+    @apply text-sm font-mono bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-pink-600 dark:text-pink-400;
+  }
+
+  .prose pre {
+    @apply my-6 p-4 rounded-lg bg-slate-900 dark:bg-slate-950 overflow-x-auto;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0 text-slate-300 text-sm leading-relaxed;
+  }
+
+  /* Callout boxes */
+  .callout {
+    @apply my-6 p-4 rounded-lg border-l-4;
+  }
+
+  .callout-info {
+    @apply bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-800 dark:text-blue-200;
+  }
+
+  .callout-warning {
+    @apply bg-amber-50 dark:bg-amber-900/20 border-amber-500 text-amber-800 dark:text-amber-200;
+  }
+
+  .callout-error {
+    @apply bg-red-50 dark:bg-red-900/20 border-red-500 text-red-800 dark:text-red-200;
+  }
+
+  .callout-success {
+    @apply bg-green-50 dark:bg-green-900/20 border-green-500 text-green-800 dark:text-green-200;
+  }
+}
+
+/* Utilities layer */
+@layer utilities {
+  /* Smooth transitions for color scheme changes */
+  .transition-theme {
+    @apply transition-colors duration-200;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

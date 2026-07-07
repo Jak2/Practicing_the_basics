@@ -1,0 +1,185 @@
+---
+// Server-side component: build a nested tree from markdown files in src/content/docs
+
+interface Page {
+  file: string;
+  route: string;
+  title: string;
+  order?: number;
+}
+
+interface TreeNode {
+  __meta?: Page;
+  children?: Record<string, TreeNode>;
+}
+
+const mods = import.meta.glob('/src/content/docs/**/*.md', { eager: true }) as Record<string, any>;
+
+function fileToRoute(filePath: string): string {
+  const rel = filePath.replace(/^\/src\/content\/docs/, '');
+  let route = '/docs' + rel.replace(/\.md$/, '');
+  route = route.replace(/\/index$/, '') || '/docs';
+  return route.replace(/\/+/g, '/');
+}
+
+function titleFromModule(module: any, filePath: string): string {
+  if (module.frontmatter?.title) return module.frontmatter.title;
+  const name = filePath.split('/').pop()?.replace('.md', '') || '';
+  if (name.toLowerCase() === 'index') {
+    const parts = filePath.split('/');
+    return parts[parts.length - 2] || 'Home';
+  }
+  return name.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function getOrder(module: any): number {
+  return module.frontmatter?.order ?? 999;
+}
+
+// Build flat list of pages
+const pages: Page[] = Object.entries(mods).map(([path, mod]) => ({
+  file: path,
+  route: fileToRoute(path),
+  title: titleFromModule(mod, path),
+  order: getOrder(mod),
+}));
+
+// Sort pages by order
+pages.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+
+// Build nested tree
+function buildTree(pages: Page[]): TreeNode {
+  const root: TreeNode = {};
+  pages.forEach((p) => {
+    const rel = p.route.replace(/^\/docs/, '').replace(/^\//, '');
+    const parts = rel === '' ? [] : rel.split('/');
+    let node = root;
+    parts.forEach((part) => {
+      node.children = node.children || {};
+      node.children[part] = node.children[part] || { __meta: undefined };
+      node = node.children[part];
+    });
+    node.__meta = p;
+  });
+  return root;
+}
+
+const tree = buildTree(pages);
+
+// Get current path for active state
+const currentPath = Astro.url.pathname;
+
+function isActive(route: string): boolean {
+  return currentPath === route || currentPath === route + '/';
+}
+
+function hasActiveChild(node: TreeNode, basePath: string): boolean {
+  if (node.__meta && isActive(node.__meta.route)) return true;
+  if (node.children) {
+    return Object.values(node.children).some((child) => hasActiveChild(child, basePath));
+  }
+  return false;
+}
+---
+
+<nav class="space-y-6">
+  <!-- Section Header -->
+  <div class="mb-4">
+    <a
+      href="/"
+      class="text-xs font-semibold uppercase tracking-wider text-docs-text-muted dark:text-docs-text-muted-dark hover:text-docs-accent dark:hover:text-indigo-400"
+    >
+      Blog
+    </a>
+  </div>
+
+  <!-- Navigation Tree -->
+  <div class="space-y-1">
+    {Object.keys(tree.children || {}).map((key) => {
+      const child = tree.children![key];
+      const route = ('/docs/' + key).replace(/\/+/g, '/');
+      const title = child.__meta?.title || key.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+      const hasChildren = child.children && Object.keys(child.children).length > 0;
+      const isOpen = hasActiveChild(child, route);
+
+      return (
+        <div class="sidebar-section">
+          {hasChildren ? (
+            <details open={isOpen} class="group">
+              <summary class="flex items-center justify-between cursor-pointer list-none py-2 px-3 rounded-lg text-sm font-medium text-docs-text dark:text-docs-text-dark hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                <span>{title}</span>
+                <svg
+                  class="w-4 h-4 text-docs-text-muted dark:text-docs-text-muted-dark transition-transform group-open:rotate-90"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </summary>
+              <ul class="mt-1 ml-3 space-y-0.5 border-l border-docs-border dark:border-docs-border-dark pl-3">
+                {child.__meta && (
+                  <li>
+                    <a
+                      href={child.__meta.route}
+                      class:list={[
+                        "block py-1.5 px-2 rounded text-sm transition-colors",
+                        isActive(child.__meta.route)
+                          ? "text-docs-accent dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 font-medium"
+                          : "text-docs-text-muted dark:text-docs-text-muted-dark hover:text-docs-text dark:hover:text-docs-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/30"
+                      ]}
+                    >
+                      Overview
+                    </a>
+                  </li>
+                )}
+                {Object.keys(child.children || {}).map((k) => {
+                  const grandchild = child.children![k];
+                  const grandRoute = (route + '/' + k).replace(/\/+/g, '/');
+                  const grandTitle = grandchild.__meta?.title || k.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+                  return (
+                    <li>
+                      <a
+                        href={grandchild.__meta?.route || grandRoute}
+                        class:list={[
+                          "block py-1.5 px-2 rounded text-sm transition-colors",
+                          isActive(grandchild.__meta?.route || grandRoute)
+                            ? "text-docs-accent dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 font-medium"
+                            : "text-docs-text-muted dark:text-docs-text-muted-dark hover:text-docs-text dark:hover:text-docs-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/30"
+                        ]}
+                      >
+                        {grandTitle}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </details>
+          ) : (
+            <a
+              href={child.__meta?.route || route}
+              class:list={[
+                "block py-2 px-3 rounded-lg text-sm font-medium transition-colors",
+                isActive(child.__meta?.route || route)
+                  ? "text-docs-accent dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20"
+                  : "text-docs-text dark:text-docs-text-dark hover:bg-slate-100 dark:hover:bg-slate-800/50"
+              ]}
+            >
+              {title}
+            </a>
+          )}
+        </div>
+      );
+    })}
+  </div>
+</nav>
+
+<style>
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details summary::marker {
+    display: none;
+  }
+</style>

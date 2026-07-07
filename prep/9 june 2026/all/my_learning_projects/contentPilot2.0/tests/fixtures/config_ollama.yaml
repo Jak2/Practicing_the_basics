@@ -1,0 +1,19 @@
+target_repo: /tmp/fake-repo
+content_paths:
+  prompts: content/prompts
+  workflows: content/workflows
+  images: public/images
+llm:
+  provider: ollama
+  model: phi3:mini
+  image_model: imagen-3.0-generate-001
+sources:
+  tavily: true
+  reddit:
+    enabled: true
+    subreddits:
+      - MachineLearning
+  hackernews:
+    enabled: true
+dashboard:
+  port: 8000

@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Documentation Home">
+  <div class="max-w-3xl mx-auto text-center py-12 lg:py-20">
+    <!-- Hero Section -->
+    <div class="mb-12">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-docs-accent to-indigo-600 mb-8 shadow-lg shadow-indigo-500/25">
+        <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-docs-text dark:text-docs-text-dark tracking-tight mb-6">
+        Documentation
+      </h1>
+
+      <p class="text-xl text-docs-text-muted dark:text-docs-text-muted-dark max-w-2xl mx-auto leading-relaxed">
+        A modern, Markdown-driven documentation engine. Write your docs in Markdown,
+        and let the filesystem be your navigation.
+      </p>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+      <a
+        href="/docs"
+        class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-docs-accent hover:bg-docs-accent-hover text-white font-medium transition-colors shadow-lg shadow-indigo-500/25"
+      >
+        Get Started
+        <svg class="w-5 h-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </a>
+
+      <a
+        href="https://github.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-docs-border dark:border-docs-border-dark text-docs-text dark:text-docs-text-dark font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+      >
+        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+        View on GitHub
+      </a>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+      <div class="p-6 rounded-xl bg-docs-sidebar dark:bg-docs-sidebar-dark border border-docs-border dark:border-docs-border-dark">
+        <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-docs-accent" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-docs-text dark:text-docs-text-dark mb-2">Filesystem Routing</h3>
+        <p class="text-sm text-docs-text-muted dark:text-docs-text-muted-dark">
+          Your folder structure becomes your navigation. Add files and folders to create new pages instantly.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-xl bg-docs-sidebar dark:bg-docs-sidebar-dark border border-docs-border dark:border-docs-border-dark">
+        <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-docs-accent" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-docs-text dark:text-docs-text-dark mb-2">Dark Mode</h3>
+        <p class="text-sm text-docs-text-muted dark:text-docs-text-muted-dark">
+          Toggle between light and dark themes. System preference detection included out of the box.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-xl bg-docs-sidebar dark:bg-docs-sidebar-dark border border-docs-border dark:border-docs-border-dark">
+        <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-docs-accent" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-docs-text dark:text-docs-text-dark mb-2">Markdown First</h3>
+        <p class="text-sm text-docs-text-muted dark:text-docs-text-muted-dark">
+          Write documentation in Markdown. No React or JavaScript knowledge required for content authors.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-xl bg-docs-sidebar dark:bg-docs-sidebar-dark border border-docs-border dark:border-docs-border-dark">
+        <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-docs-accent" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-docs-text dark:text-docs-text-dark mb-2">Static & Fast</h3>
+        <p class="text-sm text-docs-text-muted dark:text-docs-text-muted-dark">
+          Built with Astro for zero JavaScript by default. Lightning fast page loads with static generation.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-xl bg-docs-sidebar dark:bg-docs-sidebar-dark border border-docs-border dark:border-docs-border-dark">
+        <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-docs-accent" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-docs-text dark:text-docs-text-dark mb-2">Responsive Design</h3>
+        <p class="text-sm text-docs-text-muted dark:text-docs-text-muted-dark">
+          Mobile-friendly with a collapsible sidebar. Works beautifully on any device or screen size.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-xl bg-docs-sidebar dark:bg-docs-sidebar-dark border border-docs-border dark:border-docs-border-dark">
+        <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-docs-accent" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-docs-text dark:text-docs-text-dark mb-2">Tailwind CSS</h3>
+        <p class="text-sm text-docs-text-muted dark:text-docs-text-muted-dark">
+          Styled with Tailwind CSS for easy customization. Extend the design to match your brand.
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

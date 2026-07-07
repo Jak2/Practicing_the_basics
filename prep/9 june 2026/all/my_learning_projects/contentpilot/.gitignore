@@ -1,0 +1,11 @@
+.env
+config.yaml
+manifest.json
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.lock
+run_log.json
+drafts/
+schedule.json

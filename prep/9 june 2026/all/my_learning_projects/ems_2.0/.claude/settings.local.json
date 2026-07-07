@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(if [ -f check_db_connection.py ])",
+      "Bash(then mv check_db_connection.py scripts/)",
+      "Bash(fi)",
+      "Bash(if [ -f diagnose_databases.py ])",
+      "Bash(then mv diagnose_databases.py scripts/)",
+      "Bash(dir /b \"d:\\\\delete me later\\\\ems_2.0\\\\*.md\")",
+      "Bash(if not exist \"d:\\\\delete me later\\\\ems_2.0\\\\.vscode\" mkdir \"d:\\\\delete me later\\\\ems_2.0\\\\.vscode\")",
+      "Bash(python -m py_compile:*)",
+      "Bash(dir:*)",
+      "Bash(python -c:*)",
+      "Bash(cd:*)",
+      "Bash(wc:*)"
+    ]
+  }
+}

@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% macro dur(ms) %}{% if ms is not none %}{% if ms < 1000 %}{{ ms }}ms{% else %}{{ "%.1f"|format(ms/1000) }}s{% endif %}{% endif %}{% endmacro %}
+
+{% macro status_class(s) %}{% if s == "success" %}ok{% elif s == "failed" %}fail{% elif s == "skipped" %}skip{% else %}run{% endif %}{% endmacro %}
+
+{% macro status_icon(s) %}{% if s == "success" %}✅{% elif s == "failed" %}❌{% elif s == "skipped" %}⏭{% else %}⏳{% endif %}{% endmacro %}
+
+{# ── recursive macro: renders one step and its children ── #}
+{% macro render_step(step, is_root=false) %}
+<div class="tree-node {% if is_root %}tree-root{% endif %}">
+  <span class="node-box {{ status_class(step.status) }}">
+    <span class="node-dot"></span>
+    <span class="node-label">{{ step.label }}</span>
+    {% if step.module %}<span class="node-module">{{ step.module }}</span>{% endif %}
+    {% if step.duration_ms is not none %}<span class="node-dur">{{ dur(step.duration_ms) }}</span>{% endif %}
+    {% if step.detail %}<span class="node-detail">→ {{ step.detail }}</span>{% endif %}
+  </span>
+  {% if step.error %}
+  <span class="node-error">⚠ {{ step.error }}</span>
+  {% endif %}
+  {% if step.children %}
+  <div class="tree">
+    {% for child in step.children %}
+      {{ render_step(child) }}
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endmacro %}
+
+<!-- ═══════════════════════════════════════
+     RECENT RUN HISTORY
+═══════════════════════════════════════ -->
+{% if history %}
+<div class="history-bar">
+  <span style="font-size:.72rem;color:#555;align-self:center;">Previous runs:</span>
+  {% for r in history %}
+  <span class="history-chip {{ r.status }}" title="{{ r.started_at.strftime('%Y-%m-%d %H:%M UTC') }}">
+    #{{ r.run_id }} · {{ r.status }} · {{ dur(r.duration_ms) }}
+  </span>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- ═══════════════════════════════════════
+     LATEST RUN
+═══════════════════════════════════════ -->
+{% if not run %}
+  <div style="color:#555;font-size:.9rem;">
+    No pipeline runs yet. Run <code style="background:#1a1a1a;padding:2px 6px;border-radius:4px;color:#e5e5e5;">python main.py</code> to start a run.
+  </div>
+{% else %}
+
+<div class="run-header">
+  <span class="run-id">Run #{{ run.run_id }}</span>
+  <span class="run-time">{{ run.started_at.strftime('%Y-%m-%d %H:%M UTC') }}</span>
+  {% if run.duration_ms is not none %}<span class="run-dur">{{ dur(run.duration_ms) }} total</span>{% endif %}
+  <span class="run-badge {{ run.status }}">{{ run.status }}</span>
+</div>
+
+<!-- Architecture key -->
+<div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.5rem;font-size:.75rem;color:#666;">
+  <span><span style="color:#4ade80">●</span> success</span>
+  <span><span style="color:#f87171">●</span> failed</span>
+  <span><span style="color:#555">●</span> skipped</span>
+  <span><span style="color:#fbbf24">●</span> running</span>
+</div>
+
+<!-- Function call tree -->
+<div class="tree" style="padding-left:.5rem;">
+
+  {# Root: Orchestrator.run() — synthetic wrapper #}
+  <div class="tree-node tree-root">
+    <span class="node-box {{ status_class(run.status) }}">
+      <span class="node-dot"></span>
+      <span class="node-label">Orchestrator.run()</span>
+      <span class="node-module">agents/orchestrator.py</span>
+      {% if run.duration_ms is not none %}<span class="node-dur">{{ dur(run.duration_ms) }}</span>{% endif %}
+    </span>
+
+    <div class="tree">
+      {% for step in run.steps %}
+
+      {# ── Trend Discovery ── #}
+      {% if step.name == "trend_discovery" %}
+      <div class="tree-node">
+        <span class="node-box {{ status_class(step.status) }}">
+          <span class="node-dot"></span>
+          <span class="node-label">{{ step.label }}</span>
+          <span class="node-module">{{ step.module }}</span>
+          <span class="node-dur">{{ dur(step.duration_ms) }}</span>
+          {% if step.detail %}<span class="node-detail">→ {{ step.detail }}</span>{% endif %}
+        </span>
+        {% if step.error %}<span class="node-error">⚠ {{ step.error }}</span>{% endif %}
+        {% if step.children %}
+        <div class="tree">
+          {% for child in step.children %}
+          <div class="tree-node">
+            {% set src_icon = {"fetch_hackernews": "🟠", "fetch_reddit": "🔴", "fetch_tavily": "🔵"}.get(child.name, "🔹") %}
+            <span class="node-box {{ status_class(child.status) }}">
+              <span class="node-dot"></span>
+              <span class="node-label">{{ src_icon }} {{ child.label }}</span>
+              <span class="node-module">{{ child.module }}</span>
+              {% if child.detail %}<span class="node-detail">→ {{ child.detail }}</span>{% endif %}
+            </span>
+            {% if child.error %}<span class="node-error">⚠ {{ child.error }}</span>{% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+      {# ── Generate + Publish steps ── #}
+      {% elif step.name == "gen_prompt" or step.name == "gen_workflow" %}
+      <div class="tree-node">
+        {% set type_icon = "📝" if "prompt" in step.name else "🔄" %}
+        <span class="node-box {{ status_class(step.status) }}">
+          <span class="node-dot"></span>
+          <span class="node-label">{{ type_icon }} {{ step.label }}</span>
+          <span class="node-module">{{ step.module }}</span>
+          <span class="node-dur">{{ dur(step.duration_ms) }}</span>
+          {% if step.detail %}<span class="node-detail">→ {{ step.detail }}</span>{% endif %}
+        </span>
+        {% if step.error %}<span class="node-error">⚠ {{ step.error }}</span>{% endif %}
+        {% if step.children %}
+        <div class="tree">
+          {% for child in step.children %}
+          <div class="tree-node">
+            {% set fn_icons = {
+              "content_gen": "✍️",
+              "image_gen":   "🖼️",
+              "git_publish": "🚀"
+            } %}
+            <span class="node-box {{ status_class(child.status) }}">
+              <span class="node-dot"></span>
+              <span class="node-label">{{ fn_icons.get(child.name, "·") }} {{ child.label }}</span>
+              <span class="node-module">{{ child.module }}</span>
+              <span class="node-dur">{{ dur(child.duration_ms) }}</span>
+              {% if child.detail %}<span class="node-detail">→ {{ child.detail }}</span>{% endif %}
+            </span>
+            {% if child.error %}<span class="node-error">⚠ {{ child.error }}</span>{% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+      {# ── Git Push ── #}
+      {% elif step.name == "git_push" %}
+      <div class="tree-node">
+        <span class="node-box {{ status_class(step.status) }}">
+          <span class="node-dot"></span>
+          <span class="node-label">🚀 {{ step.label }}</span>
+          <span class="node-module">{{ step.module }}</span>
+          <span class="node-dur">{{ dur(step.duration_ms) }}</span>
+          {% if step.detail %}<span class="node-detail">→ {{ step.detail }}</span>{% endif %}
+        </span>
+        {% if step.error %}<span class="node-error">⚠ {{ step.error }}</span>{% endif %}
+      </div>
+      {% endif %}
+
+      {% endfor %}
+    </div>
+  </div>
+
+</div><!-- .tree -->
+{% endif %}
+
+{% endblock %}

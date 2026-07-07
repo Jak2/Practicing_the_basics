@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trend Engine — Dashboard</title>
+<style>
+  :root{--bg:#0f1117;--panel:#1a1d27;--border:#2a2e3d;--text:#e6e6e6;--muted:#9ca3af;
+        --blue:#7dd3fc;--amber:#fbbf24;--green:#34d399;--red:#ff6b6b}
+  *{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,sans-serif;max-width:1000px;margin:0 auto;
+       padding:2rem;background:var(--bg);color:var(--text);line-height:1.5}
+  h1{color:var(--blue);margin-bottom:.2rem}
+  .subtitle{color:var(--muted);margin-top:0}
+  h2{color:var(--amber);margin-top:2.4rem;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0}
+
+  /* pipeline diagram */
+  .pipeline{display:flex;flex-wrap:wrap;gap:0;justify-content:center;margin:1rem 0;align-items:flex-start}
+  .stage-wrap{width:190px}
+  .stage{background:var(--panel);border:2px solid var(--border);border-radius:10px;padding:.9rem;
+         text-align:center;transition:border-color .3s,background .3s;cursor:pointer}
+  .stage .icon{font-size:1.5rem}
+  .stage .name{font-weight:700;font-size:.85rem;margin-top:.2rem}
+  .stage .live{font-size:.7rem;color:var(--muted);margin-top:.3rem;min-height:1em}
+  .stage.done{border-color:var(--green)}
+  .stage.active{border-color:var(--amber);background:#2a2410;animation:pulse 1.2s infinite}
+  .stage.error{border-color:var(--red);background:#2a1a1a}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+  .arrow{display:flex;align-items:center;justify-content:center;width:28px;color:var(--muted);
+         font-size:1.4rem;margin-top:1.4rem;flex-shrink:0}
+  .stage-detail{font-size:.8rem;color:var(--muted);padding:.6rem .3rem 0;border-top:1px dashed var(--border);
+                margin-top:.6rem;display:none}
+  .stage-detail.open{display:block}
+  .stage-detail ul{margin:.3rem 0 0;padding-left:1.1rem}
+  .fold-hint{font-size:.7rem;color:var(--blue);margin-top:.4rem}
+
+  /* controls */
+  .row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+  button{background:var(--blue);color:#06202e;border:none;padding:.7rem 1.4rem;border-radius:8px;
+         font-weight:700;font-size:1rem;cursor:pointer}
+  button:disabled{background:#334155;color:var(--muted);cursor:not-allowed}
+  button:hover:not(:disabled){filter:brightness(1.1)}
+  .status-badge{padding:.3rem .8rem;border-radius:99px;font-weight:700;font-size:.85rem}
+  .status-badge.idle{background:#334155;color:var(--muted)}
+  .status-badge.running{background:#2a2410;color:var(--amber)}
+  .status-badge.success{background:#06281c;color:var(--green)}
+  .status-badge.error{background:#2a1a1a;color:var(--red)}
+  .status-badge.degraded{background:#2a1a1a;color:#fca5a5}
+
+  .checklist{list-style:none;padding:0;margin:0}
+  .checklist li{padding:.4rem 0;display:flex;align-items:center;gap:.6rem}
+  .check-ok{color:var(--green)}
+  .check-bad{color:var(--red)}
+
+  table{border-collapse:collapse;width:100%;margin-top:.5rem}
+  th,td{border:1px solid var(--border);padding:.5rem .7rem;text-align:left;font-size:.9rem}
+  th{background:#151822;color:var(--blue)}
+  a{color:var(--blue)}
+  a.report-link{display:inline-block;margin-top:.6rem;font-weight:700}
+
+  pre{background:#0a0c11;border:1px solid var(--border);border-radius:6px;padding:.8rem;
+      max-height:260px;overflow-y:auto;font-size:.8rem;color:#c7c9d1;white-space:pre-wrap}
+
+  code{background:#151822;padding:.1rem .4rem;border-radius:4px;color:var(--amber)}
+
+  /* foldable how-to-use accordion */
+  details{border:1px solid var(--border);border-radius:8px;margin-bottom:.6rem;background:#151822}
+  details summary{padding:.7rem 1rem;cursor:pointer;font-weight:700;list-style:none;
+                   display:flex;align-items:center;gap:.6rem}
+  details summary::-webkit-details-marker{display:none}
+  details summary::before{content:"▸";color:var(--blue);transition:transform .15s}
+  details[open] summary::before{transform:rotate(90deg)}
+  details .body{padding:0 1rem 1rem 2.3rem;color:var(--muted);font-size:.92rem}
+  details .body code{color:var(--amber)}
+  .step-num{background:var(--blue);color:#06202e;width:1.4rem;height:1.4rem;border-radius:50%;
+            display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<h1>📡 Trend Engine</h1>
+<p class="subtitle">Local dashboard — launch the daily pipeline and watch it work. Click any stage or step below to expand details.</p>
+
+<h2>Pipeline <span class="fold-hint">(click a stage to see what it does)</span></h2>
+<div class="card">
+  <div class="pipeline" id="pipeline">
+    <div class="stage-wrap">
+      <div class="stage" data-stage="collect" onclick="toggleDetail('collect')">
+        <div class="icon">📥</div><div class="name">Collect</div>
+        <div class="live" id="live-collect"></div>
+      </div>
+      <div class="stage-detail" id="detail-collect">
+        Fetches raw signals from 4 sources in parallel-ish sequence:
+        <ul>
+          <li>Hacker News — top 60 stories</li>
+          <li>Reddit — hot posts from configured subreddits (via RSS)</li>
+          <li>YouTube — trending videos (US + IN), needs <code>YOUTUBE_API_KEY</code></li>
+          <li>Wikipedia — yesterday's top pageviews</li>
+        </ul>
+        Any source that fails is skipped, not fatal. Toggle sources in <code>config.py</code>.
+      </div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="stage-wrap">
+      <div class="stage" data-stage="score" onclick="toggleDetail('score')">
+        <div class="icon">📐</div><div class="name">Score</div>
+        <div class="live" id="live-score"></div>
+      </div>
+      <div class="stage-detail" id="detail-score">
+        Pure math, no network/LLM calls:
+        <ul>
+          <li>Spike detection (z-score vs the topic's 7-day history, or same-day percentile if brand new)</li>
+          <li>Recency decay</li>
+          <li>Cross-source corroboration boost</li>
+          <li>Niche keyword weighting (AI/India ×1.5/×1.3)</li>
+          <li>Hard-excludes anything matching <code>EXCLUDE_KEYWORDS</code></li>
+        </ul>
+        Produces the top ~150 ranked candidates.
+      </div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="stage-wrap">
+      <div class="stage" data-stage="enrich" onclick="toggleDetail('enrich')">
+        <div class="icon">🧠</div><div class="name">Enrich</div>
+        <div class="live" id="live-enrich"></div>
+      </div>
+      <div class="stage-detail" id="detail-enrich">
+        One Claude Haiku call on the top candidates:
+        <ul>
+          <li>Clusters/deduplicates same-story topics</li>
+          <li>Writes a one-line "why it's viral" explanation each</li>
+          <li>Tags category, platform fit, and trend stage</li>
+        </ul>
+        If <code>ANTHROPIC_API_KEY</code> is missing or the call fails (after 1 retry),
+        the run falls back to <strong>degraded mode</strong>: math-only rankings, no
+        explanations, empty platform briefs — but the run still completes successfully.
+      </div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="stage-wrap">
+      <div class="stage" data-stage="publish" onclick="toggleDetail('publish')">
+        <div class="icon">📄</div><div class="name">Publish</div>
+        <div class="live" id="live-publish"></div>
+      </div>
+      <div class="stage-detail" id="detail-publish">
+        Writes the final output to <code>output/&lt;today&gt;/</code>:
+        <ul>
+          <li><code>top100.html</code> — the ranked report (open this first)</li>
+          <li><code>top100.json</code> — same data, machine-readable</li>
+          <li><code>briefs/youtube.html</code>, <code>instagram.html</code>, <code>x.html</code> — per-platform content angles</li>
+        </ul>
+        Also appends one row to <code>output/run_log.md</code> (shown below).
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top:1rem;justify-content:space-between">
+    <div class="row">
+      <button id="launchBtn" onclick="launchRun()">▶ Launch Run</button>
+      <span class="status-badge idle" id="statusBadge">idle</span>
+    </div>
+    <a class="report-link" id="reportLink" href="#" style="display:none">Open today's report →</a>
+  </div>
+</div>
+
+<h2>Environment checks</h2>
+<div class="card">
+  <ul class="checklist" id="envChecklist">
+    <li>Checking…</li>
+  </ul>
+</div>
+
+<h2>Live log</h2>
+<div class="card">
+  <pre id="liveLog">No run yet. Click "Launch Run" above.</pre>
+</div>
+
+<h2>Run history</h2>
+<div class="card">
+  <table id="historyTable">
+    <thead><tr><th>Date</th><th>Items</th><th>Topics</th><th>Enriched</th><th>Duration (s)</th></tr></thead>
+    <tbody><tr><td colspan="5" style="color:var(--muted)">No runs yet.</td></tr></tbody>
+  </table>
+</div>
+
+<h2>How to use this</h2>
+
+<details open>
+  <summary><span class="step-num">1</span> Set your API keys (in a <code>.env</code> file)</summary>
+  <div class="body">
+    Copy <code>.env.example</code> to <code>.env</code> in the <code>trend_engine/</code>
+    folder and fill in your keys — no need to <code>export</code> anything in your
+    shell, the pipeline and this dashboard both load <code>.env</code> automatically.
+    <pre style="margin-top:.6rem">cp .env.example .env
+# then edit .env and paste in your keys</pre>
+    Both keys are optional individually: without <code>YOUTUBE_API_KEY</code> that one
+    collector just skips itself; without <code>ANTHROPIC_API_KEY</code> the whole run
+    still completes, just in degraded (math-only) mode. The checklist above always
+    shows current status.
+  </div>
+</details>
+
+<details>
+  <summary><span class="step-num">2</span> Click "Launch Run"</summary>
+  <div class="body">
+    The pipeline diagram above lights up amber on the stage currently running, green
+    once it's done. Click any stage box any time to expand what it's actually doing —
+    those panels stay static reference text, but the badge/color updates live.
+  </div>
+</details>
+
+<details>
+  <summary><span class="step-num">3</span> Watch it work (~1–5 minutes)</summary>
+  <div class="body">
+    The live log below streams raw output as it happens. Most of the time goes to
+    Hacker News (60 sequential requests) and Reddit (paced to avoid rate limits).
+    The status badge turns green on success, red on error — hover nothing needed,
+    it's all on this page.
+  </div>
+</details>
+
+<details>
+  <summary><span class="step-num">4</span> Open the report</summary>
+  <div class="body">
+    Click "Open today's report →" once it appears (top right of the pipeline card) —
+    that's your ranked Top-100 with explanations. The per-platform briefs
+    (<code>briefs/youtube.html</code> etc.) are linked from inside that report too.
+  </div>
+</details>
+
+<details>
+  <summary><span class="step-num">5</span> Tune what it searches</summary>
+  <div class="body">
+    Edit <code>trend_engine/config.py</code>: <code>SUBREDDITS</code>,
+    <code>YOUTUBE_REGIONS</code>, <code>NICHE_*_KEYWORDS</code> (boost scoring),
+    <code>EXCLUDE_KEYWORDS</code> (hard filter), <code>SOURCE_ENABLED</code>
+    (turn a whole collector on/off). No restart needed — just click Launch Run again.
+  </div>
+</details>
+
+<details>
+  <summary><span class="step-num">6</span> Automate it (optional)</summary>
+  <div class="body">
+    See <code>README.md</code>'s "Running it automatically (cron)" section to have it
+    run on a schedule without you clicking anything. It reuses the same <code>.env</code>
+    file, so no extra setup beyond what you did in step 1.
+  </div>
+</details>
+
+<script>
+const STAGES = ["collect", "score", "enrich", "publish"];
+
+function toggleDetail(stage) {
+  const el = document.getElementById('detail-' + stage);
+  el.classList.toggle('open');
+}
+
+function setStage(name, cls) {
+  document.querySelectorAll('.stage').forEach(el => el.classList.remove('done','active','error'));
+  const idx = STAGES.indexOf(name);
+  for (let i = 0; i < idx; i++) {
+    document.querySelector(`[data-stage="${STAGES[i]}"]`).classList.add('done');
+  }
+  if (name && idx >= 0) {
+    document.querySelector(`[data-stage="${name}"]`).classList.add(cls || 'active');
+  }
+}
+
+function setLiveNote(stage, text) {
+  const el = document.getElementById('live-' + stage);
+  if (el) el.textContent = text || '';
+}
+
+function clearLiveNotes() {
+  STAGES.forEach(s => setLiveNote(s, ''));
+}
+
+function setBadge(text, cls) {
+  const b = document.getElementById('statusBadge');
+  b.textContent = text;
+  b.className = 'status-badge ' + cls;
+}
+
+// Rough stage inference + a one-line "what's happening" note from the live log text —
+// the pipeline doesn't emit structured stage markers, so we pattern-match on what
+// each stage's code actually logs.
+function inferStageAndNote(logText) {
+  if (/enrich attempt/.test(logText)) {
+    return { stage: "enrich", note: "calling Claude for dedup + explanations…" };
+  }
+  const lines = logText.trim().split("\n").filter(Boolean);
+  const last = lines[lines.length - 1] || "";
+  if (last.includes("reddit collector")) return { stage: "collect", note: "fetching Reddit subreddits…" };
+  if (last.includes("wikipedia") || last.includes("hackernews") || last.includes("youtube")) {
+    return { stage: "collect", note: last.slice(0, 60) };
+  }
+  return { stage: "collect", note: "fetching sources…" };
+}
+
+async function refreshStatus() {
+  const res = await fetch('/api/status');
+  const data = await res.json();
+
+  const envList = document.getElementById('envChecklist');
+  envList.innerHTML = `
+    <li><span class="${data.env.youtube_api_key_set ? 'check-ok' : 'check-bad'}">
+      ${data.env.youtube_api_key_set ? '✓' : '✗'}</span> YOUTUBE_API_KEY
+      ${data.env.youtube_api_key_set ? 'set' : 'not set (via .env or shell) — youtube collector will skip itself (safe, not fatal)'}</li>
+    <li><span class="${data.env.anthropic_api_key_set ? 'check-ok' : 'check-bad'}">
+      ${data.env.anthropic_api_key_set ? '✓' : '✗'}</span> ANTHROPIC_API_KEY
+      ${data.env.anthropic_api_key_set ? 'set' : 'not set (via .env or shell) — run will be DEGRADED (no dedup/explanations)'}</li>
+    <li>Sources enabled: ${Object.entries(data.sources_enabled).map(([k,v]) =>
+      `<span class="${v ? 'check-ok' : 'check-bad'}">${v ? '✓' : '✗'}</span> ${k}`).join(' &nbsp; ')}</li>
+  `;
+
+  const btn = document.getElementById('launchBtn');
+  btn.disabled = data.running;
+
+  if (data.running) {
+    setBadge('running…', 'running');
+    const log = await (await fetch('/api/log')).json();
+    const { stage, note } = inferStageAndNote(log.log);
+    setStage(stage, 'active');
+    clearLiveNotes();
+    setLiveNote(stage, note);
+  } else if (data.exit_code === 0) {
+    document.querySelectorAll('.stage').forEach(el => el.classList.remove('active','error'));
+    document.querySelectorAll('.stage').forEach(el => el.classList.add('done'));
+    clearLiveNotes();
+    const lastRow = data.run_history[0];
+    const degraded = lastRow && lastRow.enriched !== 'True';
+    setBadge(degraded ? 'success (degraded)' : 'success', degraded ? 'degraded' : 'success');
+  } else if (data.exit_code !== null && data.exit_code !== 0) {
+    setStage("collect", "error");
+    setLiveNote('collect', 'run failed — see live log below');
+    setBadge('error (exit ' + data.exit_code + ')', 'error');
+  } else {
+    setBadge('idle', 'idle');
+  }
+
+  const reportLink = document.getElementById('reportLink');
+  if (data.latest_output_dir) {
+    reportLink.href = `/output/${data.latest_output_dir}/top100.html`;
+    reportLink.style.display = 'inline-block';
+  }
+
+  const tbody = document.querySelector('#historyTable tbody');
+  if (data.run_history.length) {
+    tbody.innerHTML = data.run_history.map(r =>
+      `<tr><td>${r.date}</td><td>${r.items}</td><td>${r.topics}</td><td>${r.enriched}</td><td>${r.duration_s}</td></tr>`
+    ).join('');
+  }
+
+  const logEl = document.getElementById('liveLog');
+  if (data.running || data.exit_code !== null) {
+    const log = await (await fetch('/api/log')).json();
+    logEl.textContent = log.log || '(waiting for output…)';
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+}
+
+async function launchRun() {
+  document.querySelectorAll('.stage').forEach(el => el.classList.remove('done','active','error'));
+  clearLiveNotes();
+  setBadge('starting…', 'running');
+  const res = await fetch('/api/launch', { method: 'POST' });
+  if (!res.ok) {
+    const err = await res.json();
+    alert(err.error || 'Failed to start');
+  }
+}
+
+refreshStatus();
+setInterval(refreshStatus, 2000);
+</script>
+</body>
+</html>

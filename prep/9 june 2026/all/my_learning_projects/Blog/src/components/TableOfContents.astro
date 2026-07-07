@@ -1,0 +1,98 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+// Show h1, h2, and h3 headings
+const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
+
+// Helper to get indentation class based on heading depth
+function getIndentClass(depth: number): string {
+  switch (depth) {
+    case 1:
+      return '';
+    case 2:
+      return 'ml-3';
+    case 3:
+      return 'ml-6';
+    default:
+      return '';
+  }
+}
+
+// Helper to get font weight class based on heading depth
+function getFontClass(depth: number): string {
+  return depth === 1 ? 'font-medium' : '';
+}
+---
+
+{tocHeadings.length > 0 && (
+  <nav class="toc">
+    <h4 class="text-xs font-semibold uppercase tracking-wider text-docs-text-muted dark:text-docs-text-muted-dark mb-4">
+      On this page
+    </h4>
+    <ul class="space-y-1.5 text-sm">
+      {tocHeadings.map((heading) => (
+        <li class={getIndentClass(heading.depth)}>
+          <a
+            href={`#${heading.slug}`}
+            class:list={[
+              "block py-1 text-docs-text-muted dark:text-docs-text-muted-dark hover:text-docs-accent dark:hover:text-indigo-400 transition-colors leading-snug",
+              getFontClass(heading.depth)
+            ]}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  // Highlight active heading on scroll
+  function initTocHighlight() {
+    const headings = document.querySelectorAll('.docs-content h1, .docs-content h2, .docs-content h3');
+    const tocLinks = document.querySelectorAll('.toc a');
+
+    if (headings.length === 0 || tocLinks.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            tocLinks.forEach((link) => {
+              const href = link.getAttribute('href');
+              if (href === `#${id}`) {
+                link.classList.add('text-docs-accent', 'dark:text-indigo-400', 'font-medium');
+                link.classList.remove('text-docs-text-muted', 'dark:text-docs-text-muted-dark');
+              } else {
+                link.classList.remove('text-docs-accent', 'dark:text-indigo-400', 'font-medium');
+                link.classList.add('text-docs-text-muted', 'dark:text-docs-text-muted-dark');
+              }
+            });
+          }
+        });
+      },
+      {
+        rootMargin: '-80px 0px -80% 0px',
+        threshold: 0,
+      }
+    );
+
+    headings.forEach((heading) => observer.observe(heading));
+  }
+
+  // Run on page load and navigation
+  initTocHighlight();
+  document.addEventListener('astro:page-load', initTocHighlight);
+</script>

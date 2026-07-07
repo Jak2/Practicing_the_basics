@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="display:flex;align-items:baseline;gap:1rem;margin-bottom:1.2rem;">
+  <h2 style="font-size:1rem;color:#888;text-transform:uppercase;letter-spacing:.05em;">Pending Drafts</h2>
+  <span style="font-size:.8rem;color:#555;">{{ total }} awaiting review</span>
+</div>
+
+{% if not drafts %}
+  <p class="empty-state">No drafts waiting. Run a non-interactive pipeline or a scheduled job to generate some.</p>
+{% else %}
+  <div class="cards-row">
+    {% for post in drafts %}
+    <div class="content-card type-{{ post.type }}">
+      <div class="card-badges">
+        <span class="badge badge-{{ post.type }}">{{ post.type }}</span>
+        <span class="badge badge-draft">draft</span>
+      </div>
+      <div class="card-title">{{ post.title }}</div>
+      {% if post.type == "prompt" and post.image_path %}
+        <img src="/drafts-files/{{ post.image_path }}" alt="{{ post.title }}" class="card-image" />
+      {% endif %}
+      {% if post.preview %}
+        <div class="card-preview">{{ post.preview }}</div>
+      {% endif %}
+      <div class="card-footer" style="gap:.6rem;">
+        <button onclick="approveDraft('{{ post.slug }}')" style="background:#15803d;color:#fff;border:none;padding:.4rem .8rem;border-radius:4px;cursor:pointer;">Approve</button>
+        <button onclick="rejectDraft('{{ post.slug }}')" style="background:#b91c1c;color:#fff;border:none;padding:.4rem .8rem;border-radius:4px;cursor:pointer;">Reject</button>
+        <span class="card-date">{{ post.created_at.strftime('%b %d, %H:%M') }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<script>
+async function approveDraft(slug) {
+  const res = await fetch(`/api/drafts/${slug}/approve`, { method: "POST" });
+  if (res.ok) location.reload();
+  else alert("Approve failed — check server logs.");
+}
+async function rejectDraft(slug) {
+  const res = await fetch(`/api/drafts/${slug}/reject`, { method: "POST" });
+  if (res.ok) location.reload();
+  else alert("Reject failed — check server logs.");
+}
+</script>
+{% endblock %}

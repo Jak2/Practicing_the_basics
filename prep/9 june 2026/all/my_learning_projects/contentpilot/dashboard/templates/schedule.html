@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width:480px;">
+  <h2 style="font-size:1rem;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.2rem;">Scheduled Runs</h2>
+
+  <form id="schedule-form" style="display:flex;flex-direction:column;gap:.8rem;">
+    <label style="display:flex;align-items:center;gap:.5rem;">
+      <input type="checkbox" id="enabled" {% if cfg.enabled %}checked{% endif %} /> Enabled
+    </label>
+    <label>Interval (hours)
+      <input type="number" id="interval_hours" value="{{ cfg.interval_hours }}" min="1" style="width:100%;padding:.4rem;background:#1a1a1a;color:#e5e5e5;border:1px solid #333;border-radius:4px;" />
+    </label>
+    <label>Topics per run
+      <input type="number" id="topics" value="{{ cfg.topics }}" min="0" style="width:100%;padding:.4rem;background:#1a1a1a;color:#e5e5e5;border:1px solid #333;border-radius:4px;" />
+    </label>
+    <label>Prompts per topic
+      <input type="number" id="prompts" value="{{ cfg.prompts }}" min="0" style="width:100%;padding:.4rem;background:#1a1a1a;color:#e5e5e5;border:1px solid #333;border-radius:4px;" />
+    </label>
+    <label>Workflows per topic
+      <input type="number" id="workflows" value="{{ cfg.workflows }}" min="0" style="width:100%;padding:.4rem;background:#1a1a1a;color:#e5e5e5;border:1px solid #333;border-radius:4px;" />
+    </label>
+    <label>Categories (comma-separated, or "all")
+      <input type="text" id="categories" value="{{ cfg.categories | join(', ') }}" style="width:100%;padding:.4rem;background:#1a1a1a;color:#e5e5e5;border:1px solid #333;border-radius:4px;" />
+    </label>
+    <label style="display:flex;align-items:center;gap:.5rem;">
+      <input type="checkbox" id="publish" {% if cfg.publish %}checked{% endif %} /> Publish immediately (skip drafts queue)
+    </label>
+    <button type="submit" style="background:#facc15;color:#1a1a1a;border:none;padding:.6rem;border-radius:4px;font-weight:600;cursor:pointer;">Save</button>
+  </form>
+  <p id="save-status" style="margin-top:.6rem;color:#15803d;"></p>
+</div>
+
+<script>
+document.getElementById("schedule-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const payload = {
+    enabled: document.getElementById("enabled").checked,
+    interval_hours: parseInt(document.getElementById("interval_hours").value, 10),
+    topics: parseInt(document.getElementById("topics").value, 10),
+    prompts: parseInt(document.getElementById("prompts").value, 10),
+    workflows: parseInt(document.getElementById("workflows").value, 10),
+    categories: document.getElementById("categories").value.split(",").map(s => s.trim()),
+    publish: document.getElementById("publish").checked,
+  };
+  const res = await fetch("/api/schedule", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  document.getElementById("save-status").textContent = res.ok ? "Saved." : "Save failed.";
+});
+</script>
+{% endblock %}

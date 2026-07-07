@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="display:flex;align-items:baseline;gap:1rem;margin-bottom:1.2rem;flex-wrap:wrap;">
+  <h2 style="font-size:1rem;color:#888;text-transform:uppercase;letter-spacing:.05em;">Viral Prompt Trends</h2>
+  <span style="font-size:.8rem;color:#555;">
+    {{ total }} trend{{ "s" if total != 1 else "" }}
+    {% if last_refreshed %} · refreshed {{ last_refreshed.strftime('%b %d, %H:%M UTC') }}{% endif %}
+  </span>
+  <button onclick="refreshTrends(this)" style="background:#facc15;color:#1a1a1a;border:none;padding:.4rem .9rem;border-radius:4px;font-weight:600;cursor:pointer;margin-left:auto;">↻ Refresh trends</button>
+</div>
+
+{% if not trends %}
+  <p class="empty-state">
+    No trends yet. Click <b>Refresh trends</b> above, or run
+    <code>python main.py trends --top 20</code>.
+  </p>
+{% else %}
+  <div style="display:flex;flex-direction:column;gap:1rem;">
+    {% for t in trends %}
+    <div class="content-card" style="display:flex;gap:1.2rem;align-items:flex-start;max-width:100%;">
+
+      {% if t.image_url %}
+      <a href="{{ t.source_url }}" target="_blank" style="flex-shrink:0;">
+        <img src="{{ t.image_url }}" alt="generated image" loading="lazy"
+             style="width:140px;height:140px;object-fit:cover;border-radius:6px;border:1px solid #333;" />
+      </a>
+      {% endif %}
+
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;">
+          <span style="font-size:1.05rem;font-weight:700;color:#facc15;">#{{ loop.index }}</span>
+          <span class="badge badge-{{ 'hn' if t.source == 'civitai' else ('reddit' if t.source == 'reddit' else 'tavily') }}">{{ t.source }}</span>
+          <span class="badge badge-{{ 'prompt' if t.kind == 'image' else 'workflow' }}">{{ t.kind }}</span>
+          {% if t.engagement %}<span style="font-size:.78rem;color:#888;">🔥 {{ t.engagement }}</span>{% endif %}
+        </div>
+
+        <!-- virality score bar ("curated" when the source has no engagement metric) -->
+        {% if t.engagement %}
+        <div style="margin:.5rem 0;display:flex;align-items:center;gap:.6rem;">
+          <div style="flex:1;max-width:260px;height:6px;background:#262626;border-radius:3px;overflow:hidden;">
+            <div style="width:{{ t.virality_score }}%;height:100%;background:linear-gradient(90deg,#facc15,#f97316);"></div>
+          </div>
+          <span style="font-size:.78rem;color:#facc15;font-weight:600;">{{ t.virality_score }}</span>
+        </div>
+        {% else %}
+        <div style="margin:.5rem 0;">
+          <span style="font-size:.72rem;color:#a78bfa;border:1px solid #a78bfa55;border-radius:4px;padding:1px 6px;">curated pick</span>
+        </div>
+        {% endif %}
+
+        <div style="font-size:.88rem;color:#d4d4d4;line-height:1.45;word-break:break-word;">
+          {{ t.prompt[:400] }}{% if t.prompt|length > 400 %}…{% endif %}
+        </div>
+
+        {% if t.insight %}
+        <div style="margin-top:.6rem;">
+          {% for tag in t.insight.pattern_tags %}
+          <span style="display:inline-block;font-size:.72rem;background:#1f6feb33;color:#79c0ff;border:1px solid #1f6feb66;border-radius:4px;padding:1px 7px;margin:2px 3px 2px 0;">{{ tag }}</span>
+          {% endfor %}
+          <div style="font-size:.8rem;color:#999;margin-top:.4rem;font-style:italic;">{{ t.insight.why_viral }}</div>
+        </div>
+        {% else %}
+        <div style="font-size:.75rem;color:#666;margin-top:.5rem;">analysis pending</div>
+        {% endif %}
+
+        <div style="margin-top:.8rem;display:flex;gap:.6rem;align-items:center;">
+          <button onclick="draftFromTrend('{{ t.id }}', this)" style="background:#15803d;color:#fff;border:none;padding:.35rem .8rem;border-radius:4px;cursor:pointer;font-size:.82rem;">✍ Draft post</button>
+          <button onclick="deleteTrend('{{ t.id }}')" style="background:#3f3f46;color:#e5e5e5;border:none;padding:.35rem .8rem;border-radius:4px;cursor:pointer;font-size:.82rem;">Delete</button>
+          {% if t.source_url %}<a href="{{ t.source_url }}" target="_blank" style="font-size:.78rem;color:#79c0ff;text-decoration:none;">↗ source</a>{% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<script>
+async function refreshTrends(btn) {
+  btn.disabled = true; btn.textContent = "Refreshing… (~30s)";
+  await fetch("/api/trends/refresh", { method: "POST" });
+  setTimeout(() => location.reload(), 30000);
+}
+async function draftFromTrend(id, btn) {
+  btn.disabled = true; btn.textContent = "Drafting…";
+  const res = await fetch(`/api/trends/${id}/draft`, { method: "POST" });
+  if (res.ok) { const d = await res.json(); window.location = "/drafts"; }
+  else { alert("Draft failed — check server logs."); btn.disabled = false; btn.textContent = "✍ Draft post"; }
+}
+async function deleteTrend(id) {
+  const res = await fetch(`/api/trends/${id}`, { method: "DELETE" });
+  if (res.ok) location.reload();
+}
+</script>
+{% endblock %}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hot posts</title>
+  <entry>
+    <title>GPT-6 Leaked, Benchmarks!!</title>
+    <link href="https://www.reddit.com/r/artificial/comments/abc123/gpt_6_leaked_benchmarks/" />
+    <id>t3_abc123</id>
+    <updated>2026-07-01T18:30:00+00:00</updated>
+  </entry>
+  <entry>
+    <title>Second Hot Post Title</title>
+    <link href="https://www.reddit.com/r/artificial/comments/def456/second_hot_post_title/" />
+    <id>t3_def456</id>
+  </entry>
+</feed>

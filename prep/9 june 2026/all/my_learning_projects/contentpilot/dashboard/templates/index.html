@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ═══════════════════════════════════════════════════
+     PIPELINE FLOW
+═══════════════════════════════════════════════════ -->
+<div class="pipeline-section">
+  <h2>Pipeline Execution Flow</h2>
+  <div class="pipeline">
+
+    <!-- Step 1: Trend Discovery -->
+    {% set s1 = "success" if stats.topics > 0 else ("idle" if stats.sources|length == 0 else "failed") %}
+    <div class="pipeline-step {{ s1 }}">
+      <div class="step-status-dot"></div>
+      <div class="step-num">Step 1</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-name">Trend Discovery</div>
+      {% if stats.sources %}
+        {% for src in stats.sources %}
+          <div class="step-meta">
+            {% if src == "HackerNews" %}🟠{% elif src == "Tavily" %}🔵{% else %}🔴{% endif %} {{ src }}
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="step-meta" style="color:#666;">No sources enabled</div>
+      {% endif %}
+      <div class="step-stat {% if stats.topics > 0 %}ok{% elif stats.sources|length > 0 %}bad{% endif %}" style="margin-top:.5rem;">
+        {{ stats.topics }} topic{{ "s" if stats.topics != 1 else "" }} found
+      </div>
+    </div>
+
+    <div class="pipeline-arrow">→</div>
+
+    <!-- Step 2: Content Generation -->
+    {% set s2 = "success" if stats.content_total > 0 else ("idle" if stats.topics == 0 else "failed") %}
+    <div class="pipeline-step {{ s2 }}">
+      <div class="step-status-dot"></div>
+      <div class="step-num">Step 2</div>
+      <div class="step-icon">✍️</div>
+      <div class="step-name">Content Generation</div>
+      <div class="step-meta">Gemini 2.0 Flash</div>
+      <div class="step-stat {% if stats.prompts > 0 %}ok{% endif %}" style="margin-top:.5rem;">
+        {{ stats.prompts }} prompt{{ "s" if stats.prompts != 1 else "" }}
+      </div>
+      <div class="step-stat {% if stats.workflows > 0 %}ok{% endif %}">
+        {{ stats.workflows }} workflow{{ "s" if stats.workflows != 1 else "" }}
+      </div>
+    </div>
+
+    <div class="pipeline-arrow">→</div>
+
+    <!-- Step 3: Image Generation -->
+    {% if stats.prompts == 0 %}
+      {% set s3 = "idle" %}
+    {% elif stats.images_failed > 0 and stats.images_ok == 0 %}
+      {% set s3 = "failed" %}
+    {% elif stats.images_failed > 0 %}
+      {% set s3 = "partial" %}
+    {% elif stats.images_ok > 0 %}
+      {% set s3 = "success" %}
+    {% else %}
+      {% set s3 = "idle" %}
+    {% endif %}
+    <div class="pipeline-step {{ s3 }}">
+      <div class="step-status-dot"></div>
+      <div class="step-num">Step 3</div>
+      <div class="step-icon">🖼️</div>
+      <div class="step-name">Image Generation</div>
+      <div class="step-meta">Gemini Imagen 3</div>
+      <div class="step-stat {% if stats.images_ok > 0 %}ok{% endif %}" style="margin-top:.5rem;">
+        {{ stats.images_ok }} generated
+      </div>
+      {% if stats.images_failed > 0 %}
+      <div class="step-stat bad">{{ stats.images_failed }} failed</div>
+      {% endif %}
+    </div>
+
+    <div class="pipeline-arrow">→</div>
+
+    <!-- Step 4: Git Publish -->
+    {% if stats.content_total == 0 %}
+      {% set s4 = "idle" %}
+    {% elif stats.failed > 0 and stats.published == 0 %}
+      {% set s4 = "failed" %}
+    {% elif stats.failed > 0 %}
+      {% set s4 = "partial" %}
+    {% elif stats.published > 0 %}
+      {% set s4 = "success" %}
+    {% else %}
+      {% set s4 = "idle" %}
+    {% endif %}
+    <div class="pipeline-step {{ s4 }}">
+      <div class="step-status-dot"></div>
+      <div class="step-num">Step 4</div>
+      <div class="step-icon">🚀</div>
+      <div class="step-name">Git Publish</div>
+      <div class="step-meta">GitPython → Vercel</div>
+      <div class="step-stat {% if stats.published > 0 %}ok{% endif %}" style="margin-top:.5rem;">
+        {{ stats.published }} published
+      </div>
+      {% if stats.failed > 0 %}
+      <div class="step-stat bad">{{ stats.failed }} failed</div>
+      {% endif %}
+    </div>
+
+  </div><!-- .pipeline -->
+</div><!-- .pipeline-section -->
+
+<!-- ═══════════════════════════════════════════════════
+     GENERATED CONTENT
+═══════════════════════════════════════════════════ -->
+<div style="display:flex;align-items:baseline;gap:1rem;margin-bottom:1.2rem;">
+  <h2 style="font-size:1rem;color:#888;text-transform:uppercase;letter-spacing:.05em;">Generated Content</h2>
+  {% if total > 0 %}
+  <span style="font-size:.8rem;color:#555;">
+    {{ total }} post{{ "s" if total != 1 else "" }} across {{ by_topic|length }} topic{{ "s" if by_topic|length != 1 else "" }}
+  </span>
+  {% endif %}
+</div>
+
+{% if not by_topic %}
+  <p class="empty-state">No content yet. Run <code>python main.py</code> to generate posts.</p>
+{% else %}
+  {% for topic, posts in by_topic.items() %}
+  <div class="topic-block">
+    <div class="topic-header">
+      <span class="topic-title">{{ topic }}</span>
+      {% set first = posts[0] %}
+      {% if "ycombinator" in first.source_url or "hacker" in first.source_url %}
+        <span class="badge badge-hn">HN</span>
+      {% elif "reddit" in first.source_url %}
+        <span class="badge badge-reddit">Reddit</span>
+      {% elif first.source_url %}
+        <span class="badge badge-tavily">Web</span>
+      {% endif %}
+      {% if first.source_url %}
+        <a href="{{ first.source_url }}" target="_blank" class="topic-link">↗ source</a>
+      {% endif %}
+    </div>
+
+    <div class="cards-row">
+      {% for post in posts %}
+      <div class="content-card type-{{ post.type }} {% if post.status == 'failed' %}status-failed{% endif %}">
+        <div class="card-badges">
+          <span class="badge badge-{{ post.type }}">{{ post.type }}</span>
+          <span class="badge badge-{{ post.status }}">{{ post.status }}</span>
+        </div>
+        <div class="card-title">{{ post.title }}</div>
+
+        {% if post.type == "prompt" %}
+          {% if post.image_path %}
+            <img src="/{{ post.image_path }}" alt="{{ post.title }}" class="card-image" />
+          {% else %}
+            <div class="card-image-missing">⚠️ image generation failed</div>
+          {% endif %}
+        {% endif %}
+
+        {% if post.preview %}
+          <div class="card-preview">{{ post.preview }}</div>
+        {% endif %}
+
+        <div class="card-footer">
+          <a href="/post/{{ post.slug }}" class="card-link">View full →</a>
+          <span class="card-date">{{ post.created_at.strftime('%b %d, %H:%M') }}</span>
+        </div>
+        {% if post.push_status %}
+        <div style="font-size:.72rem;margin-top:.3rem;color:{% if post.push_status == 'pushed' %}#4ade80{% elif post.push_status == 'no_remote' %}#facc15{% else %}#f87171{% endif %};">
+          push: {{ post.push_status }}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}
