@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Study Guide · Jaya Arun Kumar</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: { extend: {
+      fontFamily: { sans: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica','Arial','sans-serif'] },
+      colors: { ink: { 950:'#0a0a0b', 900:'#141416', 800:'#1d1d20', 700:'#2a2a2e' } }
+    }}
+  }
+</script>
+<style>
+  html{scroll-padding-top:5rem;}
+  ::selection{background:#6366f1;color:#fff;}
+  [x-cloak]{display:none;}
+  .prog-track{transition:width .35s ease;}
+  details>summary{list-style:none;cursor:pointer;}
+  details>summary::-webkit-details-marker{display:none;}
+  @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important;}}
+</style>
+</head>
+<body class="bg-zinc-50 text-zinc-800 dark:bg-ink-950 dark:text-zinc-300 font-sans antialiased">
+
+<!-- top bar -->
+<header class="sticky top-0 z-40 backdrop-blur bg-zinc-50/80 dark:bg-ink-950/80 border-b border-zinc-200 dark:border-ink-800">
+  <div class="max-w-6xl mx-auto px-5 h-16 flex items-center gap-4">
+    <span class="font-semibold text-zinc-900 dark:text-white tracking-tight">Interview&nbsp;Prep</span>
+    <nav class="hidden md:flex items-center gap-1 text-sm ml-2">
+      <a href="#diagnostic" class="px-3 py-1.5 rounded-lg hover:bg-zinc-200/60 dark:hover:bg-ink-800">Diagnostic</a>
+      <a href="#plan" class="px-3 py-1.5 rounded-lg hover:bg-zinc-200/60 dark:hover:bg-ink-800">The Plan</a>
+      <a href="#topics" class="px-3 py-1.5 rounded-lg hover:bg-zinc-200/60 dark:hover:bg-ink-800">Study Cards</a>
+      <a href="#stories" class="px-3 py-1.5 rounded-lg hover:bg-zinc-200/60 dark:hover:bg-ink-800">Story Bank</a>
+      <a href="#landmines" class="px-3 py-1.5 rounded-lg hover:bg-zinc-200/60 dark:hover:bg-ink-800">Landmines</a>
+      <a href="#calendar" class="px-3 py-1.5 rounded-lg hover:bg-zinc-200/60 dark:hover:bg-ink-800">Calendar</a>
+    </nav>
+    <div class="ml-auto flex items-center gap-3">
+      <div class="hidden sm:flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+        <span id="progLabel" class="tabular-nums font-medium">0%</span>
+        <div class="w-24 h-1.5 rounded-full bg-zinc-200 dark:bg-ink-800 overflow-hidden">
+          <div id="progBar" class="prog-track h-full w-0 bg-indigo-600"></div>
+        </div>
+      </div>
+      <button id="themeBtn" aria-label="Toggle theme" class="w-9 h-9 grid place-items-center rounded-lg border border-zinc-200 dark:border-ink-700 hover:bg-zinc-200/60 dark:hover:bg-ink-800 text-sm">◐</button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-5">
+
+<!-- HERO -->
+<section class="pt-16 pb-14 border-b border-zinc-200 dark:border-ink-800">
+  <p class="text-indigo-600 dark:text-indigo-400 font-medium text-sm tracking-wide uppercase mb-3">Study &amp; interview plan</p>
+  <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white text-balance max-w-3xl">Turn 5 years of shipped systems into offers.</h1>
+  <p class="mt-5 text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
+    Built from <span class="font-semibold text-zinc-800 dark:text-zinc-200">24 real job descriptions</span> you're targeting, your resume, and deep-dives of all nine projects. It tells you the truth about what you already own, what's thin, and what to study first — then drills it with methods that actually stick.
+  </p>
+
+  <div class="mt-9 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 p-4 bg-white dark:bg-ink-900">
+      <div class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Active recall</div>
+      <div class="text-sm text-zinc-700 dark:text-zinc-300">Every topic ends in a question. Answer out loud before reading on — testing yourself beats re-reading.</div>
+    </div>
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 p-4 bg-white dark:bg-ink-900">
+      <div class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Spaced repetition</div>
+      <div class="text-sm text-zinc-700 dark:text-zinc-300">The <a href="#calendar" class="text-indigo-600 dark:text-indigo-400 underline underline-offset-2">calendar</a> revisits each topic on widening intervals so it lands in long-term memory.</div>
+    </div>
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 p-4 bg-white dark:bg-ink-900">
+      <div class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Feynman</div>
+      <div class="text-sm text-zinc-700 dark:text-zinc-300">Each project has a "explain it to a smart 12-year-old" line. If you can't, you don't own it yet.</div>
+    </div>
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 p-4 bg-white dark:bg-ink-900">
+      <div class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Pareto priority</div>
+      <div class="text-sm text-zinc-700 dark:text-zinc-300">Topics are ranked by <em>demand × gap</em>. Study the few things that move the most interviews first.</div>
+    </div>
+  </div>
+
+  <div class="mt-6 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 p-5">
+    <p class="text-sm text-indigo-900 dark:text-indigo-200"><span class="font-semibold">How to work this page:</span> tick a box when you can teach that topic without notes — your progress saves in this browser automatically. Aim to clear all <span class="font-semibold">Tier&nbsp;0</span> before your next interview; everything else is compounding advantage.</p>
+  </div>
+</section>
+
+<!-- DIAGNOSTIC -->
+<section id="diagnostic" class="py-14 border-b border-zinc-200 dark:border-ink-800">
+  <div class="flex items-baseline gap-3 mb-2">
+    <h2 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">The diagnostic</h2>
+    <span class="text-sm text-zinc-500">what 24 JDs want vs. what you can prove</span>
+  </div>
+  <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl mb-8">The number on each chip is how many of the 24 job descriptions ask for it. Green = you have a shipped project to point at. Amber = demanded a lot but your evidence is thin, dated, or only hypothetical. Red = real gap, little or no evidence.</p>
+
+  <div class="grid md:grid-cols-3 gap-5">
+    <!-- KNOWN -->
+    <div class="rounded-2xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/50 dark:bg-emerald-950/20 p-5">
+      <div class="flex items-center gap-2 mb-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><h3 class="font-semibold text-emerald-900 dark:text-emerald-300">Strengths — lead with these</h3></div>
+      <p class="text-xs text-emerald-800/70 dark:text-emerald-400/70 mb-4">Shipped, defensible, has a story.</p>
+      <div class="flex flex-wrap gap-1.5 text-xs">
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">Python <b class="text-emerald-600">23</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">Agentic AI <b class="text-emerald-600">16</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">Prompt eng <b class="text-emerald-600">13</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">RAG <b class="text-emerald-600">12</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">Vector DB <b class="text-emerald-600">10</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">LLM eval <b class="text-emerald-600">9</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">Claude <b class="text-emerald-600">9</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">LangChain <b class="text-emerald-600">8</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">REST <b class="text-emerald-600">8</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">FastAPI <b class="text-emerald-600">7</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">gRPC <b class="text-emerald-600">3</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">Redis · Pydantic · Postgres</span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-emerald-200 dark:border-emerald-900/50">🛰️ 5G / telecom domain</span>
+      </div>
+      <p class="mt-4 text-xs text-emerald-800 dark:text-emerald-300/80 leading-relaxed">Your <b>LLM-evaluation</b> depth and <b>5G-Core domain</b> knowledge are rare — most AI candidates have neither. These are your differentiators, not background.</p>
+    </div>
+
+    <!-- WEAK -->
+    <div class="rounded-2xl border border-amber-200 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/20 p-5">
+      <div class="flex items-center gap-2 mb-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span><h3 class="font-semibold text-amber-900 dark:text-amber-300">Thin — shore up fast</h3></div>
+      <p class="text-xs text-amber-800/70 dark:text-amber-400/70 mb-4">High demand, weak/dated/hypothetical evidence.</p>
+      <div class="flex flex-wrap gap-1.5 text-xs">
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-amber-200 dark:border-amber-900/50">System design @ scale <b class="text-amber-600">14</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-amber-200 dark:border-amber-900/50">CI/CD depth <b class="text-amber-600">10</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-amber-200 dark:border-amber-900/50">AWS <b class="text-amber-600">9</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-amber-200 dark:border-amber-900/50">Observability <b class="text-amber-600">8</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-amber-200 dark:border-amber-900/50">Kubernetes (operate) <b class="text-amber-600">6</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-amber-200 dark:border-amber-900/50">Docker depth <b class="text-amber-600">9</b></span>
+      </div>
+      <p class="mt-4 text-xs text-amber-800 dark:text-amber-300/80 leading-relaxed">You <em>touch</em> all of these but the reports show scale answers are hypothetical and AWS is from 2022. A weekend each turns "I've heard of it" into "here's how I'd do it."</p>
+    </div>
+
+    <!-- UNKNOWN -->
+    <div class="rounded-2xl border border-rose-200 dark:border-rose-900/50 bg-rose-50/50 dark:bg-rose-950/20 p-5">
+      <div class="flex items-center gap-2 mb-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span><h3 class="font-semibold text-rose-900 dark:text-rose-300">Gaps — learn or deflect</h3></div>
+      <p class="text-xs text-rose-800/70 dark:text-rose-400/70 mb-4">Demanded, little/no evidence.</p>
+      <div class="flex flex-wrap gap-1.5 text-xs">
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-rose-200 dark:border-rose-900/50">LLM fine-tuning / LoRA <b class="text-rose-600">9</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-rose-200 dark:border-rose-900/50">Classic ML / sklearn <b class="text-rose-600">7</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-rose-200 dark:border-rose-900/50">LangGraph <b class="text-rose-600">5</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-rose-200 dark:border-rose-900/50">Azure <b class="text-rose-600">5</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-rose-200 dark:border-rose-900/50">GCP <b class="text-rose-600">4</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-rose-200 dark:border-rose-900/50">PyTorch/TF (model-level) <b class="text-rose-600">3</b></span>
+        <span class="px-2 py-1 rounded-md bg-white dark:bg-ink-900 border border-rose-200 dark:border-rose-900/50">MLOps / model serving <b class="text-rose-600">3</b></span>
+      </div>
+      <p class="mt-4 text-xs text-rose-800 dark:text-rose-300/80 leading-relaxed"><b>Fine-tuning</b> is the highest-value gap (9 JDs). You don't need to become an expert — you need a conceptual answer + one tiny hands-on so you can say "I've done a LoRA run." The rest you deflect honestly toward your integration strength.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section id="plan" class="py-14 border-b border-zinc-200 dark:border-ink-800">
+  <h2 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white mb-2">The plan — 4 tiers, by leverage</h2>
+  <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl mb-8">Don't study in the order things feel comfortable. Study in the order that wins interviews: highest demand × biggest gap first. Interleave — do a little from two tiers each day rather than finishing one topic before starting the next; mixing is what builds durable recall.</p>
+
+  <div class="space-y-4">
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 overflow-hidden">
+      <div class="flex items-center gap-3 px-5 py-3 bg-rose-500/10 border-b border-zinc-200 dark:border-ink-800">
+        <span class="text-xs font-bold px-2 py-0.5 rounded bg-rose-600 text-white">TIER 0</span>
+        <span class="font-semibold text-zinc-900 dark:text-white">Do before your next interview</span>
+        <span class="ml-auto text-xs text-zinc-500">~1 week, highest ROI</span>
+      </div>
+      <div class="px-5 py-4 text-sm text-zinc-700 dark:text-zinc-300 grid sm:grid-cols-2 gap-x-8 gap-y-1.5">
+        <div>① <b>System design at scale</b> — the #1 demand (14 JDs) and your thinnest real answer.</div>
+        <div>② <b>The "how did you measure that" answer</b> — one honest script for all your % metrics.</div>
+        <div>③ <b>Own your self-disclosed gaps</b> — cross-DB consistency, the bias weight bug, no-auth.</div>
+        <div>④ <b>Fine-tuning literacy</b> — LoRA/PEFT concept + one tiny run to claim hands-on.</div>
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 overflow-hidden">
+      <div class="flex items-center gap-3 px-5 py-3 bg-amber-500/10 border-b border-zinc-200 dark:border-ink-800">
+        <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500 text-white">TIER 1</span>
+        <span class="font-semibold text-zinc-900 dark:text-white">Strengthen the thin-but-demanded</span>
+        <span class="ml-auto text-xs text-zinc-500">~1–2 weeks</span>
+      </div>
+      <div class="px-5 py-4 text-sm text-zinc-700 dark:text-zinc-300 grid sm:grid-cols-2 gap-x-8 gap-y-1.5">
+        <div>⑤ <b>Observability</b> — logs→metrics→traces; wire Prometheus+Grafana into one project.</div>
+        <div>⑥ <b>AWS refresh</b> — you have AppSync/IAM from 2022; add ECS/Lambda/S3 mental model.</div>
+        <div>⑦ <b>CI/CD depth</b> — you have GitHub Actions + Nokia NCD; be able to design a pipeline.</div>
+        <div>⑧ <b>LangGraph</b> — bridge from your hand-rolled agent loop to the named framework.</div>
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 overflow-hidden">
+      <div class="flex items-center gap-3 px-5 py-3 bg-indigo-500/10 border-b border-zinc-200 dark:border-ink-800">
+        <span class="text-xs font-bold px-2 py-0.5 rounded bg-indigo-600 text-white">TIER 2</span>
+        <span class="font-semibold text-zinc-900 dark:text-white">Breadth &amp; literacy</span>
+        <span class="ml-auto text-xs text-zinc-500">ongoing</span>
+      </div>
+      <div class="px-5 py-4 text-sm text-zinc-700 dark:text-zinc-300 grid sm:grid-cols-2 gap-x-8 gap-y-1.5">
+        <div>⑨ <b>Kubernetes as operator</b> — you tested on K8s; learn to deploy to it.</div>
+        <div>⑩ <b>Classic ML literacy</b> — enough sklearn/metrics to not freeze on "precision vs recall."</div>
+        <div>⑪ <b>Cloud breadth</b> — Azure/GCP conceptual equivalents of what you know in AWS.</div>
+        <div>⑫ <b>MLOps / serving</b> — vLLM, model registry, the shape of a deployment pipeline.</div>
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 overflow-hidden">
+      <div class="flex items-center gap-3 px-5 py-3 bg-zinc-500/10 border-b border-zinc-200 dark:border-ink-800">
+        <span class="text-xs font-bold px-2 py-0.5 rounded bg-zinc-500 text-white">TIER 3</span>
+        <span class="font-semibold text-zinc-900 dark:text-white">Deflect gracefully, don't cram</span>
+        <span class="ml-auto text-xs text-zinc-500">know the edges</span>
+      </div>
+      <div class="px-5 py-4 text-sm text-zinc-700 dark:text-zinc-300">
+        Deep PyTorch model architecture · Snowflake · Kafka internals · research-grade math. For these, the winning move isn't cramming — it's an honest bridge: <span class="italic">"I haven't built that; the closest I've done is X, and here's how I'd approach it."</span> Confidence about a boundary beats a shaky bluff every time.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOPIC STUDY CARDS -->
+<section id="topics" class="py-14 border-b border-zinc-200 dark:border-ink-800">
+  <h2 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white mb-2">Study cards</h2>
+  <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl mb-8">One card per priority topic. Read <em>Learn this</em>, then cover the answer and try the <em>recall check</em> out loud. Tick the box only when you can teach it cold. Each card names the <em>anchor</em> — the project you already have that proves it, so you're extending, not starting from zero.</p>
+
+  <div id="cardGrid" class="grid md:grid-cols-2 gap-4">
+
+    <!-- Card: System design -->
+    <article class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="flex items-start gap-3">
+        <input type="checkbox" data-key="sysdesign" class="track mt-1 w-5 h-5 rounded accent-indigo-600 shrink-0">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap"><h3 class="font-semibold text-zinc-900 dark:text-white">System design at scale</h3><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-600 text-white">T0</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-ink-800 text-zinc-500">14 JDs</span></div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-zinc-800 dark:text-zinc-200">Learn this:</b> the standard scale-out story — stateless services behind a load balancer, a queue (Celery/Redis) for async work, caching layers, read replicas, sharding, and where each breaks. Learn to reason about the CAP trade-off and back-of-envelope QPS/latency.</p>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-emerald-600 dark:text-emerald-400">Anchor:</b> NFTRACE (Redis session isolation, two-tier storage) and the LLM Eval framework (Celery/Redis broker) — you already built the pieces; practice assembling them into a "scale to 10k req/min" narrative.</p>
+          <details class="mt-3"><summary class="text-xs font-medium text-indigo-600 dark:text-indigo-400">Recall check →</summary><p class="text-sm mt-2 text-zinc-700 dark:text-zinc-300">"Your LLM eval service gets 1000× traffic. Walk me from one Docker Compose box to a system that survives it." You must name: horizontal workers, broker back-pressure, DB connection pooling limits, and the first thing that falls over (the single Postgres).</p></details>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card: Measurement answer -->
+    <article class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="flex items-start gap-3">
+        <input type="checkbox" data-key="metrics" class="track mt-1 w-5 h-5 rounded accent-indigo-600 shrink-0">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap"><h3 class="font-semibold text-zinc-900 dark:text-white">The "how did you measure 70%?" answer</h3><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-600 text-white">T0</span></div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-zinc-800 dark:text-zinc-200">Learn this:</b> every headline number on your resume (70% auto-resolution, 55% MTTR, 50% validation time, ~60% cost cut) lacks a stated baseline in the reports. Interviewers <em>will</em> push. Prepare <b>one</b> honest methodology answer you reuse: what the baseline was, how you sampled, over what window.</p>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-emerald-600 dark:text-emerald-400">Script:</b> "We measured over [N weeks] against the pre-pipeline manual baseline of [X]. It's an internal operational metric, not a controlled study — directionally strong, and I can walk you through exactly how we counted an 'auto-resolved' error."</p>
+          <details class="mt-3"><summary class="text-xs font-medium text-indigo-600 dark:text-indigo-400">Recall check →</summary><p class="text-sm mt-2 text-zinc-700 dark:text-zinc-300">Say your measurement answer for the 5G pipeline's 70% out loud in under 20 seconds without inventing a fake A/B test. Honesty about method reads as senior; a made-up number reads as risk.</p></details>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card: Own the gaps -->
+    <article class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="flex items-start gap-3">
+        <input type="checkbox" data-key="owngaps" class="track mt-1 w-5 h-5 rounded accent-indigo-600 shrink-0">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap"><h3 class="font-semibold text-zinc-900 dark:text-white">Own your self-disclosed gaps</h3><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-600 text-white">T0</span></div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-zinc-800 dark:text-zinc-200">Learn this:</b> three gaps hide in your projects and a sharp interviewer finds them. Pre-empt each and it becomes a maturity signal instead of a stumble: <b>(a)</b> EMS Postgres↔FAISS partial-write inconsistency, <b>(b)</b> Bias Auditor composite weights sum to 0.85 (length weight never applied), <b>(c)</b> no auth on EMS/NFTRACE despite sensitive data.</p>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-emerald-600 dark:text-emerald-400">Turn it around:</b> for (a) name the fix out loud — saga / outbox / compensating transaction. For (c) — "JWT + attribute-level RBAC, which I actually built at Brane." You already have the answer in a different project.</p>
+          <details class="mt-3"><summary class="text-xs font-medium text-indigo-600 dark:text-indigo-400">Recall check →</summary><p class="text-sm mt-2 text-zinc-700 dark:text-zinc-300">"What happens if the Postgres write succeeds but FAISS indexing fails?" Answer with the failure mode <em>and</em> the named pattern that fixes it. Don't say "that shouldn't happen."</p></details>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card: Fine-tuning -->
+    <article class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="flex items-start gap-3">
+        <input type="checkbox" data-key="finetune" class="track mt-1 w-5 h-5 rounded accent-indigo-600 shrink-0">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap"><h3 class="font-semibold text-zinc-900 dark:text-white">Fine-tuning literacy (LoRA/PEFT)</h3><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-600 text-white">T0</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-ink-800 text-zinc-500">9 JDs</span></div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-zinc-800 dark:text-zinc-200">Learn this:</b> the concepts — full fine-tune vs LoRA (freeze base, train low-rank adapters) vs PEFT vs QLoRA (quantized), and crucially <em>when NOT to</em> (most problems are prompt/RAG problems). Then do <b>one</b> tiny LoRA run on a small model with HuggingFace <code class="text-xs bg-zinc-100 dark:bg-ink-800 px-1 rounded">peft</code>+<code class="text-xs bg-zinc-100 dark:bg-ink-800 px-1 rounded">trl</code> so you can say "I've done it."</p>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-emerald-600 dark:text-emerald-400">Anchor:</b> your Ollama/qwen2.5 local-inference work + LLM-eval background means you already understand model params, temperature, and how to measure output quality — fine-tuning is the one missing verb.</p>
+          <details class="mt-3"><summary class="text-xs font-medium text-indigo-600 dark:text-indigo-400">Recall check →</summary><p class="text-sm mt-2 text-zinc-700 dark:text-zinc-300">"When would you fine-tune instead of RAG?" Strong answer: fine-tune for <em>form/behaviour/format</em> the model can't be prompted into reliably; RAG for <em>knowledge</em>. Name the cost: data curation + eval + drift, which is why you'd try prompt/RAG first.</p></details>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card: Observability -->
+    <article class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="flex items-start gap-3">
+        <input type="checkbox" data-key="observability" class="track mt-1 w-5 h-5 rounded accent-indigo-600 shrink-0">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap"><h3 class="font-semibold text-zinc-900 dark:text-white">Observability</h3><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white">T1</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-ink-800 text-zinc-500">8 JDs</span></div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-zinc-800 dark:text-zinc-200">Learn this:</b> the three pillars — logs, metrics, traces — and the tools (Prometheus scrape + Grafana dashboards + OpenTelemetry spans). For LLM apps specifically: token cost, latency p50/p95/p99, and eval-score-over-time as first-class metrics.</p>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-emerald-600 dark:text-emerald-400">Do this:</b> add a <code class="text-xs bg-zinc-100 dark:bg-ink-800 px-1 rounded">/metrics</code> endpoint + a Grafana panel to your LLM Eval framework. One afternoon; converts a documented gap into a live demo.</p>
+          <details class="mt-3"><summary class="text-xs font-medium text-indigo-600 dark:text-indigo-400">Recall check →</summary><p class="text-sm mt-2 text-zinc-700 dark:text-zinc-300">"How would you know your RAG system degraded in production?" Name: latency + cost metrics, faithfulness-score trend, retrieval-hit-rate, and an alert threshold — tying straight back to what your eval framework already computes offline.</p></details>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card: AWS -->
+    <article class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="flex items-start gap-3">
+        <input type="checkbox" data-key="aws" class="track mt-1 w-5 h-5 rounded accent-indigo-600 shrink-0">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap"><h3 class="font-semibold text-zinc-900 dark:text-white">AWS refresh</h3><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white">T1</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-ink-800 text-zinc-500">9 JDs</span></div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-zinc-800 dark:text-zinc-200">Learn this:</b> the deploy-a-container path — ECS/Fargate or EKS, ALB, RDS (Postgres), ElastiCache (Redis), S3, and how IAM ties it together. You already know IAM/AppSync/AppFlow from Abjayon; you're refreshing, not learning from scratch.</p>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-emerald-600 dark:text-emerald-400">Anchor:</b> "I built GraphQL APIs on AppSync and managed IAM roles" — extend that to "here's how I'd deploy my FastAPI+Celery+Redis stack on ECS."</p>
+          <details class="mt-3"><summary class="text-xs font-medium text-indigo-600 dark:text-indigo-400">Recall check →</summary><p class="text-sm mt-2 text-zinc-700 dark:text-zinc-300">Sketch the AWS deployment of your LLM Eval stack (API + workers + Postgres + Redis) naming the service for each box. Where does the Bedrock-vs-self-hosted-model decision live?</p></details>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card: CI/CD -->
+    <article class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="flex items-start gap-3">
+        <input type="checkbox" data-key="cicd" class="track mt-1 w-5 h-5 rounded accent-indigo-600 shrink-0">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap"><h3 class="font-semibold text-zinc-900 dark:text-white">CI/CD depth</h3><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white">T1</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-ink-800 text-zinc-500">10 JDs</span></div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-zinc-800 dark:text-zinc-200">Learn this:</b> a full pipeline — lint → test → build image → push → deploy → smoke test → rollback. Blue/green vs canary. Secrets handling. You've got real material: your Prompt Regression Suite <em>is</em> a CI gate, and Nokia NCD/TAF is genuine CD experience.</p>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-emerald-600 dark:text-emerald-400">Anchor:</b> "I built a GitHub Actions gate that blocks a merge when prompt quality regresses" is a <em>standout</em> CI story — most candidates only run unit tests. Lead with it.</p>
+          <details class="mt-3"><summary class="text-xs font-medium text-indigo-600 dark:text-indigo-400">Recall check →</summary><p class="text-sm mt-2 text-zinc-700 dark:text-zinc-300">"Design CI/CD for a service that ships a model." Include: eval gate before deploy, image build, staged rollout, and how you'd roll back a bad model version. Tie the eval-gate to your regression suite.</p></details>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card: LangGraph -->
+    <article class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="flex items-start gap-3">
+        <input type="checkbox" data-key="langgraph" class="track mt-1 w-5 h-5 rounded accent-indigo-600 shrink-0">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap"><h3 class="font-semibold text-zinc-900 dark:text-white">LangGraph</h3><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white">T1</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-ink-800 text-zinc-500">5 JDs</span></div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-zinc-800 dark:text-zinc-200">Learn this:</b> graph-based agent orchestration — nodes, edges, state, conditional routing, cycles for retry/verifier loops, checkpointing. You <em>already hand-built</em> this at Brane (agent loop, tool registry, retry-with-feedback verifier). LangGraph is just the named, standard version.</p>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2"><b class="text-emerald-600 dark:text-emerald-400">Anchor:</b> "I built an agent loop with a verifier correction cycle by hand; here's how that maps to LangGraph's conditional edges and state graph" — turns a gap into a depth signal.</p>
+          <details class="mt-3"><summary class="text-xs font-medium text-indigo-600 dark:text-indigo-400">Recall check →</summary><p class="text-sm mt-2 text-zinc-700 dark:text-zinc-300">"Why a graph instead of a chain for agents?" Answer: chains are linear; agents need branching, loops (retry until verifier passes), and shared state — exactly the correction loop you built at Brane.</p></details>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- STORY BANK -->
+<section id="stories" class="py-14 border-b border-zinc-200 dark:border-ink-800">
+  <h2 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white mb-2">Project story bank</h2>
+  <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl mb-8">Interviewers don't grade your code, they grade your <em>narration</em>. For each flagship, rehearse two things: the <b>Feynman line</b> (explain it simply) and the <b>depth hook</b> (the one hard decision that proves seniority). Tick when you can deliver both smoothly.</p>
+
+  <div class="space-y-3">
+
+    <details class="group rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden">
+      <summary class="flex items-center gap-3 px-5 py-4">
+        <input type="checkbox" data-key="story-5g" class="track w-5 h-5 rounded accent-indigo-600 shrink-0" onclick="event.stopPropagation()">
+        <span class="font-semibold text-zinc-900 dark:text-white">5G Failure-Detection Pipeline</span>
+        <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">flagship · telecom</span>
+        <span class="ml-auto text-zinc-400 group-open:rotate-180 transition">▾</span>
+      </summary>
+      <div class="px-5 pb-5 pt-1 text-sm space-y-2 text-zinc-700 dark:text-zinc-300 border-t border-zinc-100 dark:border-ink-800">
+        <p><b class="text-zinc-900 dark:text-white">Feynman:</b> "Network logs are huge and cryptic. My tool reads the packet capture, finds the error, looks up similar past errors in a smart database, and asks Claude to suggest the fix — turning hours of log-reading into seconds."</p>
+        <p><b class="text-zinc-900 dark:text-white">Depth hook:</b> Qdrant over FAISS because it filters by vendor/layer <em>at the DB level before</em> similarity ranking — so a Nokia error never surfaces an Ericsson fix. That's a real correctness failure you designed out.</p>
+        <p><b class="text-amber-600 dark:text-amber-400">Watch:</b> the 70%/55% numbers (use your measurement script); sentence-transformers is pip-installed but the shown code uses OpenAI embeddings — don't claim self-hosted embeddings; pcaps carry IMSI, so have a PII answer ready.</p>
+      </div>
+    </details>
+
+    <details class="group rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden">
+      <summary class="flex items-center gap-3 px-5 py-4">
+        <input type="checkbox" data-key="story-nftrace" class="track w-5 h-5 rounded accent-indigo-600 shrink-0" onclick="event.stopPropagation()">
+        <span class="font-semibold text-zinc-900 dark:text-white">NFTRACE</span>
+        <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">flagship · telecom</span>
+        <span class="ml-auto text-zinc-400 group-open:rotate-180 transition">▾</span>
+      </summary>
+      <div class="px-5 pb-5 pt-1 text-sm space-y-2 text-zinc-700 dark:text-zinc-300 border-t border-zinc-100 dark:border-ink-800">
+        <p><b class="text-zinc-900 dark:text-white">Feynman:</b> "Testing 5G means capturing traffic across many network boxes at once without them stepping on each other. I built a REST service that starts/stops/merges those captures, keeps each test run isolated in Redis, and validates the protocol flows automatically inside Nokia's CI."</p>
+        <p><b class="text-zinc-900 dark:text-white">Depth hook (your best impact story):</b> a test could "pass execution but fail trace validation" — you decoupled assertion-level correctness from network-protocol correctness, catching a previously invisible bug class. That's an org-level workflow change, not a metric.</p>
+        <p><b class="text-amber-600 dark:text-amber-400">Watch:</b> <code class="text-xs bg-zinc-100 dark:bg-ink-800 px-1 rounded">multiprocessing.Pool</code> gives concurrent <em>dispatch</em>, not synchronized start — don't oversell "exact same instant"; the SIP rule snippet reads like a stub, so frame code excerpts as illustrative.</p>
+      </div>
+    </details>
+
+    <details class="group rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden">
+      <summary class="flex items-center gap-3 px-5 py-4">
+        <input type="checkbox" data-key="story-eval" class="track w-5 h-5 rounded accent-indigo-600 shrink-0" onclick="event.stopPropagation()">
+        <span class="font-semibold text-zinc-900 dark:text-white">LLM Evaluation Framework</span>
+        <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400">differentiator</span>
+        <span class="ml-auto text-zinc-400 group-open:rotate-180 transition">▾</span>
+      </summary>
+      <div class="px-5 pb-5 pt-1 text-sm space-y-2 text-zinc-700 dark:text-zinc-300 border-t border-zinc-100 dark:border-ink-800">
+        <p><b class="text-zinc-900 dark:text-white">Feynman:</b> "AI models silently get worse when a vendor updates them. My system automatically grades AI answers four ways — including whether it stuck to the retrieved facts — and alerts the team before users notice."</p>
+        <p><b class="text-zinc-900 dark:text-white">Depth hook:</b> faithfulness ≠ accuracy — high faithfulness + wrong answer means a retrieval problem; low faithfulness means context leakage. That diagnostic distinction is genuine eval-design nuance most people miss. Also: Celery over BackgroundTasks for CI-gate durability, and AND-logic (not averaged) pass/fail so a critical failure can't be masked.</p>
+        <p><b class="text-amber-600 dark:text-amber-400">Watch:</b> "4 min vs 3 days" is from a <em>simulated</em> drift scenario — say so; no judge-calibration-against-humans yet (have the answer: spot-check a labelled set).</p>
+      </div>
+    </details>
+
+    <details class="group rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden">
+      <summary class="flex items-center gap-3 px-5 py-4">
+        <input type="checkbox" data-key="story-bias" class="track w-5 h-5 rounded accent-indigo-600 shrink-0" onclick="event.stopPropagation()">
+        <span class="font-semibold text-zinc-900 dark:text-white">Bias &amp; Fairness Auditor</span>
+        <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400">stats depth</span>
+        <span class="ml-auto text-zinc-400 group-open:rotate-180 transition">▾</span>
+      </summary>
+      <div class="px-5 pb-5 pt-1 text-sm space-y-2 text-zinc-700 dark:text-zinc-300 border-t border-zinc-100 dark:border-ink-800">
+        <p><b class="text-zinc-900 dark:text-white">Feynman:</b> "Change only the name on a prompt from Priya to James, run it hundreds of times, and measure if the AI treats them differently — with real statistics so it's signal, not noise — then produce a regulator-ready report."</p>
+        <p><b class="text-zinc-900 dark:text-white">Depth hook:</b> ANOVA + Cohen's d (significance <em>and</em> effect size) because LLM output is stochastic; and a <em>blind</em> judge — demographics stripped before scoring so your bias detector isn't itself biased.</p>
+        <p><b class="text-amber-600 dark:text-amber-400">Watch (own it):</b> composite weights sum to 0.85 — the length dimension (15%) is defined but never applied. If asked "do your weights sum to 1?", say plainly: "No — that's a real bug, partial rollout I didn't renormalize. Here's the one-line fix." Owning it cold is a maturity win.</p>
+      </div>
+    </details>
+
+    <details class="group rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden">
+      <summary class="flex items-center gap-3 px-5 py-4">
+        <input type="checkbox" data-key="story-ems" class="track w-5 h-5 rounded accent-indigo-600 shrink-0" onclick="event.stopPropagation()">
+        <span class="font-semibold text-zinc-900 dark:text-white">EMS 2.0 &amp; RF Keyword Generator</span>
+        <span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-ink-800 text-zinc-500">RAG · hybrid-LLM</span>
+        <span class="ml-auto text-zinc-400 group-open:rotate-180 transition">▾</span>
+      </summary>
+      <div class="px-5 pb-5 pt-1 text-sm space-y-2 text-zinc-700 dark:text-zinc-300 border-t border-zinc-100 dark:border-ink-800">
+        <p><b class="text-zinc-900 dark:text-white">EMS Feynman:</b> "Drop a resume in, chat with your employee database in plain English. A local model extracts the data, three databases each store what they're best at, and vector search answers 'find a DevOps engineer' even when those words aren't on the resume."</p>
+        <p><b class="text-zinc-900 dark:text-white">RF-Gen depth hook (your cleanest design story):</b> LLM only for what's unpredictable (natural language), deterministic templates for what's fixed (Robot Framework syntax), and the <em>real RF parser</em> as the validation gate — plus regex fallback for 100% uptime when the LLM fails. That "don't ask the LLM to do everything" instinct is exactly what senior AI hiring looks for.</p>
+        <p><b class="text-amber-600 dark:text-amber-400">Watch:</b> EMS has no auth (PII!) — answer JWT+RBAC; the 4400-line <code class="text-xs bg-zinc-100 dark:bg-ink-800 px-1 rounded">main.py</code> — have a "here's how I'd refactor into modules" answer; personal projects have no tests — acknowledge and contrast with your telecom 3-tier testing.</p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<!-- LANDMINES -->
+<section id="landmines" class="py-14 border-b border-zinc-200 dark:border-ink-800">
+  <h2 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white mb-2">Landmine answers</h2>
+  <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl mb-8">Three questions can sink an otherwise strong interview because they cut across <em>every</em> project. Rehearse one honest answer for each — spoken, not just read.</p>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="text-3xl mb-2">📏</div>
+      <h3 class="font-semibold text-zinc-900 dark:text-white mb-1">"How did you measure that?"</h3>
+      <p class="text-sm text-zinc-600 dark:text-zinc-400">Every % is an internal operational metric vs a manual baseline, not a controlled study. Say that plainly and describe how you counted. Never invent an A/B test.</p>
+    </div>
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="text-3xl mb-2">📈</div>
+      <h3 class="font-semibold text-zinc-900 dark:text-white mb-1">"How does it scale?"</h3>
+      <p class="text-sm text-zinc-600 dark:text-zinc-400">Your Celery/async/sharding scale-outs are <em>designed, not built or load-tested</em>. Say "proposed, not shipped" — then reason through it live. Pretending it's in prod is the trap.</p>
+    </div>
+    <div class="rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+      <div class="text-3xl mb-2">🧪</div>
+      <h3 class="font-semibold text-zinc-900 dark:text-white mb-1">"How did you test it?"</h3>
+      <p class="text-sm text-zinc-600 dark:text-zinc-400">Telecom projects have real 3-tier testing — lead with those. Personal projects have none — acknowledge it and say what you'd add, don't bluff a test suite that isn't there.</p>
+    </div>
+  </div>
+  <div class="mt-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50 p-5">
+    <p class="text-sm text-emerald-900 dark:text-emerald-200"><b>Your unfair advantage:</b> almost no AI-engineer candidate has real 5G-Core domain depth — AMF/AUSF, Diameter, NAS cause codes, 3GPP SBI endpoint names, Nokia NCD/TAF. It's hard to fake and impossible to cram. When a JD is telecom-adjacent, make it the spine of your pitch, not a footnote.</p>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section id="calendar" class="py-14">
+  <h2 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white mb-2">Spaced-repetition calendar</h2>
+  <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl mb-8">A topic reviewed once is forgotten. This 3-week cadence revisits each item on widening gaps (day 1 → 3 → 7 → 14), interleaving new learning with recall of old. Two focused 45-minute blocks a day is enough. Adjust dates to your real timeline.</p>
+
+  <div class="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-ink-800">
+    <table class="w-full text-sm min-w-[640px]">
+      <thead class="bg-zinc-100 dark:bg-ink-900 text-zinc-500 text-xs uppercase tracking-wide">
+        <tr><th class="text-left font-medium px-4 py-3">Days</th><th class="text-left font-medium px-4 py-3">New (learn + active recall)</th><th class="text-left font-medium px-4 py-3">Review (spaced)</th><th class="text-left font-medium px-4 py-3">Rehearse aloud</th></tr>
+      </thead>
+      <tbody class="divide-y divide-zinc-100 dark:divide-ink-800">
+        <tr><td class="px-4 py-3 font-medium text-zinc-900 dark:text-white">1–2</td><td class="px-4 py-3">System design at scale · Measurement answer</td><td class="px-4 py-3 text-zinc-500">—</td><td class="px-4 py-3">5G pipeline story</td></tr>
+        <tr><td class="px-4 py-3 font-medium text-zinc-900 dark:text-white">3–4</td><td class="px-4 py-3">Fine-tuning concepts + tiny LoRA run</td><td class="px-4 py-3 text-zinc-600 dark:text-zinc-400">System design</td><td class="px-4 py-3">NFTRACE story</td></tr>
+        <tr><td class="px-4 py-3 font-medium text-zinc-900 dark:text-white">5–6</td><td class="px-4 py-3">Own-the-gaps scripts · Observability</td><td class="px-4 py-3 text-zinc-600 dark:text-zinc-400">Measurement · System design</td><td class="px-4 py-3">LLM Eval story</td></tr>
+        <tr><td class="px-4 py-3 font-medium text-zinc-900 dark:text-white">7</td><td class="px-4 py-3 text-zinc-500">rest / mock interview</td><td class="px-4 py-3 text-zinc-600 dark:text-zinc-400">Everything from days 1–6</td><td class="px-4 py-3">Full behavioral pass</td></tr>
+        <tr><td class="px-4 py-3 font-medium text-zinc-900 dark:text-white">8–9</td><td class="px-4 py-3">AWS refresh · CI/CD pipeline design</td><td class="px-4 py-3 text-zinc-600 dark:text-zinc-400">Fine-tuning · Observability</td><td class="px-4 py-3">Bias Auditor (own the bug)</td></tr>
+        <tr><td class="px-4 py-3 font-medium text-zinc-900 dark:text-white">10–11</td><td class="px-4 py-3">LangGraph (map from your agent loop)</td><td class="px-4 py-3 text-zinc-600 dark:text-zinc-400">AWS · gaps scripts</td><td class="px-4 py-3">RF-Gen hybrid-LLM story</td></tr>
+        <tr><td class="px-4 py-3 font-medium text-zinc-900 dark:text-white">12–13</td><td class="px-4 py-3">Tier 2: K8s deploy · classic-ML literacy</td><td class="px-4 py-3 text-zinc-600 dark:text-zinc-400">CI/CD · LangGraph · System design</td><td class="px-4 py-3">EMS (own no-auth)</td></tr>
+        <tr><td class="px-4 py-3 font-medium text-zinc-900 dark:text-white">14</td><td class="px-4 py-3 text-zinc-500">full mock interview</td><td class="px-4 py-3 text-zinc-600 dark:text-zinc-400">All Tier 0 + landmines</td><td class="px-4 py-3">3 landmine answers cold</td></tr>
+        <tr><td class="px-4 py-3 font-medium text-zinc-900 dark:text-white">15–21</td><td class="px-4 py-3">Tier 2/3 breadth · target-JD specifics</td><td class="px-4 py-3 text-zinc-600 dark:text-zinc-400">Rotate weakest 3 topics daily</td><td class="px-4 py-3">Tailor pitch per company</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-8 flex items-center gap-4 rounded-2xl border border-zinc-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5">
+    <div class="shrink-0">
+      <div class="relative w-16 h-16">
+        <svg class="w-16 h-16 -rotate-90" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" class="stroke-zinc-200 dark:stroke-ink-800" stroke-width="3"></circle><circle id="ringProg" cx="18" cy="18" r="15.9" fill="none" class="stroke-indigo-600" stroke-width="3" stroke-dasharray="100" stroke-dashoffset="100" stroke-linecap="round"></circle></svg>
+        <span id="ringLabel" class="absolute inset-0 grid place-items-center text-xs font-bold tabular-nums text-zinc-900 dark:text-white">0%</span>
+      </div>
+    </div>
+    <div>
+      <h3 class="font-semibold text-zinc-900 dark:text-white">Your readiness</h3>
+      <p class="text-sm text-zinc-600 dark:text-zinc-400">Ticked topics + rehearsed stories. Clear every <span class="text-rose-600 font-medium">Tier 0</span> card before you interview — that's the line between "impressive projects" and "impressive <em>and</em> can defend them."</p>
+      <button id="resetBtn" class="mt-2 text-xs text-zinc-500 hover:text-rose-600 underline underline-offset-2">reset progress</button>
+    </div>
+  </div>
+</section>
+
+<footer class="max-w-6xl mx-auto px-5 py-10 border-t border-zinc-200 dark:border-ink-800 text-xs text-zinc-500 dark:text-zinc-500">
+  Built from 24 target job descriptions, your resume, and full deep-dives of all nine projects (2026-07-07). Demand counts are how many of the 24 JDs mention each topic. Verify any specific claim against the underlying report before quoting it in an interview — this guide summarizes and prioritizes, it doesn't replace the source.
+</footer>
+
+</main>
+
+<script>
+  // theme
+  const root = document.documentElement;
+  const saved = localStorage.getItem('sg-theme');
+  if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches)) root.classList.add('dark');
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    root.classList.toggle('dark');
+    localStorage.setItem('sg-theme', root.classList.contains('dark') ? 'dark' : 'light');
+  });
+
+  // progress persistence
+  const boxes = Array.from(document.querySelectorAll('.track'));
+  const KEY = 'sg-progress-v1';
+  const state = JSON.parse(localStorage.getItem(KEY) || '{}');
+  boxes.forEach(b => { if (state[b.dataset.key]) b.checked = true; b.addEventListener('change', () => { state[b.dataset.key] = b.checked; localStorage.setItem(KEY, JSON.stringify(state)); render(); }); });
+
+  function render(){
+    const done = boxes.filter(b => b.checked).length;
+    const pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
+    document.getElementById('progBar').style.width = pct + '%';
+    document.getElementById('progLabel').textContent = pct + '%';
+    const ring = document.getElementById('ringProg');
+    ring.style.strokeDashoffset = (100 - pct);
+    document.getElementById('ringLabel').textContent = pct + '%';
+  }
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (!confirm('Reset all ticked progress?')) return;
+    localStorage.removeItem(KEY); boxes.forEach(b => b.checked = false); render();
+  });
+  render();
+</script>
+</body>
+</html>

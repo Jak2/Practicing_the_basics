@@ -3,7 +3,7 @@ from core.trend_models import TrendItem, TrendState
 from core.trend_store import load_trends, save_trends, delete_trend
 
 
-def make_item(slug="x", source="reddit") -> TrendItem:
+def make_item(slug="x", source="civitai") -> TrendItem:
     return TrendItem(
         id=f"id-{slug}", prompt=f"prompt {slug}", source=source, kind="text",
         engagement=10, fetched_at=datetime.now(UTC),

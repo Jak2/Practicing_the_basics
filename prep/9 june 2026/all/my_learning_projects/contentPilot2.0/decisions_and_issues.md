@@ -35,6 +35,18 @@ dashboard templates, and tests; full suite (39 tests) passes.
 
 ---
 
+## Decisions (2.0)
+
+### DECISION-3 (2026-07-06): Reddit dropped as trend-engine source
+
+Reddit script-app creation was blocked (reCAPTCHA never loads with the user's browser
+extensions) and credentials in `.env` were placeholders. The trend engine keeps two sources —
+prompts.chat (text, CC0, keyless) and Civitai (image, free token) — which cover both prompt
+kinds. `agents/sources/reddit_trends.py` deleted; `TrendItem.source` literal narrowed.
+Re-adding later = new adapter file + one registry line in `agents/sources/__init__.py`.
+
+---
+
 ## Current Bugs
 
 These are broken at runtime and should be fixed first.

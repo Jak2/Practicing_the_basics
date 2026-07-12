@@ -17,7 +17,7 @@ class TrendInsight(BaseModel):
 class TrendItem(BaseModel):
     id: str
     prompt: str
-    source: Literal["civitai", "promptschat", "reddit"]
+    source: Literal["civitai", "promptschat"]
     kind: Literal["image", "text"]
     image_url: str | None = None
     source_url: str = ""

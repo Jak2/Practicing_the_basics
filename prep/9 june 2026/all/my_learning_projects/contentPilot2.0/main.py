@@ -13,7 +13,7 @@ console = Console()
 
 @app.command("trends")
 def trends(
-    sources: str = typer.Option("reddit,civitai,promptschat", "--sources", help="Comma-separated: reddit, civitai, promptschat"),
+    sources: str = typer.Option("civitai,promptschat", "--sources", help="Comma-separated: civitai, promptschat"),
     top: int = typer.Option(20, "--top", min=1, max=100, help="How many ranked trends to keep"),
 ):
     """Fetch viral prompts, score them, extract insights, store to trends.json."""

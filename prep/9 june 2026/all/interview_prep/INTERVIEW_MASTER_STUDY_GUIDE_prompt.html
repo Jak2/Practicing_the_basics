@@ -1,0 +1,59 @@
+Build me a single self-contained HTML interview study guide for my job search.
+
+INPUTS TO READ FIRST (use multiple parallel agents to read/explore):
+- My resume: interview_prep/resume_prep/Jaya_Arun_Kumar_Resume_Ai_Engineer_Python_Developer.pdf
+- Every job description under interview_prep/job_description/ (recurse all subfolders;
+.md and .docx; skip derived study-guides and non-JD files). Count how many JDs mention
+each skill/topic to get a real demand ranking.
+- my_learning_projects/LEARNING_GUIDE.html
+- These 9 project reports in interview_prep/resume_prep/:
+5G_Failure_Detection_Pipeline_Deep_Dive.md, NFTRACE_Deep_Dive.md,
+RF_Keyword_Generator_Deep_Dive.md, LLM_EVAL_FRAMEWORK_REPORT.md,
+Bias_Fairness_Auditor_Report_PROJECT_REPORT.md,
+Prompt_Regression_Suite_Report_FULL_PROJECT_REPORT.md, EMS_2.0_PROJECT_REPORT.md,
+expense_tracker_PROJECT_REPORT.md, BLOG_PROJECT_REPORT.md
+- IGNORE interview_prep/resume_prep/to_explain_interviewer and any old STUDY_GUIDE files.
+
+MY GOAL: I need to clearly UNDERSTAND everything I've built so I can explain it to an
+interviewer. Assume I know nothing — explain from zero, tutorial-style, descriptive, not
+terse. My focus is narrating what I did, not memorizing definitions.
+
+DIAGNOSIS:
+- Map every skill/topic into Known (shipped, defensible) vs Partial (thin/dated/hypothetical)
+vs Gap (little evidence), driven by JD demand vs what my projects prove.
+- Rank study priority by Pareto: demand x gap. Highest-leverage first.
+
+THE GUIDE MUST CONTAIN THESE SECTIONS:
+1. Study method — the famous evidence-based techniques (active recall, spaced repetition,
+Feynman, interleaving, build-to-learn, name-the-road-not-taken) and how to use them.
+2. Market demand — topics ranked by how many JDs asked, color-coded Known/Partial/Gap.
+3. Proven arsenal — my Known skills, grouped.
+4. Gap map — Partial/Gap items in ROI tiers, each with a small "prove it" build.
+5. A paced study plan (weekly) + a spaced-repetition review calendar.
+6. Project deep-dive dossier — ALL 9 projects, each with: Feynman one-liner, concepts proven,
+depth signals worth rehearsing, likely interview questions TAGGED strong/thin/gap, and
+watch-outs to pre-empt. Flag my 5G/telecom domain as the differentiator.
+7. Guided walkthroughs — each flagship project as a plain-English, high-level, numbered
+step-by-step STORY from input to output; every step names the library AND why I chose it
+over the obvious alternative, jargon glossed inline; end each with "the one line they'll
+remember." Reading it out loud should BE my interview answer.
+8. Technique textbook — every technique/pattern/library across the projects, each taught as
+What it is / Why it's a strong choice (impressive framing) / How it works under the hood /
+a model answer I can say almost verbatim.
+9. Concepts, principles & system-design patterns — categorized inventory of the IDEAS (not
+just tools): design patterns, engineering principles, AI/LLM techniques, telecom domain.
+10. Skills 101 — EVERY skill on my resume explained from zero: What it is (assume no
+knowledge) / Where I used it (which project) / The concept/library to name.
+11. Landmine answers — the cross-cutting risks (my % metrics have no stated baseline; my
+scale-outs are designed-not-built; personal projects have no tests) with one honest
+rehearsed answer each.
+12. Full technology index table — every tech, color-coded by status.
+
+FRAMING THROUGHOUT: "most candidates show a CRUD app or a notebook; I show systems with
+judgment calls." Lead every explanation with the DECISION, not the tool. Be honest about
+gaps — turn self-disclosed weaknesses into maturity signals, never overclaim.
+
+OUTPUT: one self-contained HTML file using Tailwind (CDN), minimalist modern design, light
++ dark mode with a toggle, sticky nav to every section, and checkboxes whose state persists
+in localStorage so I can track progress. Validate that tags balance, all nav anchors resolve,
+and both themes work before finishing.

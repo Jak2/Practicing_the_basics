@@ -2,7 +2,6 @@ import json
 from unittest.mock import MagicMock
 from agents.sources.civitai import CivitaiSource
 from agents.sources.promptschat import PromptsChatSource
-from agents.sources.reddit_trends import RedditTrendsSource
 
 CIVITAI_FIXTURE = {
     "items": [
@@ -59,29 +58,3 @@ def test_promptschat_parses_rows(mocker):
     assert "Ethereum Developer" in items[0].prompt or items[0].prompt.startswith("Imagine")
 
 
-def test_reddit_parses_text_and_image_posts(mocker):
-    text_post = MagicMock(
-        title="My mega prompt", selftext="Act as a career coach and...",
-        score=420, permalink="/r/ChatGPTPromptGenius/1", url="https://reddit.com/x",
-    )
-    image_post = MagicMock(
-        title="cinematic portrait, 85mm, volumetric light", selftext="",
-        score=2100, permalink="/r/StableDiffusion/2", url="https://i.redd.it/pic.jpg",
-    )
-    sub = MagicMock()
-    sub.top.return_value = [text_post]
-    img_sub = MagicMock()
-    img_sub.top.return_value = [image_post]
-    reddit = MagicMock()
-    reddit.subreddit.side_effect = lambda name: img_sub if name in ("StableDiffusion", "midjourney") else sub
-    mocker.patch("agents.sources.reddit_trends.praw.Reddit", return_value=reddit)
-
-    items = RedditTrendsSource().fetch(limit=5)
-
-    kinds = {i.kind for i in items}
-    assert "text" in kinds and "image" in kinds
-    img = next(i for i in items if i.kind == "image")
-    assert img.image_url == "https://i.redd.it/pic.jpg"
-    assert img.engagement == 2100
-    txt = next(i for i in items if i.kind == "text")
-    assert txt.prompt.startswith("Act as a career coach")

@@ -7,7 +7,7 @@ from agents.insight_extractor import InsightExtractor
 
 def make_item(prompt="cinematic portrait, 85mm") -> TrendItem:
     return TrendItem(
-        id="abc", prompt=prompt, source="reddit", kind="image",
+        id="abc", prompt=prompt, source="civitai", kind="image",
         engagement=100, fetched_at=datetime.now(UTC),
     )
 

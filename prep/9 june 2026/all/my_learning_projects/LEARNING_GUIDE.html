@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Notes — my_learning_projects</title>
+<style>
+  :root{
+    --bg:#eef1ec; --paper:#f6f8f4; --ink:#1c231f; --ink-dim:#5b665e;
+    --rule:#cfd6cc; --rule-strong:#a9b3a3;
+    --accent:#a13d2c; --accent-soft:#c17a6c;
+    --moss:#3f7d54; --steel:#3a6ea5; --plum:#7a5a9e; --ochre:#8a6415;
+    --mono:ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Consolas,monospace;
+    --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Georgia,"Times New Roman",serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#14181a; --paper:#1b2225; --ink:#dfe6e0; --ink-dim:#8a978f;
+      --rule:#2b3336; --rule-strong:#3c4649;
+      --accent:#d97a63; --accent-soft:#a85a48;
+      --moss:#7fd19a; --steel:#7fb3e0; --plum:#c3a3e6; --ochre:#e0b25c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14181a; --paper:#1b2225; --ink:#dfe6e0; --ink-dim:#8a978f;
+    --rule:#2b3336; --rule-strong:#3c4649;
+    --accent:#d97a63; --accent-soft:#a85a48;
+    --moss:#7fd19a; --steel:#7fb3e0; --plum:#c3a3e6; --ochre:#e0b25c;
+  }
+  :root[data-theme="light"]{
+    --bg:#eef1ec; --paper:#f6f8f4; --ink:#1c231f; --ink-dim:#5b665e;
+    --rule:#cfd6cc; --rule-strong:#a9b3a3;
+    --accent:#a13d2c; --accent-soft:#c17a6c;
+    --moss:#3f7d54; --steel:#3a6ea5; --plum:#7a5a9e; --ochre:#8a6415;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  body{
+    margin:0; background:var(--bg); color:var(--ink); font-family:var(--serif);
+    font-size:16px; line-height:1.65;
+    background-image:repeating-linear-gradient(var(--bg) 0 34px, var(--rule) 34px 35px);
+  }
+  a{color:var(--accent);}
+  code, .mono{font-family:var(--mono);}
+  .wrap{display:flex; max-width:1360px; margin:0 auto;}
+
+  /* index rail */
+  nav{
+    position:sticky; top:0; align-self:flex-start; height:100vh; overflow-y:auto;
+    width:248px; flex-shrink:0; padding:2.2rem 1.1rem 2rem;
+    background:var(--paper); border-right:1px solid var(--rule-strong);
+  }
+  nav .mark{font-family:var(--mono); font-size:.72rem; letter-spacing:.09em; color:var(--accent); text-transform:uppercase;}
+  nav .title{font-family:var(--serif); font-size:1.3rem; font-weight:600; margin:.25rem 0 .1rem; text-wrap:balance;}
+  nav .sub{font-family:var(--mono); font-size:.7rem; color:var(--ink-dim); margin-bottom:1.6rem; line-height:1.5;}
+  nav h2{font-family:var(--mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-dim); margin:1.4rem 0 .3rem; border-top:1px solid var(--rule); padding-top:.6rem;}
+  nav h2:first-of-type{border-top:none;}
+  nav a{display:flex; gap:.5rem; align-items:baseline; text-decoration:none; color:var(--ink); font-size:.86rem; padding:.22rem .3rem; border-radius:2px;}
+  nav a:hover{color:var(--accent);}
+  nav a .tag{font-family:var(--mono); font-size:.65rem; color:var(--ink-dim); flex-shrink:0;}
+  @media (max-width:900px){ nav{display:none;} }
+
+  main{flex:1; min-width:0; padding:3rem 3.4rem 5rem;}
+  @media (max-width:900px){ main{padding:1.6rem;} }
+
+  h1{font-family:var(--serif); font-size:2.1rem; font-weight:600; margin:0 0 .3rem; text-wrap:balance;}
+  .stamp{
+    display:inline-block; font-family:var(--mono); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent); border:1px solid var(--accent-soft); border-radius:2px; padding:.15rem .5rem; margin-bottom:.9rem;
+  }
+  .lede{color:var(--ink-dim); font-size:1.05rem; max-width:64ch; margin-bottom:2.4rem;}
+
+  h2.section{
+    font-family:var(--serif); font-size:1.5rem; font-weight:600; margin:3.6rem 0 1.3rem;
+    padding-bottom:.5rem; border-bottom:2px solid var(--rule-strong); scroll-margin-top:1rem; text-wrap:balance;
+  }
+  h2.section .num{font-family:var(--mono); font-size:.9rem; color:var(--accent); margin-right:.6rem; letter-spacing:.02em;}
+
+  .callout{
+    background:var(--paper); border:1px solid var(--rule); border-left:3px solid var(--accent);
+    border-radius:2px; padding:1rem 1.3rem; margin:1.4rem 0; font-size:.95rem;
+  }
+  .callout strong{font-family:var(--mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:.3rem; color:var(--accent);}
+
+  /* matrix table */
+  .scroll{overflow-x:auto;}
+  table{width:100%; border-collapse:collapse; font-size:.9rem;}
+  th,td{text-align:left; padding:.55rem .8rem; border-bottom:1px solid var(--rule); vertical-align:top;}
+  th{font-family:var(--mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-dim); font-weight:500;}
+  td.num, th.num{font-variant-numeric:tabular-nums;}
+  tr:hover td{background:var(--paper);}
+  .kind{font-family:var(--mono); font-size:.72rem; padding:.05rem .4rem; border:1px solid currentColor; border-radius:2px; white-space:nowrap;}
+  .kind.ai{color:var(--steel);} .kind.full{color:var(--plum);} .kind.front{color:var(--moss);} .kind.infra{color:var(--ochre);}
+
+  /* log entries */
+  .entry{margin-bottom:3.2rem; scroll-margin-top:1rem;}
+  .entry-head{display:flex; align-items:baseline; gap:.8rem; flex-wrap:wrap; border-top:1px solid var(--rule-strong); padding-top:.9rem;}
+  .entry-id{font-family:var(--mono); font-size:.78rem; color:var(--accent); letter-spacing:.03em;}
+  .entry h3{font-family:var(--serif); font-size:1.35rem; font-weight:600; margin:.15rem 0 .1rem; text-wrap:balance;}
+  .entry .stack-line{font-family:var(--mono); font-size:.76rem; color:var(--ink-dim); margin-bottom:.7rem;}
+  .entry p.desc{margin:.4rem 0 1rem; max-width:70ch;}
+
+  .ledger{width:100%; border-collapse:collapse; font-size:.88rem; margin-top:.6rem;}
+  .ledger td{padding:.5rem .9rem .5rem 0; vertical-align:top; border-bottom:1px solid var(--rule);}
+  .ledger tr:last-child td{border-bottom:none;}
+  .ledger .lens{
+    width:118px; font-family:var(--mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.05em;
+    border-left:3px solid var(--rule); padding-left:.7rem; color:var(--ink-dim);
+  }
+  .ledger .lens.learned{border-color:var(--moss); color:var(--moss);}
+  .ledger .lens.approach{border-color:var(--steel); color:var(--steel);}
+  .ledger .lens.alt{border-color:var(--plum); color:var(--plum);}
+  .ledger .lens.bug{border-color:var(--accent); color:var(--accent);}
+  .ledger ul{margin:0; padding-left:1.1rem;}
+  .ledger li{margin:.25rem 0;}
+  .ledger li::marker{color:var(--ink-dim);}
+
+  /* bug taxonomy */
+  .bugnote{border-left:3px solid var(--accent); background:var(--paper); border-radius:2px; padding:.9rem 1.2rem; margin-bottom:.9rem;}
+  .bugnote .bn-id{font-family:var(--mono); font-size:.68rem; color:var(--accent); letter-spacing:.05em; text-transform:uppercase;}
+  .bugnote h3{font-family:var(--serif); font-size:1.05rem; margin:.2rem 0 .3rem;}
+  .bugnote p{margin:.25rem 0;}
+  .bugnote .where{color:var(--ink-dim); font-size:.88rem;}
+
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; margin:1.2rem 0;}
+  @media (max-width:760px){ .row2{grid-template-columns:1fr;} }
+  .row2 h4{font-family:var(--mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-dim); margin:0 0 .5rem;}
+  .row2 ul{margin:.2rem 0; padding-left:1.2rem;}
+  .row2 li{margin:.3rem 0;}
+
+  footer{color:var(--ink-dim); font-size:.82rem; margin-top:3.5rem; border-top:1px solid var(--rule-strong); padding-top:1.1rem; max-width:70ch;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <div class="mark">Field Notes</div>
+  <div class="title">my_learning_projects</div>
+  <div class="sub">a logbook of what got built, why, and what else was on the table — kept for interview prep.</div>
+
+  <h2>Front matter</h2>
+  <a href="#how"><span class="tag">§0</span> How to read this</a>
+
+  <h2>Overview</h2>
+  <a href="#matrix"><span class="tag">§1</span> Project index</a>
+  <a href="#themes"><span class="tag">§2</span> Recurring habits</a>
+
+  <h2>Log entries</h2>
+  <a href="#ems"><span class="tag">01</span> EMS 2.0</a>
+  <a href="#llmeval"><span class="tag">02</span> LLM Eval Fmwk</a>
+  <a href="#bias"><span class="tag">03</span> Bias Auditor</a>
+  <a href="#regression"><span class="tag">04</span> Regression Suite</a>
+  <a href="#contentpilot"><span class="tag">05</span> ContentPilot</a>
+  <a href="#trend"><span class="tag">06</span> Trend Engine</a>
+  <a href="#expense"><span class="tag">07</span> Statement Parser</a>
+  <a href="#blog"><span class="tag">08</span> Blog SSG</a>
+  <a href="#outflo"><span class="tag">09</span> Outflo / Folio</a>
+
+  <h2>Reference</h2>
+  <a href="#bugs"><span class="tag">§3</span> Bug taxonomy</a>
+  <a href="#patterns"><span class="tag">§4</span> Patterns vs alt.</a>
+  <a href="#gaps"><span class="tag">§5</span> Honest gaps</a>
+</nav>
+
+<main>
+<div class="stamp">rev. 2026-07-06 · 9 entries</div>
+<h1>What You've Been Learning</h1>
+<p class="lede">A field notebook across every project in <code>my_learning_projects</code> — what got built, the approach actually taken, what learned, what else exists on the shelf, and the classes of bugs handled. Meant to be read the night before an interview.</p>
+
+<div class="callout" id="how">
+  <strong>How to read this</strong>
+  The index (§1) is the 30-second map. Each log entry runs a four-row ledger — <span style="color:var(--moss)">learned</span>, <span style="color:var(--steel)">approach taken</span>, <span style="color:var(--plum)">alternatives on the shelf</span>, <span style="color:var(--accent)">bugs handled</span>. The value in an interview is rarely "I built the thing" — it's naming the road not taken and defending the one you drove down. §3 and §4 cut across every entry: they turn "I fixed a bug" into "I recognise this <em>class</em> of failure."
+</div>
+
+<h2 class="section" id="matrix"><span class="num">§1</span>Project index</h2>
+<div class="scroll">
+<table>
+<tr><th>Project</th><th>Kind</th><th>Core stack</th><th>The one skill it proves</th></tr>
+<tr><td><a href="#ems">EMS 2.0</a></td><td><span class="kind ai">ai</span> <span class="kind full">full-stack</span></td><td class="mono">FastAPI · Postgres · Mongo · FAISS · Ollama</td><td>Local LLM extraction with reliability guards + RAG over a real CRUD app</td></tr>
+<tr><td><a href="#llmeval">LLM Eval Framework</a></td><td><span class="kind ai">ai</span> <span class="kind infra">infra</span></td><td class="mono">FastAPI · Celery · Redis · Postgres · Docker</td><td>Async job architecture + quality gates for LLM apps</td></tr>
+<tr><td><a href="#bias">Bias &amp; Fairness Auditor</a></td><td><span class="kind ai">ai</span></td><td class="mono">FastAPI · Claude · VADER · SciPy</td><td>Statistical rigor + regulatory framing on free-text LLM output</td></tr>
+<tr><td><a href="#regression">Prompt Regression Suite</a></td><td><span class="kind ai">ai</span> <span class="kind infra">infra</span></td><td class="mono">asyncio · Pydantic · GH Actions</td><td>"pytest for prompts" — CI gate, tiered evaluation, cost control</td></tr>
+<tr><td><a href="#contentpilot">ContentPilot 1.0 / 2.0</a></td><td><span class="kind ai">ai</span> <span class="kind full">full-stack</span></td><td class="mono">Typer · FastAPI · APScheduler · Git</td><td>Autonomous agent pipeline with a human-approval gate</td></tr>
+<tr><td><a href="#trend">Trend Engine</a></td><td><span class="kind ai">ai</span> <span class="kind infra">infra</span></td><td class="mono">Python · multi-source · SQLite</td><td>Resilient multi-source ETL under real rate limits</td></tr>
+<tr><td><a href="#expense">Financial Statement Parser</a></td><td><span class="kind front">front</span> <span class="kind ai">ai</span></td><td class="mono">React · Tesseract WASM · pdf.js</td><td>Privacy-first client-side compute — file never leaves browser</td></tr>
+<tr><td><a href="#blog">Blog</a></td><td><span class="kind front">front</span></td><td class="mono">Astro · vanilla JS</td><td>Build-time vs runtime separation; algorithms without a library</td></tr>
+<tr><td><a href="#outflo">Outflo · Portfolio</a></td><td><span class="kind front">front</span></td><td class="mono">Next.js 14 · TS · Vercel</td><td>Production SSG, SEO, clean deployment</td></tr>
+</table>
+</div>
+
+<h2 class="section" id="themes"><span class="num">§2</span>Recurring habits</h2>
+<div class="row2">
+  <div>
+    <h4>What shows up entry after entry</h4>
+    <ul>
+      <li><strong>LLM output is untrusted input.</strong> Every AI project validates, retries, or gates the model's output rather than assuming well-formed responses.</li>
+      <li><strong>Human-in-the-loop by design.</strong> Draft/approve gates, quality thresholds, verdict bands — nothing acts unsupervised.</li>
+      <li><strong>Provider-swappable.</strong> Config-driven LLM choice (Gemini ↔ Ollama ↔ Claude) recurs — decoupled from any one vendor.</li>
+    </ul>
+  </div>
+  <div>
+    <h4>Engineering habits</h4>
+    <ul>
+      <li><strong>TDD &amp; test isolation</strong> — ContentPilot grew 39→98 tests; caught tests writing into real data files.</li>
+      <li><strong>Explainability over black-box</strong> — log-normalized scores, significance tests, tiered evaluation, all narratable in one sentence.</li>
+      <li><strong>Cost/latency awareness</strong> — cheap checks before expensive ones; background threads so UIs never block.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ EMS ============ -->
+<div class="entry" id="ems">
+  <div class="entry-head">
+    <span class="entry-id">LOG-01</span>
+    <h3>EMS 2.0 — AI Employee Management System</h3>
+  </div>
+  <div class="stack-line">FastAPI · PostgreSQL · MongoDB GridFS · FAISS · Ollama (qwen2.5:7b) · sentence-transformers</div>
+  <p class="desc">Upload a resume PDF/image → a local LLM extracts structured fields → stored in Postgres, indexed in FAISS → then natural-language CRUD: "find a DevOps engineer with Kubernetes experience," "update John's email." Runs on a 6GB GPU, no data leaves the machine.</p>
+  <table class="ledger">
+    <tr><td class="lens learned">learned</td><td><ul>
+      <li>Polyglot persistence — three stores because each is best at one job, not one store forced to do all three.</li>
+      <li>RAG fundamentals: retrieval gates generation so the model answers only from real records.</li>
+      <li>Deterministic LLM calls — <code>temperature=0</code>, fixed <code>seed</code>, tuned context window for reproducible extraction.</li>
+    </ul></td></tr>
+    <tr><td class="lens approach">approach</td><td><ul>
+      <li>Four-strategy JSON parse chain (direct → regex extract → regex cleanup → key-value fallback) + Pydantic validation, retries with a stricter prompt if the name is missing.</li>
+      <li>Resume scoring gate (40/100 threshold) — reject garbage before spending an LLM call.</li>
+      <li>Explicit <code>threading.Thread(daemon=True)</code>, job status written to flat files the frontend polls.</li>
+    </ul></td></tr>
+    <tr><td class="lens alt">alt. shelf</td><td><ul>
+      <li>Structured-output APIs (JSON mode, function-calling, grammar-constrained decoding via Outlines/Instructor) would shrink the parse chain — unavailable for arbitrary local Ollama models, which is why the chain exists.</li>
+      <li>Single Postgres + <code>pgvector</code> + <code>bytea</code> instead of three stores — simpler ops, loses FAISS's raw ANN speed. A fair debate either way.</li>
+      <li>A real task queue (Celery/RQ/Arq) instead of raw threads — more robust at scale, heavier to run locally.</li>
+    </ul></td></tr>
+    <tr><td class="lens bug">bugs handled</td><td><ul>
+      <li>Malformed LLM JSON, markdown-fenced output, dropped fields — the core reliability problem the parse chain solves.</li>
+      <li>Input chaos: all-caps, emoji, unicode names, punctuation walls — documented in a stress-test suite.</li>
+      <li>Async timing bugs from <code>BackgroundTasks</code> + blocking calls → switched to explicit threads.</li>
+    </ul></td></tr>
+  </table>
+</div>
+
+<!-- ============ LLM EVAL ============ -->
+<div class="entry" id="llmeval">
+  <div class="entry-head">
+    <span class="entry-id">LOG-02</span>
+    <h3>LLM Evaluation Framework</h3>
+  </div>
+  <div class="stack-line">FastAPI · Celery · Redis · PostgreSQL · Streamlit · Plotly · Docker Compose</div>
+  <p class="desc">Submit a prompt/response via API → four independent evaluators run (LLM-judge, hallucination, RAG faithfulness, consistency) → results to Postgres, Slack alert on failure, live dashboard. Catches silent "model provider drift" — a vendor updates a model, quality shifts, nothing in the API contract signals it.</p>
+  <table class="ledger">
+    <tr><td class="lens learned">learned</td><td><ul>
+      <li>Async job architecture: API returns <code>201</code> immediately, work happens on a Celery worker — the caller never waits.</li>
+      <li>"Is this true?" vs "did the model stay within retrieved context?" — the RAG faithfulness distinction.</li>
+      <li>Multi-service orchestration with Docker Compose across five services.</li>
+    </ul></td></tr>
+    <tr><td class="lens approach">approach</td><td><ul>
+      <li>Each evaluator independent with its own pass threshold — composable, individually testable.</li>
+      <li>Broker/worker split (Redis + Celery) so evaluation scales horizontally.</li>
+      <li>Dashboard polls rather than holding connections — simple, robust.</li>
+    </ul></td></tr>
+    <tr><td class="lens alt">alt. shelf</td><td><ul>
+      <li>promptfoo, Braintrust, LangSmith, Ragas, DeepEval already do this. The edge in an interview: understanding the internals, not beating them.</li>
+      <li>Arq or Dramatiq (async-native) vs Celery (mature, sync-oriented); RQ for simpler needs.</li>
+      <li>Kafka-based streaming eval if volume were high — overkill here, worth naming as the next step.</li>
+    </ul></td></tr>
+    <tr><td class="lens bug">bugs handled</td><td><ul>
+      <li>Non-determinism in scoring → averaging multiple runs to separate signal from variance.</li>
+      <li>Judge cost/latency → thresholds and ordering so expensive checks are gated behind cheap ones.</li>
+    </ul></td></tr>
+  </table>
+</div>
+
+<!-- ============ BIAS ============ -->
+<div class="entry" id="bias">
+  <div class="entry-head">
+    <span class="entry-id">LOG-03</span>
+    <h3>Bias &amp; Fairness Auditor</h3>
+  </div>
+  <div class="stack-line">FastAPI · Claude · VADER · DistilBERT · sentence-transformers · SciPy · fpdf2 · Streamlit</div>
+  <p class="desc">Run a prompt hundreds of times, vary only the demographic signal (name, age, religion), measure whether tone/content/quality differ. Produces a 0–100 bias score with a four-band verdict, remediation suggestions, and a PDF report structured for EU AI Act Article 13.</p>
+  <table class="ledger">
+    <tr><td class="lens learned">learned</td><td><ul>
+      <li>Counterfactual fairness: hold everything constant, vary one signal, attribute the difference.</li>
+      <li>Statistical significance — one run can't separate bias from random variance; needs N runs and a real test.</li>
+      <li>Layered analysis: cheap signals first (word count, VADER), ML second (DistilBERT, embeddings), LLM-judge last (blind, demographics stripped).</li>
+    </ul></td></tr>
+    <tr><td class="lens approach">approach</td><td><ul>
+      <li>Four independent analysis pipelines (sentiment, semantic, structural, LLM-judge) feeding one composite score.</li>
+      <li>Async execution with a semaphore cap to respect rate limits.</li>
+      <li>Regulatory output as a first-class feature — Article 13 docs, not an afterthought.</li>
+    </ul></td></tr>
+    <tr><td class="lens alt">alt. shelf</td><td><ul>
+      <li>IBM AIF360, Microsoft Fairlearn, Google's What-If Tool — built for tabular ML, not free-text LLM output. That gap is what this fills.</li>
+      <li>VADER (lexicon, fast) vs a fine-tuned transformer (accurate, slow) — used both, in a two-layer design.</li>
+    </ul></td></tr>
+    <tr><td class="lens bug">bugs handled</td><td><ul>
+      <li>Statistical false positives — mitigated with significance testing, not eyeballed means.</li>
+      <li>Judge contamination — demographics stripped before the LLM judge ever sees a pair.</li>
+    </ul></td></tr>
+  </table>
+</div>
+
+<!-- ============ REGRESSION ============ -->
+<div class="entry" id="regression">
+  <div class="entry-head">
+    <span class="entry-id">LOG-04</span>
+    <h3>Prompt Regression Suite</h3>
+  </div>
+  <div class="stack-line">asyncio · Pydantic v2 · GitHub Actions · Anthropic/OpenAI/Ollama · Streamlit</div>
+  <p class="desc">Each prompt gets a behavioral test suite in version-controlled YAML. Every PR touching a prompt runs its tests in CI; if quality drops below a stored baseline, the merge is blocked before the regression reaches users.</p>
+  <table class="ledger">
+    <tr><td class="lens learned">learned</td><td><ul>
+      <li>Prompts as first-class software artifacts with version-controlled tests.</li>
+      <li>Reverse-index design: changed files → affected tests, so a PR touching 3 of 80 prompts runs ~12 tests, not 80.</li>
+      <li>Deployment-gate thinking — blocking a merge, not just reporting a number.</li>
+    </ul></td></tr>
+    <tr><td class="lens approach">approach</td><td><ul>
+      <li>Tiered assertion engine: rule checks (free) → semantic similarity (local) → LLM judge (paid, last). Fail-fast roughly halves API cost.</li>
+      <li><code>asyncio.Semaphore</code> caps concurrent LLM calls without serializing everything.</li>
+      <li>Each case runs 3× and averages — one sample at temperature 0.7 is noise, not signal.</li>
+    </ul></td></tr>
+    <tr><td class="lens alt">alt. shelf</td><td><ul>
+      <li>promptfoo does much of this off the shelf — building it proves the mechanism is understood, not reinvented for its own sake.</li>
+      <li>Snapshot/exact-match testing — brittle for stochastic output, why semantic scoring was chosen instead.</li>
+    </ul></td></tr>
+    <tr><td class="lens bug">bugs handled</td><td><ul>
+      <li>Silent prompt regressions that green unit tests miss — the entire reason the project exists.</li>
+      <li>Cost blow-ups from calling the judge on everything — gated by tier ordering.</li>
+    </ul></td></tr>
+  </table>
+</div>
+
+<!-- ============ CONTENTPILOT ============ -->
+<div class="entry" id="contentpilot">
+  <div class="entry-head">
+    <span class="entry-id">LOG-05</span>
+    <h3>ContentPilot 1.0 / 2.0 — autonomous content + viral-prompt trend engine</h3>
+  </div>
+  <div class="stack-line">Typer · FastAPI · Jinja2 · APScheduler · GitPython · Pydantic · Gemini / Ollama · pytest</div>
+  <p class="desc">1.0: an agent pipeline that finds trending topics, generates posts + images, pushes to a static-site git repo — dashboard, scheduler, draft/approve gate. 2.0 adds trend intelligence: pull viral prompts from Civitai + prompts.chat, score with an explainable virality metric, use an LLM to extract <em>why</em> each prompt works.</p>
+  <table class="ledger">
+    <tr><td class="lens learned">learned</td><td><ul>
+      <li>Agent-pipeline design — one <code>Orchestrator.run()</code> reachable from CLI, dashboard button, or scheduler. One code path, three triggers.</li>
+      <li>Per-source failure isolation — one dead API marks a run "partial," doesn't kill it.</li>
+      <li>Explainable scoring — log-normalized-per-source virality, defensible in one sentence.</li>
+      <li>TDD at scale + test isolation — grew to 98 tests; caught tests writing into real data files.</li>
+    </ul></td></tr>
+    <tr><td class="lens approach">approach</td><td><ul>
+      <li>Draft-by-default — automated runs stage to a local <code>drafts/</code> folder; nothing goes live without human approval in the dashboard.</li>
+      <li>Pathspec-scoped git commits (<code>git commit -- &lt;path&gt;</code>) so a run never sweeps unrelated staged work.</li>
+      <li>In-process APScheduler inside the dashboard — one process is the whole control plane; cron documented as the headless alternative.</li>
+    </ul></td></tr>
+    <tr><td class="lens alt">alt. shelf</td><td><ul>
+      <li>Agent frameworks (LangChain, LangGraph, CrewAI) instead of a hand-rolled orchestrator — more features, more magic, harder to reason about. Legibility was chosen deliberately.</li>
+      <li>Scheduling: in-process APScheduler vs system cron vs Celery-beat vs a cloud scheduler — shipped the first, documented the second.</li>
+      <li>Git-based publish vs a headless CMS API — git gives free version history for the cost of a commit step.</li>
+    </ul></td></tr>
+    <tr><td class="lens bug">bugs handled</td><td><ul>
+      <li><strong>Git index sweep:</strong> <code>index.commit()</code> committed the whole staged index; a run could publish unrelated uncommitted work. Fixed with pathspec-scoped commits + a regression test.</li>
+      <li><strong>Vendor rug-pull:</strong> <code>gemini-2.0-flash</code> free-tier quota silently went to zero — extraction returned zero insights with exit code 0. Diagnosed via the quota error, switched models.</li>
+      <li><strong>Test pollution:</strong> orchestrator tests omitted a path arg and wrote fake runs into the real <code>run_log.json</code>. Isolated to tmp dirs, purged 19 fake entries.</li>
+      <li><strong>Swallowed exceptions:</strong> HackerNews errors caught silently, dashboard showed a green step for a failed fetch. Let them propagate.</li>
+      <li><strong>Data migration:</strong> renamed a status enum (<code>pushed→published</code>); old <code>manifest.json</code> files crashed on load until a <code>field_validator</code> migrated them.</li>
+      <li><strong>Static-mount 404:</strong> draft images referenced a route with no mount — added a dedicated static mount.</li>
+    </ul></td></tr>
+  </table>
+</div>
+
+<!-- ============ TREND ENGINE ============ -->
+<div class="entry" id="trend">
+  <div class="entry-head">
+    <span class="entry-id">LOG-06</span>
+    <h3>Trend Engine</h3>
+  </div>
+  <div class="stack-line">Python · HN/Reddit/YouTube/Wikipedia collectors · LLM dedup · SQLite · stdlib dashboard</div>
+  <p class="desc">Collects viral signals from four platforms, scores them, deduplicates + explains them with an LLM pass, publishes a ranked Top-100 report with per-platform content briefs. A zero-dependency dashboard shows pipeline stages lighting up live.</p>
+  <table class="ledger">
+    <tr><td class="lens learned">learned</td><td><ul>
+      <li>Real-world ETL resilience — per-item batch isolation so one bad record doesn't sink a stage.</li>
+      <li>Working with rate limits, not against them — pacing and RSS fallbacks.</li>
+      <li>Cold-start problems in scoring — percentile ranking with little data.</li>
+    </ul></td></tr>
+    <tr><td class="lens approach">approach</td><td><ul>
+      <li>LLM as a dedup/enrichment pass over clustered signals, with enum-fallback validation.</li>
+      <li>Run-row logging + guaranteed DB-connection close even on stage crash.</li>
+      <li>Shared User-Agent header across collectors to stay within platform etiquette.</li>
+    </ul></td></tr>
+    <tr><td class="lens alt">alt. shelf</td><td><ul>
+      <li>Orchestrators (Airflow, Dagster, Prefect) for scheduled pipelines — heavier, real observability and retries. Hand-rolled for simplicity here.</li>
+      <li>Official APIs vs RSS/scraping — fell back to Reddit RSS when JSON was blocked for unauthenticated clients, a real constraint well handled.</li>
+    </ul></td></tr>
+    <tr><td class="lens bug">bugs handled</td><td><ul>
+      <li>HTTP 429 rate limits → paced fetches + RSS fallback.</li>
+      <li>Resource leaks → close DB connection and log a run row on crash.</li>
+      <li>Security: safe <code>href</code> schemes, idempotent DB saves (no dupes on re-run).</li>
+      <li>Variable shadowing, cross-cluster dedup guards, enum-fallback validation.</li>
+    </ul></td></tr>
+  </table>
+</div>
+
+<!-- ============ EXPENSE ============ -->
+<div class="entry" id="expense">
+  <div class="entry-head">
+    <span class="entry-id">LOG-07</span>
+    <h3>Financial Statement Parser</h3>
+  </div>
+  <div class="stack-line">React · Vite · Tesseract.js (WASM) · pdf.js · Gemini 2.5 Flash · SheetJS · jsPDF</div>
+  <p class="desc">Bank statement images/PDFs → structured exports. The file never leaves the browser: OCR runs entirely in-browser via WebAssembly, only extracted <em>text</em> goes to Gemini for categorisation, exports land as CSV/Excel/PDF with analytics. Zero server, zero subscription, zero data liability.</p>
+  <table class="ledger">
+    <tr><td class="lens learned">learned</td><td><ul>
+      <li>Client-side heavy compute — running OCR (Tesseract) as WASM in the browser.</li>
+      <li>Privacy as an architectural constraint that drives every decision, not a bolted-on feature.</li>
+      <li>PDF rendering pipeline: pdf.js → canvas → image → OCR.</li>
+    </ul></td></tr>
+    <tr><td class="lens approach">approach</td><td><ul>
+      <li>Send only text (capped at 8k chars) to the LLM — minimises data exposure and token cost.</li>
+      <li>All persistence and export happen locally in the browser.</li>
+    </ul></td></tr>
+    <tr><td class="lens alt">alt. shelf</td><td><ul>
+      <li>Server-side OCR (Google Vision, AWS Textract, Docparser) — far more accurate, but takes custody of the user's financial documents. The whole thesis is not doing that.</li>
+      <li>Cloud multimodal LLM on the raw image — simpler, but reintroduces the upload the architecture was designed away from.</li>
+    </ul></td></tr>
+    <tr><td class="lens bug">bugs handled</td><td><ul>
+      <li>OCR noise on low-quality scans → text cleanup before the LLM step.</li>
+      <li>Large-file / memory limits in-browser — 20MB cap, per-page rendering.</li>
+    </ul></td></tr>
+  </table>
+</div>
+
+<!-- ============ BLOG ============ -->
+<div class="entry" id="blog">
+  <div class="entry-head">
+    <span class="entry-id">LOG-08</span>
+    <h3>Blog — Astro static documentation engine</h3>
+  </div>
+  <div class="stack-line">Astro · vanilla JS · IntersectionObserver · import.meta.glob</div>
+  <p class="desc">Drop Markdown into a folder; the build produces auto-sidebar navigation, client-side full-text search, a scroll-spy table of contents, and dark mode. The entire <code>dist/</code> output is static HTML — no backend, no database.</p>
+  <table class="ledger">
+    <tr><td class="lens learned">learned</td><td><ul>
+      <li>Build-time vs runtime separation — compute the sidebar, search index, and routes at build; defer nothing.</li>
+      <li>Algorithms without a library — a ~80-line weighted-scoring search engine, recursive tree-building for the sidebar.</li>
+      <li><code>IntersectionObserver</code> with tuned <code>rootMargin</code> for scroll-spy.</li>
+    </ul></td></tr>
+    <tr><td class="lens approach">approach</td><td><ul>
+      <li><code>import.meta.glob()</code> as a build-time filesystem API — one primitive feeds both sidebar and search.</li>
+      <li>Zero runtime attack surface — nothing to exploit because nothing runs server-side.</li>
+    </ul></td></tr>
+    <tr><td class="lens alt">alt. shelf</td><td><ul>
+      <li>Docusaurus / VitePress / MkDocs do this out of the box — building it proves the machinery is understood.</li>
+      <li>Search: the vanilla scorer vs Pagefind, FlexSearch, or Algolia — libraries scale better, this one has zero deps.</li>
+    </ul></td></tr>
+    <tr><td class="lens bug">bugs handled</td><td><ul>
+      <li>Route/path edge cases converting file paths to URLs.</li>
+      <li>Scroll-spy jitter — calibrated <code>rootMargin</code> so the right heading highlights.</li>
+    </ul></td></tr>
+  </table>
+</div>
+
+<!-- ============ OUTFLO ============ -->
+<div class="entry" id="outflo">
+  <div class="entry-head">
+    <span class="entry-id">LOG-09</span>
+    <h3>Outflo &amp; Portfolio — production frontends</h3>
+  </div>
+  <div class="stack-line">Next.js 14 (App Router, SSG) · TypeScript · Tailwind · gray-matter · remark · Vercel</div>
+  <p class="desc">Outflo is a Next.js prompt/workflow platform — SSG, SEO metadata, dynamic slug routing, markdown rendering, dark mode, local-storage bookmarks — and the live target ContentPilot publishes into. The portfolio is a lightweight static site on Vercel.</p>
+  <table class="ledger">
+    <tr><td class="lens learned">learned</td><td><ul>
+      <li>Static generation and SEO on the modern Next.js App Router.</li>
+      <li>Markdown-as-CMS — frontmatter parsing + remark rendering, no database.</li>
+      <li>Clean Vercel deployment, CI-driven publishing (ContentPilot pushes → Vercel builds).</li>
+    </ul></td></tr>
+    <tr><td class="lens alt">alt. shelf</td><td><ul>
+      <li>SSR / ISR instead of pure SSG if content changed per-request — unnecessary for a content site.</li>
+      <li>A real CMS (Sanity, Contentful) vs markdown files — heavier, editor-friendly.</li>
+    </ul></td></tr>
+  </table>
+</div>
+
+<!-- ============ BUG TAXONOMY ============ -->
+<h2 class="section" id="bugs"><span class="num">§3</span>Bug taxonomy — the classes actually handled</h2>
+<p class="lede">The section that turns "I fixed a bug" into "I recognise this category of failure." Each drawn from real commits above.</p>
+
+<div class="bugnote"><span class="bn-id">class 01</span><h3>LLM output is malformed / untrusted</h3>
+  <p>Malformed JSON, markdown code fences, dropped fields, hallucinated content.</p>
+  <p class="where">Seen in: EMS's 4-strategy parse chain; ContentPilot's draft/approve gate; Bias Auditor's blind judge. General fix: validate with Pydantic, retry with a stricter prompt, gate behind a human, or constrain decoding.</p>
+</div>
+<div class="bugnote"><span class="bn-id">class 02</span><h3>Silent failure / swallowed errors</h3>
+  <p>A caught exception hides a real failure; the system reports success while doing nothing.</p>
+  <p class="where">Seen in: HackerNews exceptions swallowed → green dashboard step for a failed fetch; Gemini quota=0 returned zero insights at exit code 0. General fix: let errors propagate to a handler that records them; never conflate "ran" with "succeeded."</p>
+</div>
+<div class="bugnote"><span class="bn-id">class 03</span><h3>Over-broad side effects</h3>
+  <p>An operation touches more than it should.</p>
+  <p class="where">Seen in: <code>git index.commit()</code> committed the whole staged index instead of one file. General fix: scope the operation explicitly (pathspec-scoped commit) + a regression test proving the blast radius is contained.</p>
+</div>
+<div class="bugnote"><span class="bn-id">class 04</span><h3>Test / environment contamination</h3>
+  <p>Tests mutate real state; the environment isn't isolated.</p>
+  <p class="where">Seen in: orchestrator tests wrote into the real <code>run_log.json</code>. General fix: inject paths, use <code>tmp_path</code> fixtures, never let a test default to a production file.</p>
+</div>
+<div class="bugnote"><span class="bn-id">class 05</span><h3>External-dependency instability</h3>
+  <p>Rate limits, auth changes, vendor rug-pulls, blocked endpoints.</p>
+  <p class="where">Seen in: Reddit 429 → RSS + pacing; Reddit JSON blocked for anonymous clients; Gemini free tier pulled. General fix: back-off/pacing, fallbacks, provider-swap via config, graceful degradation.</p>
+</div>
+<div class="bugnote"><span class="bn-id">class 06</span><h3>Data / schema migration</h3>
+  <p>Old persisted data no longer matches new code.</p>
+  <p class="where">Seen in: renamed status enum crashed old <code>manifest.json</code> files. General fix: a validator/migration that upgrades legacy records on read.</p>
+</div>
+<div class="bugnote"><span class="bn-id">class 07</span><h3>Resource lifecycle &amp; concurrency</h3>
+  <p>Leaked connections, blocking the event loop, thread timing.</p>
+  <p class="where">Seen in: DB connection left open on stage crash; <code>BackgroundTasks</code> + blocking calls → explicit threads; sync work must not block FastAPI's loop → executor offload. General fix: ensure cleanup on all paths, keep blocking work off the event loop.</p>
+</div>
+<div class="bugnote"><span class="bn-id">class 08</span><h3>Non-determinism in evaluation</h3>
+  <p>One stochastic sample treated as a reliable signal.</p>
+  <p class="where">Seen in: prompt tests and bias runs average N samples; statistical significance testing. General fix: multiple runs + aggregation/significance, not a single reading.</p>
+</div>
+<div class="bugnote"><span class="bn-id">class 09</span><h3>Web plumbing</h3>
+  <p>Static mounts, safe URL schemes, idempotency.</p>
+  <p class="where">Seen in: draft-image 404 from a missing mount; safe <code>href</code> schemes; idempotent DB saves. General fix: mind the boundary between routes and static assets, make re-runs idempotent.</p>
+</div>
+
+<!-- ============ PATTERNS ============ -->
+<h2 class="section" id="patterns"><span class="num">§4</span>Patterns reached for, and the alternatives worth naming</h2>
+<div class="scroll">
+<table>
+<tr><th>Pattern used</th><th>Where</th><th>Alternatives to name in an interview</th></tr>
+<tr><td>Tiered / fail-fast evaluation</td><td>Regression Suite, Bias Auditor</td><td>Run everything always (simpler, costlier); single-model judge (pricier, less explainable)</td></tr>
+<tr><td>Async job + broker/worker</td><td>LLM Eval (Celery/Redis)</td><td>Arq/Dramatiq (async-native), RQ (simple), raw threads (local only), serverless</td></tr>
+<tr><td>Hand-rolled orchestrator, one run-path</td><td>ContentPilot, Trend Engine</td><td>LangChain/LangGraph/CrewAI; Airflow/Dagster/Prefect for scheduled DAGs</td></tr>
+<tr><td>Polyglot persistence</td><td>EMS 2.0</td><td>Single Postgres + <code>pgvector</code> + <code>bytea</code> — fewer moving parts</td></tr>
+<tr><td>Human-approval gate</td><td>ContentPilot draft/approve</td><td>Full autonomy (risky); confidence-threshold auto-publish (middle ground)</td></tr>
+<tr><td>Explainable per-source scoring</td><td>ContentPilot 2.0, Trend Engine</td><td>Learned ranker/embeddings (stronger, opaque); raw counts (unfair across sources)</td></tr>
+<tr><td>Client-side compute</td><td>Financial Parser</td><td>Server OCR (Textract/Vision) — accurate, takes custody of user data</td></tr>
+<tr><td>Build-time computation</td><td>Blog (Astro)</td><td>Runtime rendering (SSR/ISR); client-side SPA</td></tr>
+<tr><td>Provider-swappable LLM via config</td><td>almost all AI entries</td><td>Hard-coding one vendor (simpler, locked-in); a gateway/router like LiteLLM</td></tr>
+</table>
+</div>
+
+<div class="callout">
+  <strong>Interview move</strong>
+  The sharpest question an interviewer asks is "why did you build it instead of using X?" The honest answer across every entry: for a learning project, building it <em>is</em> the point — the internals, the failure modes, and the cost trade-offs are now understood firsthand. In production the off-the-shelf tool gets used, and its internals can be described precisely because they've already been written once. That answer signals maturity, not naïveté.
+</div>
+
+<!-- ============ GAPS ============ -->
+<h2 class="section" id="gaps"><span class="num">§5</span>Honest gaps — what to learn next</h2>
+<div class="row2">
+  <div>
+    <h4>Thin spots across the portfolio</h4>
+    <ul>
+      <li><strong>Scale &amp; load.</strong> Everything runs single-user/local — no load testing, horizontal scaling, or p99-latency story yet.</li>
+      <li><strong>Observability.</strong> Logging to JSON/DB rows; no metrics or tracing (Prometheus, OpenTelemetry).</li>
+      <li><strong>Auth &amp; multi-tenancy.</strong> Dashboards are localhost, no real authn/authz.</li>
+      <li><strong>Cloud/CD.</strong> Vercel deploys exist; no containers-in-prod, IaC, or k8s story.</li>
+    </ul>
+  </div>
+  <div>
+    <h4>Highest-leverage next steps</h4>
+    <ul>
+      <li>Add real observability to one project — the most-asked "what's missing" in AI-infra interviews.</li>
+      <li>Load-test the LLM Eval Framework, get a real throughput/latency number to quote.</li>
+      <li>Containerise + deploy one service to a cloud with IaC, end to end.</li>
+      <li>Take one project from POC to genuinely production-hardened, rather than starting another.</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  Kept as a study reference across <code>my_learning_projects</code>. Source of truth is each project's own README, interview doc, and <code>git log</code> — this notebook summarises and cross-links them; verify a specific claim against the project before quoting it verbatim in an interview.
+</footer>
+
+</main>
+</div>
+</body>
+</html>

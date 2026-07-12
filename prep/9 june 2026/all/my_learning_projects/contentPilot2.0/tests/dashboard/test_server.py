@@ -214,7 +214,7 @@ def make_trend_state(tmp_path):
     from core.trend_models import TrendItem, TrendInsight, TrendState
     state = TrendState(trends=[
         TrendItem(
-            id="t1", prompt="cinematic portrait, 85mm lens", source="reddit", kind="image",
+            id="t1", prompt="cinematic portrait, 85mm lens", source="civitai", kind="image",
             image_url="https://i.redd.it/x.jpg", source_url="https://reddit.com/r/x",
             engagement=2100, virality_score=100.0,
             insight=TrendInsight(pattern_tags=["lens spec"], why_viral="Works. Well.", category="portrait"),

@@ -70,10 +70,10 @@ def test_trends_command_invokes_engine(mocker):
     mock_engine = MagicMock()
     mocker.patch("main.TrendEngine", return_value=mock_engine)
 
-    result = runner.invoke(app, ["trends", "--sources", "reddit,promptschat", "--top", "5"])
+    result = runner.invoke(app, ["trends", "--sources", "civitai,promptschat", "--top", "5"])
 
     assert result.exit_code == 0
-    mock_engine.run.assert_called_once_with(sources=["reddit", "promptschat"], top=5)
+    mock_engine.run.assert_called_once_with(sources=["civitai", "promptschat"], top=5)
 
 
 def test_trends_command_rejects_unknown_source(mocker):

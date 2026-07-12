@@ -4,7 +4,7 @@ from core.trend_models import TrendItem, TrendInsight, TrendState, trend_id
 
 def make_item(**kw) -> TrendItem:
     base = dict(
-        id="abc123def456", prompt="a cinematic portrait", source="reddit",
+        id="abc123def456", prompt="a cinematic portrait", source="civitai",
         kind="image", engagement=100, fetched_at=datetime.now(UTC),
     )
     base.update(kw)
@@ -12,9 +12,9 @@ def make_item(**kw) -> TrendItem:
 
 
 def test_trend_id_deterministic():
-    assert trend_id("reddit", "hello") == trend_id("reddit", "hello")
-    assert trend_id("reddit", "hello") != trend_id("civitai", "hello")
-    assert len(trend_id("reddit", "hello")) == 12
+    assert trend_id("civitai", "hello") == trend_id("civitai", "hello")
+    assert trend_id("civitai", "hello") != trend_id("promptschat", "hello")
+    assert len(trend_id("civitai", "hello")) == 12
 
 
 def test_trend_item_defaults():

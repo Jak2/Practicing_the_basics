@@ -43,10 +43,14 @@ scoring over black-box, human-approval gate in front of LLM output, provider-swa
 |---|---|---|
 | prompts.chat (HuggingFace) | Curated text prompts, CC0 | nothing — works out of the box |
 | Civitai | Weekly most-reacted image prompts + images | free API token: civitai.com → Settings → API Keys → put `CIVITAI_API_TOKEN=...` in `.env` |
-| Reddit | Top weekly posts from prompt/SD subreddits | free app creds: reddit.com/prefs/apps → fill `REDDIT_CLIENT_ID/SECRET` in `.env` |
 
-Without the optional keys the engine still runs — sources degrade gracefully (logged in
-`/pipeline`, run continues).
+Without the optional Civitai key the engine still runs — sources degrade gracefully (logged
+in `/pipeline`, run continues).
+
+> Reddit was evaluated as a trend source and dropped: script-app creation was blocked by
+> reCAPTCHA issues and the two remaining sources cover both text (prompts.chat) and image
+> (Civitai) prompts. The legacy 1.0 content pipeline's optional Reddit topic source is
+> unaffected (disabled by default in `config.yaml`).
 
 ---
 

@@ -3,7 +3,7 @@ from core.trend_models import TrendItem
 from core.virality import score_trends
 
 
-def make_item(source="reddit", engagement=0, slug="x") -> TrendItem:
+def make_item(source="civitai", engagement=0, slug="x") -> TrendItem:
     return TrendItem(
         id=f"id-{source}-{slug}", prompt=f"p {slug}", source=source, kind="text",
         engagement=engagement, fetched_at=datetime.now(UTC),
@@ -25,10 +25,10 @@ def test_scores_sorted_descending():
 
 
 def test_per_source_normalization_makes_cross_source_fair():
-    # reddit whale 5000 upvotes, civitai top 300 reactions — both are their source's max
+    # civitai whale 5000 reactions, promptschat top 300 — both are their source's max
     items = [
-        make_item(source="reddit", engagement=5000, slug="r"),
-        make_item(source="civitai", engagement=300, slug="c"),
+        make_item(source="civitai", engagement=5000, slug="r"),
+        make_item(source="promptschat", engagement=300, slug="c"),
     ]
     scored = score_trends(items)
     assert scored[0].virality_score == 100.0
