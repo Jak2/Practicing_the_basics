@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Course Gap-Fill Modules 2 - Python Edition</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-top: 30px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 20px;
+        }
+        .meta-box {
+            background-color: #ffffff;
+            border-left: 4px solid #0076ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .section {
+            background-color: #ffffff;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .tech-badge {
+            display: inline-block;
+            background-color: #e1ecf4;
+            color: #0c4d78;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .core-project {
+            background-color: #fff9db;
+            border-left: 4px solid #fab005;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .gap-tag {
+            display: inline-block;
+            background-color: #ffe3e3;
+            color: #a61e1e;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        a {
+            color: #0076ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background-color: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.9em;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f3f5;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AI Course Gap-Fill Modules 2 (Python Edition)</h1>
+
+    <div class="meta-box">
+        <strong>Course Format:</strong> Second supplement to "Build AI-Powered Apps" and "Claude Code for Professional Developers" (Python adaptations)<br>
+        <strong>Core Objective:</strong> Restore full project-build depth that Gemini's adaptation compressed to one-line mentions — the Review Summarizer capstone, and most of the Ticket Management / User Management / AI-Features / Production sections of the Claude Code course.<br>
+        <strong>Target Stack:</strong> Python, FastAPI, SQLAlchemy, Celery, Redis, Bleach/nh3, Docker, Railway, GitHub Actions.
+    </div>
+
+    <div class="core-project">
+        <h3>Why This Second File Exists</h3>
+        <p>The first gap-fill file covered 3 missing <em>topics</em> (RAG, evals/guardrails, open-source models, Claude Code tools/skills depth). Re-checking against the original 120-lesson listings found something bigger: entire original <strong>project-build sections</strong> got reduced to a badge and a sentence in Gemini's adaptation. This file restores the actual build steps for those sections.</p>
+    </div>
+
+    <h2>Course Curriculum & Learning Modules</h2>
+
+    <!-- Module 1 -->
+    <div class="section">
+        <span class="gap-tag">GAP — Review Summarizer</span>
+        <h3>Module F: Building the Review Summarizer (Full Capstone)</h3>
+        <p>Restores the original 2-hour Review Summarizer project, dropped to a single sentence in the Python adaptation: DB setup, fetching reviews, generating and storing summaries, regeneration, edge cases, and displaying results.</p>
+        <span class="tech-badge">PostgreSQL</span>
+        <span class="tech-badge">SQLAlchemy</span>
+        <span class="tech-badge">FastAPI</span>
+        <ul>
+            <li>Defining the schema (reviews, summaries) and running migrations with Alembic.</li>
+            <li>Building the API to fetch reviews, then a separate API to generate and store an LLM summary — separating fetch logic from generation logic (service/repository split).</li>
+            <li>Handling regeneration (re-summarize on demand) and edge cases: zero reviews, one review, stale summaries.</li>
+            <li>Serving the summary and review list with pagination, replacing the original's Tanstack Query layer with a plain polling or server-rendered equivalent.</li>
+        </ul>
+        <p><strong>Primary Learning Resources:</strong></p>
+        <ul>
+            <li><a href="https://medium.com/@devkotamanohar/fastapi-crud-simplified-base-repository-with-sqlalchemy-pagination-09668329570d" target="_blank">FastAPI CRUD Simplified: Base Repository with SQLAlchemy & Pagination</a></li>
+            <li><a href="https://oneuptime.com/blog/post/2026-02-02-fastapi-pagination/view" target="_blank">How to Implement Pagination in FastAPI</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 2 -->
+    <div class="section">
+        <span class="gap-tag">GAP — User & Ticket Management</span>
+        <h3>Module G: Ticket Management — CRUD, Sorting, Filtering, Pagination, XSS</h3>
+        <p>The single largest section of the original course (~2 hours) — reduced to nothing in the Python adaptation. Covers full ticket CRUD plus the security lesson ("Preventing XSS Attacks") that a support-ticket app specifically needs, since replies render user-submitted text.</p>
+        <span class="tech-badge">SQLAlchemy</span>
+        <span class="tech-badge">bleach / nh3</span>
+        <span class="tech-badge">Pydantic</span>
+        <ul>
+            <li>Receiving, listing, sorting, filtering, and paginating tickets via query parameters (offset or cursor-based).</li>
+            <li>Viewing ticket details, assigning, updating, and replying to tickets — with clean interface extraction between the API layer and the persistence layer.</li>
+            <li>Preventing stored XSS in ticket replies: sanitize on write with <code>bleach</code>/<code>nh3</code>, and rely on auto-escaping if any HTML is templated server-side.</li>
+        </ul>
+        <p><strong>Primary Learning Resources:</strong></p>
+        <ul>
+            <li><a href="https://blog.d3vyce.fr/posts/how-to-implement-pagination-sorting-and-filtering-with-fastapi/" target="_blank">How to Implement Pagination, Sorting and Filtering with FastAPI</a></li>
+            <li><a href="https://medium.com/@arif.rahman.rhm/protecting-your-web-app-from-stored-xss-flask-fastapi-django-and-expressjs-8e796935c3f7" target="_blank">Protecting Your Web App from Stored XSS: Flask, FastAPI, Django, ExpressJS</a></li>
+            <li><a href="https://davidmuraya.com/blog/fastapi-security-guide/" target="_blank">A Practical Guide to FastAPI Security</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 3 -->
+    <div class="section">
+        <span class="gap-tag">GAP — AI-Powered Features</span>
+        <h3>Module H: AI Features — Classification, Auto-Resolve, Background Jobs</h3>
+        <p>Original section (1 hour) had polishing replies, summarizing tickets, classifying tickets, background job processing, and auto-resolving common requests. Python adaptation kept only badges. This restores the build.</p>
+        <span class="tech-badge">Celery</span>
+        <span class="tech-badge">Redis</span>
+        <span class="tech-badge">Structured Output</span>
+        <ul>
+            <li>Polishing agent replies and summarizing/classifying tickets with structured (Pydantic-schema) LLM output.</li>
+            <li>Offloading slow LLM calls to a Celery worker backed by Redis so the API stays responsive — the original's "Background Job Processing" lesson.</li>
+            <li>Auto-resolving common tickets: a classification step routes to a canned or LLM-generated response without a human, with a fallback path when confidence is low.</li>
+        </ul>
+        <p><strong>Primary Learning Resources:</strong></p>
+        <ul>
+            <li><a href="https://testdriven.io/blog/fastapi-and-celery/" target="_blank">Asynchronous Tasks with FastAPI and Celery — TestDriven.io</a></li>
+            <li><a href="https://www.youtube.com/watch?v=YN3HASb7kmU" target="_blank">Async LLM Tasks — Celery + Redis + FastAPI Queue Tutorial (YouTube)</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 4 -->
+    <div class="section">
+        <span class="gap-tag">GAP — Production Deploy</span>
+        <h3>Module I: Dockerizing, Deploying, and CI/CD</h3>
+        <p>Original had 11 lessons on production (Sentry, Docker, Railway, seeding prod DB, GitHub Actions fixing issues/creating PRs). Python adaptation kept generic badges only — no actual deploy steps.</p>
+        <span class="tech-badge">Docker</span>
+        <span class="tech-badge">Railway</span>
+        <span class="tech-badge">GitHub Actions</span>
+        <ul>
+            <li>Writing a multi-stage Dockerfile for a Python/FastAPI app (build stage installs deps, runtime stage runs Gunicorn+Uvicorn workers).</li>
+            <li>Deploying to Railway via Dockerfile detection, setting env vars, and seeding the production database.</li>
+            <li>A GitHub Actions workflow that installs deps, runs <code>pytest</code>, and only then builds/pushes the Docker image — the original's "Claude Code GitHub Actions" + "Fixing GitHub Issues" + "Creating Pull Requests" lessons, minus the JS specifics.</li>
+        </ul>
+        <p><strong>Primary Learning Resources:</strong></p>
+        <ul>
+            <li><a href="https://docs.railway.com/guides/fastapi" target="_blank">Deploy a FastAPI App — Official Railway Guide</a></li>
+            <li><a href="https://markaicode.com/tutorial/how-to-deploy-fastapi-on-docker-production/" target="_blank">How to Deploy FastAPI on Docker for Production</a></li>
+            <li><a href="https://latchkey.dev/learn/ci-recipes/ci-cd-for-fastapi-with-github-actions" target="_blank">CI/CD for FastAPI with GitHub Actions</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>

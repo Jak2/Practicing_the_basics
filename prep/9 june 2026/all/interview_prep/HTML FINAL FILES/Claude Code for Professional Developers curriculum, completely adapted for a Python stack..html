@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code for Professional Developers - Python Edition</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-top: 30px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 20px;
+        }
+        .meta-box {
+            background-color: #ffffff;
+            border-left: 4px solid #0076ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .section {
+            background-color: #ffffff;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .tech-badge {
+            display: inline-block;
+            background-color: #e1ecf4;
+            color: #0c4d78;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .core-project {
+            background-color: #fff9db;
+            border-left: 4px solid #fab005;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        a {
+            color: #0076ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background-color: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.9em;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f3f5;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Claude Code for Professional Developers (Python Edition)</h1>
+    
+    <div class="meta-box">
+        <strong>Course Format:</strong> Self-Guided Blueprint & Documentation Track<br>
+        <strong>Core Objective:</strong> Transition from "vibe coding" to production-grade AI engineering using advanced Claude CLI workflows paired with a robust Python backend architecture.<br>
+        <strong>Prerequisites:</strong> Strong understanding of Python 3.10+, asynchronous programming, and relational database fundamentals.
+    </div>
+
+    <div class="core-project">
+        <h3>Core Capstone Project: AI-Powered Customer Support System</h3>
+        <p>Instead of building with Node.js/TypeScript, you will construct a highly scalable customer ticketing app entirely in Python. Features include: asynchronous ticket CRUD, issue classification using structured JSON outputs, auto-resolving common requests via background workers, and email integration pipelines—all built using Claude Code CLI assistance.</p>
+    </div>
+
+    <h2>Stack Translation Map</h2>
+    <p>To eliminate reliance on the JavaScript ecosystem, your development environment will use direct architectural equivalents:</p>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Original Syllabus Component</th>
+                    <th>TypeScript Production Stack</th>
+                    <th>Your Python Production Stack</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Runtime & Engine</strong></td>
+                    <td>Bun / Node.js</td>
+                    <td><strong>Python 3.12+ / Uvicorn</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Backend API Framework</strong></td>
+                    <td>Express</td>
+                    <td><strong>FastAPI</strong> (Asynchronous routing)</td>
+                </tr>
+                <tr>
+                    <td><strong>Data Validation Layer</strong></td>
+                    <td>Zod</td>
+                    <td><strong>Pydantic v2</strong> (Strict type-checking)</td>
+                </tr>
+                <tr>
+                    <td><strong>Database ORM</strong></td>
+                    <td>Prisma</td>
+                    <td><strong>SQLAlchemy 2.0 / SQLModel</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>AI SDK / Agent Framework</strong></td>
+                    <td>Vercel AI SDK</td>
+                    <td><strong>PydanticAI</strong> (Type-safe agents)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Course Curriculum & Learning Modules</h2>
+
+    <!-- Module 1 -->
+    <div class="section">
+        <h3>Module 1: Advanced Claude Code CLI & Protocol Operations</h3>
+        <p>Master the foundational tooling, project memory building, and system contexts required to write verifiable code rather than relying on guesswork.</p>
+        <span class="tech-badge">Claude Code CLI</span>
+        <span class="tech-badge">MCP</span>
+        <span class="tech-badge">System Prompting</span>
+        <ul>
+            <li>Configuring the Claude Code environment for deep repository parsing.</li>
+            <li>Using Plan Mode and subagents to isolate tasks and avoid context fragmentation.</li>
+            <li>Implementing the Model Context Protocol (MCP) to bridge local database environments with Claude.</li>
+        </ul>
+        <p><strong>Primary Reference Documents:</strong></p>
+        <ul>
+            <li><a href="https://code.claude.com/docs/en/quickstart" target="_blank">Claude Code CLI Reference Manual</a></li>
+            <li><a href="https://modelcontextprotocol.io/docs/develop/build-server" target="_blank">Building Custom MCP Servers in Python</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 2 -->
+    <div class="section">
+        <h3>Module 2: Project Planning & Modular Backend Setup</h3>
+        <p>Establish a high-performance, asynchronous web architecture capable of handling long-lived database connections and clean API routing boundaries.</p>
+        <span class="tech-badge">FastAPI</span>
+        <span class="tech-badge">SQLAlchemy 2.0</span>
+        <span class="tech-badge">PostgreSQL</span>
+        <ul>
+            <li>Structuring a scalable Python directory structure (Controllers, Services, Repositories).</li>
+            <li>Configuring asynchronous connection pools for PostgreSQL.</li>
+            <li>Mapping relational data models using SQLAlchemy or SQLModel schemas.</li>
+        </ul>
+        <p><strong>Primary Reference Documents:</strong></p>
+        <ul>
+            <li><a href="https://fastapi.tiangolo.com/learn/" target="_blank">FastAPI Asynchronous Routing Guides</a></li>
+            <li><a href="https://docs.pydantic.dev/" target="_blank">Pydantic Data Structuring & Filtering</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 3 -->
+    <div class="section">
+        <h3>Module 3: Authentication, Session Defenses & E2E Testing</h3>
+        <p>Implement secure user onboarding, role-based resource permissions, and complete end-to-end browser integration suites.</p>
+        <span class="tech-badge">FastAPI-Users</span>
+        <span class="tech-badge">JWT Tokens</span>
+        <span class="tech-badge">Playwright Python</span>
+        <ul>
+            <li>Building secure sign-up, login, and token generation steps.</li>
+            <li>Creating middle-tier interceptors for role-based access control (Admin, Agent, Customer).</li>
+            <li>Writing repeatable, simulated customer workflows using Playwright for browser tests.</li>
+        </ul>
+        <p><strong>Primary Reference Documents:</strong></p>
+        <ul>
+            <li><a href="https://fastapi-users.github.io/fastapi-users/14.0/" target="_blank">FastAPI-Users Authentication Control</a></li>
+            <li><a href="https://playwright.dev/python/docs/intro" target="_blank">Playwright Python Test Suites</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 4 -->
+    <div class="section">
+        <h3>Module 4: Agentic Systems & Distributed Background Tasks</h3>
+        <p>Incorporate intelligent application logic. Build classification engines, tone polishers, and background loops to parse issues automatically.</p>
+        <span class="tech-badge">PydanticAI</span>
+        <span class="tech-badge">Celery</span>
+        <span class="tech-badge">Redis</span>
+        <ul>
+            <li>Defining rigid JSON structures for model outputs to guarantee application runtime stability.</li>
+            <li>Building ticket summary, category analysis, and emotion-tracking endpoints.</li>
+            <li>Offloading resource-intensive tasks to Celery task queues backed by Redis storage.</li>
+        </ul>
+        <p><strong>Primary Reference Documents:</strong></p>
+        <ul>
+            <li><a href="https://ai.pydantic.dev/" target="_blank">PydanticAI Production Framework</a></li>
+            <li><a href="https://docs.celeryq.dev/en/stable/getting-started/introduction.html" target="_blank">Celery Asynchronous Task Architecture</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 5 -->
+    <div class="section">
+        <h3>Module 5: Operations, Containers, and Deployment Pipelines</h3>
+        <p>Package the finished customer management tool into modern virtual runtimes and automate code validation pipelines via version control hooks.</p>
+        <span class="tech-badge">Docker</span>
+        <span class="tech-badge">Sentry</span>
+        <span class="tech-badge">GitHub Actions</span>
+        <ul>
+            <li>Creating multi-stage container configurations for Python runtimes.</li>
+            <li>Adding application tracing and system error monitoring via Sentry.</li>
+            <li>Writing build scripts that execute tests automatically on code change events.</li>
+        </ul>
+        <p><strong>Primary Reference Documents:</strong></p>
+        <ul>
+            <li><a href="https://docs.docker.com/get-started/" target="_blank">Docker Engine & Multi-stage Packaging</a></li>
+            <li><a href="https://docs.github.com/en/actions" target="_blank">GitHub Actions Workflow Design</a></li>
+        </ul>
+    </div>
+
+    <h2>Comprehensive Video Walkthrough</h2>
+    <div class="section">
+        <p>To view an all-in-one comprehensive project build matching this technical stack architecture (including routing, databases, validation, and container isolation) use this link:</p>
+        <p><strong><a href="https://www.youtube.com/watch?v=iukOehU5aF4" target="_blank">Python FastAPI Comprehensive Development Video Course</a></strong></p>
+    </div>
+
+</body>
+</html>

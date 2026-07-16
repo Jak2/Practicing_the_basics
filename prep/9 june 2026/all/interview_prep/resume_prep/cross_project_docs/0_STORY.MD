@@ -1,0 +1,1 @@
+write a fascinating story regarding the same to explain to the interveiwer the story should be something that every manager/arcchitect loves to hear, the story should have a hero, villian, smooth flow and sudden dip in struggle, and other aspects that make the narration attentive.

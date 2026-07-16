@@ -1,0 +1,9 @@
+anthropic          # only used when RAG_LLM=claude
+ollama             # default LLM client (talks to local Ollama server)
+chromadb
+sentence-transformers
+pymupdf
+pyyaml
+python-dotenv
+fastapi
+uvicorn[standard]

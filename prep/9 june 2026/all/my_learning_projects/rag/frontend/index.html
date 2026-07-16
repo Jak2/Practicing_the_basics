@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Folder-RAG</title>
+<style>
+  :root {
+    --bg: #f7f8fa; --surface: #ffffff; --surface-2: #eef0f4;
+    --text: #1a1d24; --muted: #6b7280; --border: #e5e7eb;
+    --accent: #4f6bed; --accent-soft: #eaeeff;
+    --user-bg: #4f6bed; --user-text: #ffffff;
+    --danger: #d64550;
+    --radius: 12px; --sidebar-w: 264px;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1115; --surface: #181b21; --surface-2: #21252d;
+      --text: #e6e8ec; --muted: #9aa1ad; --border: #262a31;
+      --accent: #7c8cf5; --accent-soft: #1e2333;
+      --user-bg: #3b4bb0; --user-text: #f2f4ff;
+      --danger: #e06a72;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f7f8fa; --surface: #ffffff; --surface-2: #eef0f4;
+    --text: #1a1d24; --muted: #6b7280; --border: #e5e7eb;
+    --accent: #4f6bed; --accent-soft: #eaeeff;
+    --user-bg: #4f6bed; --user-text: #ffffff; --danger: #d64550;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1115; --surface: #181b21; --surface-2: #21252d;
+    --text: #e6e8ec; --muted: #9aa1ad; --border: #262a31;
+    --accent: #7c8cf5; --accent-soft: #1e2333;
+    --user-bg: #3b4bb0; --user-text: #f2f4ff; --danger: #e06a72;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: var(--font); background: var(--bg); color: var(--text);
+    display: flex; height: 100vh; overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Sidebar */
+  aside {
+    width: var(--sidebar-w); flex-shrink: 0; background: var(--surface);
+    border-right: 1px solid var(--border); display: flex; flex-direction: column;
+  }
+  .brand {
+    padding: 18px 16px 12px; display: flex; align-items: center; gap: 9px;
+    font-weight: 650; letter-spacing: -0.01em;
+  }
+  .brand .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
+  .new-btn {
+    margin: 4px 12px 10px; padding: 10px 12px; border: 1px solid var(--border);
+    background: var(--surface-2); color: var(--text); border-radius: var(--radius);
+    font: inherit; font-weight: 550; cursor: pointer; text-align: left;
+    display: flex; align-items: center; gap: 8px; transition: border-color .15s;
+  }
+  .new-btn:hover { border-color: var(--accent); }
+  .convos { flex: 1; overflow-y: auto; padding: 4px 8px; display: flex; flex-direction: column; gap: 2px; }
+  .convo {
+    display: flex; align-items: center; gap: 6px; padding: 9px 10px;
+    border-radius: 9px; cursor: pointer; color: var(--text);
+    font-size: 14px; line-height: 1.2;
+  }
+  .convo:hover { background: var(--surface-2); }
+  .convo.active { background: var(--accent-soft); color: var(--accent); font-weight: 550; }
+  .convo .title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .convo .del {
+    opacity: 0; border: none; background: none; color: var(--muted);
+    cursor: pointer; font-size: 15px; padding: 0 2px; line-height: 1;
+  }
+  .convo:hover .del { opacity: 1; }
+  .convo .del:hover { color: var(--danger); }
+
+  .side-foot {
+    border-top: 1px solid var(--border); padding: 12px 14px;
+    font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 10px;
+  }
+  .backends { display: flex; flex-wrap: wrap; gap: 5px; }
+  .pill {
+    font-family: var(--mono); font-size: 11px; padding: 2px 7px;
+    border: 1px solid var(--border); border-radius: 999px; color: var(--muted);
+  }
+  .foot-row { display: flex; gap: 8px; }
+  .ghost-btn {
+    flex: 1; font: inherit; font-size: 12px; padding: 6px 8px; cursor: pointer;
+    border: 1px solid var(--border); background: transparent; color: var(--text);
+    border-radius: 8px; transition: border-color .15s;
+  }
+  .ghost-btn:hover { border-color: var(--accent); }
+
+  /* Main */
+  main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .thread { flex: 1; overflow-y: auto; padding: 28px 0; }
+  .thread-inner { max-width: 720px; margin: 0 auto; padding: 0 24px;
+    display: flex; flex-direction: column; gap: 22px; }
+
+  .empty {
+    height: 100%; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 10px; color: var(--muted); text-align: center;
+  }
+  .empty h1 { font-size: 22px; font-weight: 650; color: var(--text); margin: 0; letter-spacing: -0.02em; }
+  .empty p { margin: 0; max-width: 420px; line-height: 1.5; font-size: 14px; }
+
+  .msg { display: flex; flex-direction: column; gap: 7px; }
+  .msg .who { font-size: 12px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; color: var(--muted); }
+  .bubble { line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; font-size: 15px; }
+  .msg.user { align-items: flex-end; }
+  .msg.user .bubble {
+    background: var(--user-bg); color: var(--user-text);
+    padding: 11px 15px; border-radius: 16px 16px 4px 16px; max-width: 82%;
+  }
+  .msg.assistant .bubble {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 14px 16px; border-radius: 4px 16px 16px 16px;
+  }
+  .sources { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+  .source {
+    font-family: var(--mono); font-size: 11.5px; padding: 3px 8px;
+    background: var(--accent-soft); color: var(--accent); border-radius: 7px;
+  }
+  .typing { color: var(--muted); font-style: italic; }
+  .typing::after { content: "▍"; animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .typing::after { animation: none; } }
+
+  /* Composer */
+  .composer { border-top: 1px solid var(--border); background: var(--bg); padding: 14px 0 20px; }
+  .composer-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  .input-row {
+    display: flex; align-items: flex-end; gap: 8px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 16px; padding: 8px 8px 8px 16px;
+    transition: border-color .15s;
+  }
+  .input-row:focus-within { border-color: var(--accent); }
+  textarea {
+    flex: 1; border: none; outline: none; resize: none; background: transparent;
+    color: var(--text); font: inherit; font-size: 15px; line-height: 1.5;
+    max-height: 180px; padding: 6px 0;
+  }
+  .send {
+    width: 36px; height: 36px; flex-shrink: 0; border: none; border-radius: 10px;
+    background: var(--accent); color: #fff; cursor: pointer; font-size: 17px;
+    display: grid; place-items: center; transition: opacity .15s;
+  }
+  .send:disabled { opacity: .4; cursor: default; }
+  .hint { text-align: center; color: var(--muted); font-size: 11.5px; margin-top: 8px; }
+
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--text); color: var(--bg); padding: 9px 16px; border-radius: 10px;
+    font-size: 13px; opacity: 0; pointer-events: none; transition: opacity .2s;
+  }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 720px) {
+    aside { position: absolute; z-index: 10; height: 100%; transform: translateX(-100%); transition: transform .2s; }
+    aside.open { transform: none; }
+  }
+</style>
+</head>
+<body>
+  <aside id="sidebar">
+    <div class="brand"><span class="dot"></span> Folder-RAG</div>
+    <button class="new-btn" id="newChat">+&nbsp; New chat</button>
+    <div class="convos" id="convos"></div>
+    <div class="side-foot">
+      <div class="backends" id="backends"></div>
+      <div class="foot-row">
+        <button class="ghost-btn" id="reindex">Reindex folder</button>
+        <button class="ghost-btn" id="themeBtn">Theme</button>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="thread" id="thread">
+      <div class="empty" id="empty">
+        <h1>Ask your documents</h1>
+        <p>Questions are answered only from the indexed folder, with the source files cited. Start a new chat below.</p>
+      </div>
+    </div>
+    <div class="composer">
+      <div class="composer-inner">
+        <div class="input-row">
+          <textarea id="input" rows="1" placeholder="Ask a question about your documents…"></textarea>
+          <button class="send" id="send" title="Send">↑</button>
+        </div>
+        <div class="hint">Answers are grounded in your indexed folder. Enter to send · Shift+Enter for newline</div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let convId = null;
+let busy = false;
+
+// ---- theme ----
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+$("themeBtn").onclick = () => {
+  const cur = document.documentElement.dataset.theme
+    || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem("theme", next);
+};
+
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+async function api(path, opts) {
+  const r = await fetch(path, opts);
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.detail || r.statusText); }
+  return r.json();
+}
+
+// ---- status / backends ----
+async function loadStatus() {
+  try {
+    const s = await api("/api/status");
+    $("backends").innerHTML =
+      ["llm", "embed", "store", "retrieval"].map(k => `<span class="pill">${k}: ${s[k]}</span>`).join("");
+  } catch (e) { /* ignore */ }
+}
+
+// ---- conversations ----
+async function loadConvos() {
+  const list = await api("/api/conversations");
+  const box = $("convos"); box.innerHTML = "";
+  for (const c of list) {
+    const el = document.createElement("div");
+    el.className = "convo" + (c.id === convId ? " active" : "");
+    el.innerHTML = `<span class="title"></span><button class="del" title="Delete">×</button>`;
+    el.querySelector(".title").textContent = c.title;
+    el.querySelector(".title").onclick = () => openConvo(c.id);
+    el.querySelector(".del").onclick = async (ev) => {
+      ev.stopPropagation();
+      await api(`/api/conversations/${c.id}`, { method: "DELETE" });
+      if (c.id === convId) { convId = null; showEmpty(); }
+      loadConvos();
+    };
+    box.appendChild(el);
+  }
+}
+
+function showEmpty() {
+  $("thread").innerHTML =
+    `<div class="empty"><h1>Ask your documents</h1><p>Questions are answered only from the indexed folder, with the source files cited. Start a new chat below.</p></div>`;
+}
+
+function renderThread(msgs) {
+  const t = $("thread");
+  t.innerHTML = `<div class="thread-inner" id="inner"></div>`;
+  for (const m of msgs) addBubble(m.role, m.content, m.sources);
+  scrollDown();
+}
+
+function addBubble(role, content, sources) {
+  let inner = $("inner");
+  if (!inner) { $("thread").innerHTML = `<div class="thread-inner" id="inner"></div>`; inner = $("inner"); }
+  const el = document.createElement("div");
+  el.className = "msg " + role;
+  const who = role === "user" ? "You" : "Assistant";
+  const src = (sources && sources.length)
+    ? `<div class="sources">${sources.map(s => `<span class="source">${s}</span>`).join("")}</div>` : "";
+  el.innerHTML = `<div class="who">${who}</div><div class="bubble"></div>${src}`;
+  el.querySelector(".bubble").textContent = content;
+  inner.appendChild(el);
+  return el;
+}
+
+function scrollDown() { const t = $("thread"); t.scrollTop = t.scrollHeight; }
+
+async function openConvo(id) {
+  convId = id;
+  const msgs = await api(`/api/conversations/${id}/messages`);
+  renderThread(msgs);
+  loadConvos();
+}
+
+$("newChat").onclick = async () => {
+  const c = await api("/api/conversations", { method: "POST" });
+  convId = c.id;
+  $("thread").innerHTML = `<div class="thread-inner" id="inner"></div>`;
+  loadConvos();
+  $("input").focus();
+};
+
+$("reindex").onclick = async () => {
+  toast("Indexing folder…");
+  try {
+    const s = await api("/api/index", { method: "POST" });
+    toast(`Indexed: +${s.added} new, ${s.updated} updated, ${s.skipped} unchanged`);
+  } catch (e) { toast("Index failed: " + e.message); }
+};
+
+// ---- send ----
+const input = $("input");
+input.addEventListener("input", () => {
+  input.style.height = "auto";
+  input.style.height = Math.min(input.scrollHeight, 180) + "px";
+});
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
+});
+$("send").onclick = send;
+
+async function send() {
+  const q = input.value.trim();
+  if (!q || busy) return;
+  if (convId === null) {
+    const c = await api("/api/conversations", { method: "POST" });
+    convId = c.id;
+    $("thread").innerHTML = `<div class="thread-inner" id="inner"></div>`;
+  }
+  input.value = ""; input.style.height = "auto";
+  addBubble("user", q, []);
+  scrollDown();
+
+  busy = true; $("send").disabled = true;
+  const typing = addBubble("assistant", "", []);
+  typing.querySelector(".bubble").className = "bubble typing";
+  typing.querySelector(".bubble").textContent = "Thinking";
+  scrollDown();
+
+  try {
+    const res = await api(`/api/conversations/${convId}/chat`,
+      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: q }) });
+    typing.remove();
+    addBubble("assistant", res.answer, res.sources);
+    loadConvos();
+  } catch (e) {
+    typing.remove();
+    addBubble("assistant", "⚠ " + e.message, []);
+  } finally {
+    busy = false; $("send").disabled = false; scrollDown(); input.focus();
+  }
+}
+
+loadStatus();
+loadConvos();
+</script>
+</body>
+</html>

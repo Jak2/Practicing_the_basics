@@ -1,0 +1,9 @@
+llm: ollama              # ollama | claude  (default: local, no API key needed)
+embed: local             # local
+store: chroma            # chroma
+retrieval: plain         # plain
+db_dir: .rag_db
+chunk_tokens: 800
+chunk_overlap: 100
+top_k: 6
+ollama_model: qwen2.5:1.5b   # default local model (change here or via RAG_OLLAMA_MODEL in .env)

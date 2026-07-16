@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Course Gap-Fill Modules - Python Edition</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-top: 30px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 20px;
+        }
+        .meta-box {
+            background-color: #ffffff;
+            border-left: 4px solid #0076ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .section {
+            background-color: #ffffff;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .tech-badge {
+            display: inline-block;
+            background-color: #e1ecf4;
+            color: #0c4d78;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .core-project {
+            background-color: #fff9db;
+            border-left: 4px solid #fab005;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .gap-tag {
+            display: inline-block;
+            background-color: #ffe3e3;
+            color: #a61e1e;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        a {
+            color: #0076ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background-color: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.9em;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f3f5;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AI Course Gap-Fill Modules (Python Edition)</h1>
+
+    <div class="meta-box">
+        <strong>Course Format:</strong> Supplement to "Build AI-Powered Apps" and "Claude Code for Professional Developers" (Python adaptations)<br>
+        <strong>Core Objective:</strong> Cover what the two Gemini-adapted curricula dropped or never included, but your target job descriptions (Accolite/Bounteous, Altezzasys) explicitly require: RAG pipelines, evaluation workflows, guardrails, open-source/local models, and Claude Code's subagent/skill/testing/email depth.<br>
+        <strong>Target Stack:</strong> Python, LangChain, Ragas/DeepEval, Guardrails AI, Ollama, Hugging Face, Claude Code CLI, pytest, SendGrid.
+    </div>
+
+    <div class="core-project">
+        <h3>Why This File Exists</h3>
+        <p><strong>Gap 1:</strong> Neither original course nor its Python adaptation teaches RAG, LLM evaluation, or guardrails — yet both job descriptions you're targeting name these explicitly.</p>
+        <p><strong>Gap 2:</strong> The Python adaptation of "Build AI-Powered Apps" silently dropped the entire "Open-Source Models" section (Hugging Face, Ollama, local inference).</p>
+        <p><strong>Gap 3:</strong> The Python adaptation of "Claude Code for Professional Developers" compressed away Skills/Tools/Subagents/Checkpointing depth, dropped Email Integration and pytest-based unit testing entirely.</p>
+    </div>
+
+    <h2>Course Curriculum & Learning Modules</h2>
+
+    <!-- Module 1 -->
+    <div class="section">
+        <span class="gap-tag">GAP 1 — RAG</span>
+        <h3>Module A: Retrieval-Augmented Generation from Scratch</h3>
+        <p>Build a RAG pipeline: chunk documents, embed them, store vectors, retrieve relevant context, and ground LLM answers in it — the single most-requested skill across your job leads.</p>
+        <span class="tech-badge">LangChain</span>
+        <span class="tech-badge">Embeddings</span>
+        <span class="tech-badge">Vector Store</span>
+        <ul>
+            <li>Loading and chunking documents (PDF, Markdown, CSV) with LangChain's document loaders.</li>
+            <li>Generating embeddings and storing them in a vector database (Chroma) for similarity search.</li>
+            <li>Wiring retrieval into a generation call so answers cite source context instead of hallucinating.</li>
+        </ul>
+        <p><strong>Primary Learning Resources:</strong></p>
+        <ul>
+            <li><a href="https://github.com/langchain-ai/rag-from-scratch" target="_blank">langchain-ai/rag-from-scratch (official GitHub repo, step-by-step notebooks)</a></li>
+            <li><a href="https://docs.langchain.com/oss/python/langchain/rag" target="_blank">RAG — Official LangChain Python Docs</a></li>
+            <li><a href="https://machinelearningmastery.com/a-practical-guide-to-building-local-rag-applications-with-langchain/" target="_blank">A Practical Guide to Building Local RAG Applications with LangChain</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 2 -->
+    <div class="section">
+        <span class="gap-tag">GAP 1 — Evals & Guardrails</span>
+        <h3>Module B: LLM Evaluation Workflows & Guardrails</h3>
+        <p>Move past "it looks right" — build repeatable evaluation datasets, score outputs, and enforce structural/safety guarantees on what a model returns.</p>
+        <span class="tech-badge">Ragas</span>
+        <span class="tech-badge">DeepEval</span>
+        <span class="tech-badge">Guardrails AI</span>
+        <ul>
+            <li>Building test datasets and comparing prompts/models with reproducible scoring.</li>
+            <li>Tracing LLM outputs and reading eval results as an observability signal, not a one-off check.</li>
+            <li>Adding guardrails (via Pydantic schemas or Guardrails AI's RAIL spec) that catch hallucinations and PII leaks before output reaches a user.</li>
+        </ul>
+        <p><strong>Primary Learning Resources:</strong></p>
+        <ul>
+            <li><a href="https://www.deeplearning.ai/short-courses/safe-and-reliable-ai-via-guardrails/" target="_blank">Safe and Reliable AI via Guardrails — DeepLearning.AI (free, by GuardrailsAI's founder)</a></li>
+            <li><a href="https://www.evidentlyai.com/llm-evaluation-course-practice" target="_blank">LLM Evaluation for Builders: Applied Course — Evidently AI (10 free Python tutorials)</a></li>
+            <li><a href="https://github.com/guardrails-ai/guardrails" target="_blank">guardrails-ai/guardrails (official GitHub repo)</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 3 -->
+    <div class="section">
+        <span class="gap-tag">GAP 2 — Open-Source Models</span>
+        <h3>Module C: Running Open-Source Models Locally</h3>
+        <p>The original course's "Building with Open Source Models" section (28 min, 8 lessons) — restored. Covers picking, calling, and self-hosting Hugging Face models via Ollama.</p>
+        <span class="tech-badge">Hugging Face</span>
+        <span class="tech-badge">Ollama</span>
+        <span class="tech-badge">Local Inference</span>
+        <ul>
+            <li>Why and when to use open-source vs. commercial models (cost, data privacy, latency).</li>
+            <li>Finding and calling Hugging Face models directly from Python.</li>
+            <li>Installing Ollama, pulling a GGUF model, and calling it locally via the <code>ollama</code> Python library or LangChain's <code>Ollama</code> wrapper.</li>
+        </ul>
+        <p><strong>Primary Learning Resources:</strong></p>
+        <ul>
+            <li><a href="https://www.freecodecamp.org/news/how-to-run-an-open-source-llm-on-your-personal-computer-run-ollama-locally/" target="_blank">How To Run an Open-Source LLM on Your Personal Computer — freeCodeCamp</a></li>
+            <li><a href="https://github.com/ijstokes/tutorial-local-llm" target="_blank">Tutorial: Hosting local LLMs using Ollama and the Hugging Face ecosystem (GitHub)</a></li>
+            <li><a href="https://www.youtube.com/watch?v=UtSSMs6ObqY" target="_blank">Learn Ollama in 15 Minutes — Run LLM Models Locally for Free (YouTube)</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 4 -->
+    <div class="section">
+        <span class="gap-tag">GAP 3 — Claude Code Depth</span>
+        <h3>Module D: Claude Code — Tools, Skills, Subagents, Checkpointing</h3>
+        <p>Restores the 6 compressed lessons from the original Claude Code course: Adding Tools, Creating Skills, Adding Skills, Checkpointing, Creating Subagents, and AI Code Review.</p>
+        <span class="tech-badge">Custom Tools</span>
+        <span class="tech-badge">SKILL.md</span>
+        <span class="tech-badge">Subagents</span>
+        <ul>
+            <li>Writing a custom Skill as a <code>SKILL.md</code> file that Claude discovers and invokes automatically.</li>
+            <li>Creating a subagent with its own context window and tool access (e.g. a dedicated security-audit or testing agent) via <code>.claude/agents/</code>.</li>
+            <li>Using Checkpointing to snapshot working state before a risky multi-step change.</li>
+        </ul>
+        <p><strong>Primary Learning Resources:</strong></p>
+        <ul>
+            <li><a href="https://code.claude.com/docs/en/skills" target="_blank">Extend Claude with Skills — Official Claude Code Docs</a></li>
+            <li><a href="https://anthropic.skilljar.com/introduction-to-subagents" target="_blank">Introduction to Subagents — Official Anthropic Course</a></li>
+        </ul>
+    </div>
+
+    <!-- Module 5 -->
+    <div class="section">
+        <span class="gap-tag">GAP 3 — Testing & Email</span>
+        <h3>Module E: pytest Unit Testing & Email Integration</h3>
+        <p>Restores the original's dedicated unit-testing lesson and the entire dropped Email Integration section (SendGrid, receiving/sending emails).</p>
+        <span class="tech-badge">pytest</span>
+        <span class="tech-badge">FastAPI TestClient</span>
+        <span class="tech-badge">SendGrid</span>
+        <ul>
+            <li>Writing unit and integration tests for FastAPI endpoints with <code>pytest</code> and <code>TestClient</code>, using fixtures for setup/teardown and a separate test database.</li>
+            <li>Sending transactional email from FastAPI via SendGrid.</li>
+            <li>Receiving inbound email (webhook parsing) to auto-create or update tickets.</li>
+        </ul>
+        <p><strong>Primary Learning Resources:</strong></p>
+        <ul>
+            <li><a href="https://learnmodernpython.com/fastapi-with-pytest-unit-testing-your-api-endpoints/" target="_blank">FastAPI With Pytest: Unit Testing Your API Endpoints</a></li>
+            <li><a href="https://www.ficode.com/blog/how-to-use-python-fastapi-to-send-email" target="_blank">Send Emails with Python FastAPI: A Step-by-Step Guide</a></li>
+            <li><a href="https://davidmuraya.com/blog/python-fastapi-production-email-service/" target="_blank">Python & FastAPI: Building a Production-Ready Email Service</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>

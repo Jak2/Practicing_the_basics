@@ -1,0 +1,6 @@
+.env
+.rag_db/
+.rag_history.sqlite
+.venv/
+__pycache__/
+.pytest_cache/
