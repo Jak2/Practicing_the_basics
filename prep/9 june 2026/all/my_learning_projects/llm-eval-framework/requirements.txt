@@ -31,4 +31,4 @@ aiosqlite==0.20.0        # SQLite backend for in-memory test DB
 
 # ✨ Optional: local ML (comment in to enable sentence-transformer similarity) ✨
 sentence-transformers==3.1.1   # ~80 MB model, much better consistency scores
-torch==2.4.1                   # Required by sentence-transformers
+torch==2.13.0                   # Required by sentence-transformers
