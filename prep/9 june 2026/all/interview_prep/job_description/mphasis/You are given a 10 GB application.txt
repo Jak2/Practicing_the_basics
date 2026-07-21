@@ -1,0 +1,82 @@
+You are given a 10 GB application log file containing millions of records. Write a Python program that reads the file line by line without loading it entirely into memory. Count the number of INFO, WARNING, and ERROR logs, identify the top 10 most frequent error messages, detect if the same error occurs more than five times within a rolling 60-second window, and generate a CSV report containing the error message, count, first occurrence, and last occurrence. The solution should be memory-efficient, optimized for performance, and handle malformed log entries gracefully.
+
+
+
+import re, csv
+from collection import Counter, defaultdict, deque
+from datetime import datetime
+
+log_re = re.compile(xxxxxxxxxx, info| warning|error| <messages>
+
+def parse_line(line):
+	m= log_re.match(line.strip())
+	if not m:
+		return None
+	ts = datetime.strptime(xxxxxxx)
+	return ts, m['level'], m[message]
+
+def process (filepath, out_csv)
+	level_counts = Counter()
+	error_counts = Counter()
+	error_first={}
+	error_last={}
+	windows= defaultdict(deque)
+	burst_alerts=set()
+	malformed=0
+
+	with open(filepathg, 'r', buffering=1<<20) as f:
+
+		for line in f:
+			parsed = parse_line(line)
+			if not parsed:
+				malformed +=1
+				continue
+			ts,level, msg= parsed
+			level_counts[level] +=1
+			if level != 'ERROR':
+				continue
+			
+			error_counts[msg] +=1
+			error_first.setdefault(msg,ts_
+			error_last[msg]
+
+			dq = windows[msg]
+			dq.append(ts)
+			while dq and (ts-dq[0]).total_seconds() >60:
+				dq.popleft()
+			if len(dq) >5 :
+				burst_alerts.add(msg)
+	
+
+	top10 = error_counts.most_common(10)
+	with open (out_csv, 'w', newline='') as f:
+		w=csv.writer(f)
+		w.writerow(['error_message', 'count'
+, 'first_occurance', 'last_occurance', 'burst_gts_in60s'])
+		for msg, cnt in top10:
+			w.writerow([msg,cnt,error_first[msg], error_last[msg], msg in burst_alerts])
+
+	print(level_counts, f"malformed={malformed}")
+	
+if __name__ == '__main__'
+	process('app_log', 'error_report.csv')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
