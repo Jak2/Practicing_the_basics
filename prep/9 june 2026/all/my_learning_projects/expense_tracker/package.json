@@ -16,8 +16,8 @@
     "xlsx": "^0.18.5",
     "file-saver": "^2.0.5",
     "lucide-react": "^0.303.0",
-    "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.8.1",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
     "recharts": "^2.12.0",
     "html2canvas": "^1.4.1"
   },
